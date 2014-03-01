@@ -2,8 +2,8 @@
 (message "Default Dir: %S" default-directory)
 
 ; error here
-;; (eval-after-load "sql"
-;;   '(load-library "sql-indent"))
+(eval-after-load "sql"
+  '(load-library "sql-indent.el"))
 
 ;; Capitalizes all SQL words
 (defun my-capitalize-all-mysql-keywords ()
