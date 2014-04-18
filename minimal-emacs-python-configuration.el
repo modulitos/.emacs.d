@@ -1,21 +1,25 @@
 ;; Requisites: Emacs >= 24
-(require 'package)
-(package-initialize)
+;; (require 'package)
+;; (package-initialize)
 
-(add-to-list 'package-archives
-	     '("melpa" . "http://melpa.milkbox.net/packages/"))
+;; (add-to-list 'package-archives
+;; 	     '("melpa" . "http://melpa.milkbox.net/packages/"))
 (add-to-list 'package-archives
 	     '("marmalade" . "http://marmalade-repo.org/packages/") t)
 
-(package-refresh-contents)
+;; (package-refresh-contents)
 
 (defun install-if-needed (package)
   (unless (package-installed-p package)
     (package-install package)))
 
+(add-to-list 'load-path "~/workspace/emacs/.emacs.d/plugins")
+(require 'python-mode)
 ;; make more packages available with the package installer
+;; (setq to-install
+;;       '(python-mode magit yasnippet jedi auto-complete autopair find-file-in-repository flycheck))
 (setq to-install
-      '(python-mode magit yasnippet jedi auto-complete autopair find-file-in-repository flycheck))
+      '(magit yasnippet jedi auto-complete autopair find-file-in-repository flycheck))
 
 (mapc 'install-if-needed to-install)
 
@@ -66,6 +70,3 @@
 ;; (add-hook 'python-mode-hook 'auto-complete-mode)
 
 ;; (ido-mode t)
-
-;; (eval-after-load "sql"
-;;   '(load-library "sql-indent"))

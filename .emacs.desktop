@@ -1,0 +1,128 @@
+;; -*- mode: emacs-lisp; coding: emacs-mule; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Thu Mar 27 17:40:34 2014
+;; Desktop file format version 206
+;; Emacs version 24.3.1
+
+;; Global section:
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list nil)
+(setq search-ring nil)
+(setq regexp-search-ring nil)
+(setq register-alist nil)
+(setq file-name-history nil)
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 206
+  "/usr/share/applications/eclipse_clean.desktop"
+  "eclipse_clean.desktop"
+  'conf-unix-mode
+  nil
+  197
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/usr/share/applications/eclipse.desktop"
+  "eclipse.desktop"
+  'conf-unix-mode
+  nil
+  192
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/etc/mongodb.conf"
+  "mongodb.conf"
+  'conf-unix-mode
+  nil
+  562
+  '(865 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/etc/bumblebee/bumblebee.conf"
+  "bumblebee.conf"
+  'conf-unix-mode
+  nil
+  423
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/lucas/bin/reinit_multiscreen"
+  "reinit_multiscreen"
+  'fundamental-mode
+  nil
+  75
+  '(74 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/lucas/.bashrc"
+  ".bashrc"
+  'sh-mode
+  nil
+  4440
+  '(4380 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/lucas/bin/term_multiscreen"
+  "term_multiscreen"
+  'sh-mode
+  nil
+  173
+  '(144 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/lucas/bin/init_multiscreen"
+  "init_multiscreen"
+  'sh-mode
+  nil
+  1
+  '(138 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/etc/apt/sources.list"
+  "sources.list"
+  'fundamental-mode
+  nil
+  212
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/etc/passwd"
+  "passwd"
+  'conf-colon-mode
+  nil
+  1886
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
