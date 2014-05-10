@@ -1,4 +1,0 @@
-###Luke's Emacs configuration
-This is mostly for my personal use when working on different machines. It requires ELPA and marmalade package managers, which I believe are standard for Emacs 24.
-
-Feel free to use it, and send me a message if I have overlooked any dependencies. 
