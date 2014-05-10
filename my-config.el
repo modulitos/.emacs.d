@@ -2,6 +2,42 @@
 (setq default-directory "~/")
 (message "Default Dir: %S" default-directory)
 
+;; WARNING: These options result in errors for non-supported encodings.
+;; (setq utf-translate-cjk-mode nil) ; disable CJK coding/encoding (Chinese/Japanese/Korean characters)
+;; (set-language-environment 'utf-8)
+;; (set-keyboard-coding-system 'utf-8-mac) ; For old Carbon emacs on OS X only
+;; (setq locale-coding-system 'utf-8)
+;; (set-default-coding-systems 'utf-8)
+;; (set-terminal-coding-system 'utf-8)
+;; (unless (eq system-type 'windows-nt)
+;;  (set-selection-coding-system 'utf-16-le))
+;; (prefer-coding-system 'utf-8)
+
+
+;; SESSION MANAGEMENT - Windows Mode
+  ;; (require 'desktop-menu)
+;; (add-to-list 'load-path "~/workspace/emacs/.emacs.d/elisp/windows2.el") 
+  (add-to-list 'load-path (expand-file-name "~/workspace/emacs/.emacs.d/elisp"))
+  ;; (add-to-list 'load-path "~/workspace/emacs/.emacs.d/elisp/windows.el")
+  (require 'windows)
+  (win:startup-with-window)
+  (define-key ctl-x-map "C" 'see-you-again)
+
+  ;; ;; Revive for Windows Mode - saves windows configuration for the desktop.
+  ;; ;; Put revive.el into your elisp  directory included in load-path
+  ;; ;; and write the next expressions.
+
+  ;;   (autoload 'save-current-configuration "revive" "Save status" t)
+  ;;   (autoload 'resume "revive" "Resume Emacs" t)
+  ;;   (autoload 'wipe "revive" "Wipe Emacs" t)
+
+  ;; ;; And define favorite keys to those functions.  Here is a sample.
+
+  ;;   (define-key ctl-x-map "S" 'save-current-configuration)
+  ;;   (define-key ctl-x-map "F" 'resume)
+  ;;   (define-key ctl-x-map "K" 'wipe)
+
+
 ;; JDEE for java support
 (add-to-list 'load-path "~/workspace/emacs/.emacs.d/jdee-2.4.1/lisp")
 ;; (load "jde") ;; Lazy-load instead
@@ -61,6 +97,14 @@
 ;; '.m' confilcts with obj-c mode. Default to matlab for '.m' files.
 (setq auto-mode-alist
        (cons '("\\.m$" . matlab-mode) auto-mode-alist))
+
+;; LATEX
+  (setq latex-run-command "xelatex")
+  (add-hook 'latex-mode-hook 'flyspell-mode)
+
+;; MARKDOWN 
+  (custom-set-variables
+   '(markdown-command "/usr/bin/pandoc"))
 
 ;; THEMING
 ;; (add-to-list 'custom-theme-load-path "~/workspace/emacs/.emacs.d/elisp/themes/color-theme-6.6.0/color-theme.el")
@@ -151,15 +195,6 @@
 	(unless (memq this-command
 		      '(isearch-abort abort-recursive-edit exit-minibuffer keyboard-quit))
 	  (ding))))
-;; (setq utf-translate-cjk-mode nil) ; disable CJK coding/encoding (Chinese/Japanese/Korean characters)
-;; (set-language-environment 'utf-8)
-;; (set-keyboard-coding-system 'utf-8-mac) ; For old Carbon emacs on OS X only
-;; (setq locale-coding-system 'utf-8)
-;; (set-default-coding-systems 'utf-8)
-;; (set-terminal-coding-system 'utf-8)
-;; (unless (eq system-type 'windows-nt)
-;;  (set-selection-coding-system 'utf-16-le))
-;; (prefer-coding-system 'utf-8)
 
 ;; Original idea from
 ;; http://www.opensubscriber.com/message/emacs-devel@gnu.org/10971693.html
@@ -254,11 +289,11 @@
 
 (defun shift-right ()
   (interactive)
-  (shift-region 2))
+  (shift-region 1))
 
 (defun shift-left ()
   (interactive)
-  (shift-region -2))
+  (shift-region -1))
 
 ;; Bind (shift-right) and (shift-left) function to your favorite keys. I use
 ;; the following so that Ctrl-Shift-Right Arrow moves selected text one 
