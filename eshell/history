@@ -1,0 +1,19 @@
+ls
+java -cp saxon9he.jar net.sf.saxon.Query Problem1.xq > p1.xml
+xmllint --format p1.xml
+cd hw5/
+ls
+java -cp saxon9he.jar net.sf.saxon.Query Problem1.xq > p1.xml
+xmllint --format p1.xml
+ls ../
+ls
+cp Probl* LukeProbl*
+ls
+rename '/s/^/Solution2/' Proble*
+ls
+rename.ul '/s/^/Solution2/' Proble*
+ls
+ls
+java -cp saxon9he.jar net.sf.saxon.Query Solution2Problem1.xq > Solution2Problem1.xml
+xmllint --format Solution2Problem1.xml 
+java -cp saxon9he.jar net.sf.saxon.Query Solution2Problem1.xq > Solution2Problem1.xml
