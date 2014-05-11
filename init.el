@@ -18,10 +18,14 @@
 
 (package-refresh-contents)	     
 
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/elisp"))
+;; (add-to-list 'load-path (expand-file-name "~/workspace/emacs/.emacs.d/elisp"))
 (add-to-list 'load-path "~/workspace/emacs/.emacs.d/plugins")
+;; (add-to-list 'load-path "~/.emacs.d/plugins")
 
 ;; Load Luke's personal settings.
 (load "~/Dropbox/workspaces/emacs/.emacs.d/my-config.el")
+;; (load "~/.emacs.d/my-config.el")
 
 ;; -------------------- extra nice things --------------------
 ;; use shift to move around windows

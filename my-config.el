@@ -1,5 +1,6 @@
 ;; SYSTEM DIRECTORY
-(setq default-directory "~/")
+(setq default-directory "~/")        
+;; (setq default-directory "~/workspace/emacs/")
 (message "Default Dir: %S" default-directory)
 
 ;; WARNING: These options result in errors for non-supported encodings.
@@ -294,6 +295,10 @@
 (defun shift-left ()
   (interactive)
   (shift-region -1))
+
+;; Camel Case subword mode
+  (add-hook 'prog-mode-hook 'subword-mode)
+  (add-hook 'text-mode-hook 'subword-mode)
 
 ;; Bind (shift-right) and (shift-left) function to your favorite keys. I use
 ;; the following so that Ctrl-Shift-Right Arrow moves selected text one 
