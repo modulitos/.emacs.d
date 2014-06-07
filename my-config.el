@@ -38,6 +38,9 @@
   ;;   (define-key ctl-x-map "F" 'resume)
   ;;   (define-key ctl-x-map "K" 'wipe)
 
+  (require 'uniquify)
+  (setq uniquify-buffer-name-style 'reverse)
+
 
 ;; JDEE for java support
 (add-to-list 'load-path "~/workspace/emacs/.emacs.d/jdee-2.4.1/lisp")
@@ -100,6 +103,7 @@
        (cons '("\\.m$" . matlab-mode) auto-mode-alist))
 
 ;; LATEX
+  ;; (setq latex-run-command "pdflatex")
   (setq latex-run-command "xelatex")
   (add-hook 'latex-mode-hook 'flyspell-mode)
 
@@ -142,7 +146,6 @@
 ;;     (change-theme 'wombat 'wombat)
 ;; ;; in mini-buffer, this is "load-theme"
 
-
 ;; TERMINAL
 ;; (setq term-default-bg-color "#D787FF")
 (setq term-default-bg-color "#6334A8") ;; background
@@ -183,7 +186,6 @@
 
 (define-key global-map (kbd "C-S-t") 'find-last-killed-file)
 (global-set-key (kbd "C-x C-;") 'comment-or-uncomment-region-or-line)
-(setq lazy-highlight-cleanup nil)
 (add-hook 'before-save-hook
           (lambda ()
             (when buffer-file-name
@@ -266,6 +268,9 @@
 ;; Start a new eshell even if one is active.
 (global-set-key (kbd "C-x M") (lambda () (interactive) (eshell t)))
 
+;; Lazy highlighting while searching (can instead use M-s h r to highlight regex)
+;; (setq lazy-highlight-cleanup nil)
+
 ;; Delete words in minibuffer without adding it to the kill ring.
 (add-hook 'minibuffer-setup-hook'
           (lambda ()
@@ -274,7 +279,6 @@
 ;; (setq last-nonmenu-event nil)
 ;;   (funcall (or read-file-name-function #'read-file-name-default)
 ;;            prompt dir default-filename mustmatch initial predicate))
-
 
 ;; Shift the selected region right if distance is postive, left if
 ;; negative
@@ -295,10 +299,6 @@
 (defun shift-left ()
   (interactive)
   (shift-region -1))
-
-;; Camel Case subword mode
-  (add-hook 'prog-mode-hook 'subword-mode)
-  (add-hook 'text-mode-hook 'subword-mode)
 
 ;; Bind (shift-right) and (shift-left) function to your favorite keys. I use
 ;; the following so that Ctrl-Shift-Right Arrow moves selected text one 
@@ -434,6 +434,12 @@ there's a region, all lines that region covers will be duplicated."
 
 (global-set-key (kbd "C-S-SPC") 'duplicate-current-line-or-region)
 
+;; BUFFER NAVIGATION
+
+;; Sentence navigation
+(setq sentence-end-double-space nil)   
+
+
 ;; Emulate Eclipse's text movement for regions and lines.
 ;; Moves text up or down.
 (defun move-text-internal (arg)
@@ -469,6 +475,21 @@ there's a region, all lines that region covers will be duplicated."
    (interactive "*p")
    (move-text-internal (- arg)))
 
+;; Setting the backtab.
+;; (global-set-key (kbd "<S-tab>") 'un-indent-by-removing-4-spaces)
+(global-set-key (kbd "<backtab>") 'un-indent-by-removing-4-spaces)
+(defun un-indent-by-removing-4-spaces ()
+  "remove 4 spaces from beginning of of line"
+  (interactive)
+  (save-excursion
+    (save-match-data
+      (beginning-of-line)
+      ;; get rid of tabs at beginning of line
+      (when (looking-at "^\\s-+")
+        (untabify (match-beginning 0) (match-end 0)))
+      (when (looking-at "^    ")
+        (replace-match "")))))
+
 ;; (global-set-key [\M-\S-up] 'move-text-up)
 ;; (global-set-key [\M-\S-down] 'move-text-down)
 (global-set-key (kbd "C-M-p") 'move-text-up)
@@ -490,3 +511,14 @@ there's a region, all lines that region covers will be duplicated."
 (add-hook 'MATLAB-mode 
           (lambda()
             (define-key MATLAB-mode-map (kbd "M-;" 'comment-dwim-line))))
+
+
+;; MINOR MODES
+;; Camel Case subword mode
+  (add-hook 'prog-mode-hook 'subword-mode)
+  (add-hook 'text-mode-hook 'subword-mode)
+
+;; Fly spell checker mode
+  (add-hook 'text-mode-hook 'flyspell-mode)
+  (add-hook 'markdown-mode-hook 'flyspell-mode)
+
