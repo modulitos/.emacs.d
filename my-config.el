@@ -18,7 +18,7 @@
 ;; SESSION MANAGEMENT - Windows Mode
   ;; (require 'desktop-menu)
 ;; (add-to-list 'load-path "~/workspace/emacs/.emacs.d/elisp/windows2.el") 
-  (add-to-list 'load-path (expand-file-name "~/workspace/emacs/.emacs.d/elisp"))
+  (add-to-list 'load-path (expand-file-name "~/.emacs.d/elisp"))
   ;; (add-to-list 'load-path "~/workspace/emacs/.emacs.d/elisp/windows.el")
   (require 'windows)
   (win:startup-with-window)
@@ -43,7 +43,7 @@
 
 
 ;; JDEE for java support
-(add-to-list 'load-path "~/workspace/emacs/.emacs.d/jdee-2.4.1/lisp")
+(add-to-list 'load-path "~/.emacs.d/jdee-2.4.1/lisp")
 ;; (load "jde") ;; Lazy-load instead
 ;;Lazy-load JDEE
 (setq defer-loading-jde t)
@@ -59,7 +59,7 @@
 ;; PYTHON
 ;; Andreas' python-mode support
 (eval-after-load "Python"
-  '(load "~/Dropbox/workspaces/emacs/.emacs.d/minimal-emacs-python-configuration.el"))
+  '(load "~/.emacs.d/minimal-emacs-python-configuration.el"))
 ;;rnj			       
 
 ;; SQL
@@ -113,7 +113,7 @@
 
 ;; THEMING
 ;; (add-to-list 'custom-theme-load-path "~/workspace/emacs/.emacs.d/elisp/themes/color-theme-6.6.0/color-theme.el")
-(add-to-list 'load-path "~/workspace/emacs/.emacs.d/elisp/themes/color-theme-6.6.0")
+(add-to-list 'load-path "~/.emacs.d/elisp/themes/color-theme-6.6.0")
 ;; (load-theme 'light-blue t)
     (require 'color-theme)
     (color-theme-initialize);; try "color-theme-select" to try out themes
