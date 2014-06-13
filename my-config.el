@@ -58,9 +58,19 @@
 
 ;; PYTHON
 ;; Andreas' python-mode support
-(eval-after-load "Python"
-  '(load "~/.emacs.d/minimal-emacs-python-configuration.el"))
+;; (eval-after-load "Python"
+;;   '(load "~/.emacs.d/minimal-emacs-python-configuration.el"))
 ;;rnj			       
+(setenv "PYTHONPATH” “/usr/bin/python") 
+;; For Python 3
+;;(setenv "PYTHONPATH” “/usr/bin/python3") 
+(package-initialize)
+ (elpy-enable)
+ ;; Fixing a key binding bug in elpy
+ (define-key yas-minor-mode-map (kbd "C-c k") 'yas-expand)
+ ;; Fixing another key binding bug in iedit mode
+ (define-key global-map (kbd "C-c o") 'iedit-mode)
+
 
 ;; SQL
 ;; Capitalizes all mySQL words
