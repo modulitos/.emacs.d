@@ -67,7 +67,7 @@
 (package-initialize)
  (elpy-enable)
  ;; Fixing a key binding bug in elpy
- (define-key yas-minor-mode-map (kbd "C-c k") 'yas-expand)
+ (define-key yas-minor-mode-map (kbd "C-c e") 'yas-expand)
  ;; Fixing another key binding bug in iedit mode
  (define-key global-map (kbd "C-c o") 'iedit-mode)
 
@@ -106,6 +106,22 @@
    (if mark-active (list (region-beginning) (region-end))
      (list (line-beginning-position)
 	   (line-beginning-position 2)))))
+
+
+;; JAVASCRIPT-MODE
+;; (add-to-list 'load-path "~/path-to/auto-complete")
+; Load the default configuration
+(require 'auto-complete-config)
+; Make sure we can find the dictionaries
+;; (add-to-list 'ac-dictionary-directories "~/.emacs.d/elpa/auto-complete/dict")
+; Use dictionaries by default
+(setq-default ac-sources (add-to-list 'ac-sources 'ac-source-dictionary))
+(global-auto-complete-mode t)
+; Start auto-completion after 2 characters of a word
+(setq ac-auto-start 2)
+; case sensitivity is important when finding matches
+(setq ac-ignore-case nil)
+
 
 ;; MATLAB-MODE
 ;; '.m' confilcts with obj-c mode. Default to matlab for '.m' files.
