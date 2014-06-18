@@ -122,6 +122,11 @@
 ; case sensitivity is important when finding matches
 (setq ac-ignore-case nil)
 
+(add-hook 'js-mode-hook 'js2-minor-mode)
+(add-hook 'js2-mode-hook 'ac-js2-mode)
+;; js2-mode provides 4 level of syntax highlighting. They are * 0 or a negative value means none. * 1 adds basic syntax highlighting. * 2 adds highlighting of some Ecma built-in properties. * 3 adds highlighting of many Ecma built-in functions.
+(setq js2-highlight-level 1)
+
 
 ;; MATLAB-MODE
 ;; '.m' confilcts with obj-c mode. Default to matlab for '.m' files.
@@ -188,6 +193,33 @@
 ;; (global-set-key (kbd "M-S-t") 'ansi-term)
 
 ;; (global-set-key [M-S-t] 'ansi-term)    
+
+
+;; YASNIPPET AND AUTO-COMPLETION
+;;; yasnippet
+;;; should be loaded before auto complete so that they can work together
+(require 'yasnippet)
+(yas-global-mode 1)
+;; help from: http://stackoverflow.com/questions/8225183/emacs-yasnippet-install
+(require 'yasnippet "~/.emacs.d/elpa//yasnippet-20140514.1649/yasnippet.el")
+;; (yas/initialize)
+(setq yas/root-directory "~/.emacs.d/elpa/yasnippet-20140514.1649/snippets")
+(yas/load-directory yas/root-directory)
+(add-hook 'term-mode-hook (lambda()
+        (setq yas-dont-activate t)))
+
+;;; auto complete mod
+;;; should be loaded after yasnippet so that they can work together
+(require 'auto-complete-config)
+;; (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+(ac-config-default)
+;;; set the trigger key so that it can work together with yasnippet on tab key,
+;;; if the word exists in yasnippet, pressing tab will cause yasnippet to
+;;; activate, otherwise, auto-complete will
+(ac-set-trigger-key "TAB")
+(ac-set-trigger-key "<tab>")
+
+
 
 ;; TEXT EDITING
 
@@ -547,4 +579,16 @@ there's a region, all lines that region covers will be duplicated."
 ;; Fly spell checker mode
   (add-hook 'text-mode-hook 'flyspell-mode)
   (add-hook 'markdown-mode-hook 'flyspell-mode)
+
+;; Paragraph edit mode for balancing parentheses
+(define-key js-mode-map "{" 'paredit-open-curly)
+(define-key js-mode-map "}" 'paredit-close-curly-and-newline)
+
+(defun my-paredit-nonlisp ()
+  "Turn on paredit mode for non-lisps."
+  (interactive)
+  (set (make-local-variable 'paredit-space-for-delimiter-predicates)
+       '((lambda (endp delimiter) nil)))
+  (paredit-mode 1))
+(add-hook 'js-mode-hook 'my-paredit-nonlisp)
 
