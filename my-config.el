@@ -125,13 +125,43 @@
 (add-hook 'js-mode-hook 'js2-minor-mode)
 (add-hook 'js2-mode-hook 'ac-js2-mode)
 ;; js2-mode provides 4 level of syntax highlighting. They are * 0 or a negative value means none. * 1 adds basic syntax highlighting. * 2 adds highlighting of some Ecma built-in properties. * 3 adds highlighting of many Ecma built-in functions.
-(setq js2-highlight-level 1)
+(setq js2-highlight-level 3)
+;;keybindings
+;; (eval-after-load "js2-mode"
+  ;; '(progn
+     ;; Add an alternative local binding for the command
+     ;; bound to <f3>
+     ;; (define-key js2-mode <f3>
+       ;; 'ac-js2-jump-to-definition))
+     ;; Unbind <f3> from the local keymap
+     ;; (define-key js2-mode <f3> nil)
+;; ))
+(add-hook 'js2-mode-hook
+          (lambda ()
+            ;; (global-unset-key [<f1>])
+            ;; (local-set-key [<f3>] 'ac-js2-jump-to-definition)
+            ;; (define-key js2-mode-map [<f3>] 'ac-js2-jump-to-definition)
+
+            (local-set-key (kbd "C-j") 'ac-js2-jump-to-definition)
+            (define-key js2-mode-map (kbd "C-j") 'ac-js2-jump-to-definition)
+            )
+)
+
+;; (global-unset-key [<f3>])
+;; (global-set-key [<f3>] nil)
+
+;; (autoload 'js2-mode "elp/js2-mode-20140603.1818/js2.el" nil t)
+(setq auto-mode-alist
+       (cons '("\\.js$" . js2-mode) auto-mode-alist))
+;; (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode)) ;; same thing as above
+
 
 
 ;; MATLAB-MODE
 ;; '.m' confilcts with obj-c mode. Default to matlab for '.m' files.
 (setq auto-mode-alist
        (cons '("\\.m$" . matlab-mode) auto-mode-alist))
+
 
 ;; LATEX
   ;; (setq latex-run-command "pdflatex")
@@ -297,9 +327,28 @@
       (interactive)
       (other-window -1)))
 ; Cycle between buffers
-(global-set-key [C-tab] 'next-buffer)
-(global-set-key [C-S-iso-lefttab] 'previous-buffer);Linux
-(global-set-key [C-S-tab] 'previous-buffer);Windows/Linux???
+
+;; start buffer-stack keybindings
+(require 'buffer-stack)
+
+(global-set-key [(f9)] 'buffer-stack-bury)
+(global-set-key [(control f9)] 'buffer-stack-bury-and-kill)
+(global-set-key [(f10)] 'buffer-stack-up)
+(global-set-key [(f11)] 'buffer-stack-down)
+(global-set-key [(f12)] 'buffer-stack-track)
+(global-set-key [(control f12)] 'buffer-stack-untrack)
+
+(global-set-key (kbd "C-q") 'buffer-stack-bury)
+(global-set-key [C-tab] 'buffer-stack-down)
+(global-set-key [C-S-iso-lefttab] 'buffer-stack-up);Linux
+(global-set-key [C-S-tab] 'buffer-stack-up);Windows/Linux
+;; end buffer-stack keybindings
+
+;; (global-set-key [C-tab] 'next-buffer)
+;; (global-set-key [C-S-iso-lefttab] 'previous-buffer);Linux
+;; (global-set-key [C-S-tab] 'previous-buffer);Windows/Linux
+
+
 ;; (defun my-switch-buffer ()
 ;;   "Switch buffers, but don't record the change until the last one."
 ;;   (interactive)
@@ -497,6 +546,8 @@ there's a region, all lines that region covers will be duplicated."
 ;; Sentence navigation
 (setq sentence-end-double-space nil)   
 
+;; Scrolling
+(setq scroll-conservatively 10000)
 
 ;; Emulate Eclipse's text movement for regions and lines.
 ;; Moves text up or down.
@@ -554,21 +605,30 @@ there's a region, all lines that region covers will be duplicated."
 (global-set-key (kbd "C-M-n") 'move-text-down)
 ;; end move text up or down.
 
+;; Show matching PARENTHESIS, BRACES
+(show-paren-mode 1)
+
+;; Paragraph edit mode for balancing parentheses
+;; (define-key js-mode-map "{" 'paredit-open-curly)
+;; (define-key js-mode-map "}" 'paredit-close-curly-and-newline)
+(defun my-paredit-nonlisp ()
+  "Turn on paredit mode for non-lisps."
+  (interactive)
+  (set (make-local-variable 'paredit-space-for-delimiter-predicates)
+       '((lambda (endp delimiter) nil)))
+  (paredit-mode 1))
+(add-hook 'js-mode-hook 'my-paredit-nonlisp)
+
+
 ;; MISC KEY-BINDINGS
 (global-set-key (kbd "C-z") 'undo)
 (dolist (key '("\C-Caps_Lock" "\C-x \C-z"))
   (global-unset-key key))
-
-
-;; Matlab unbind default comments (not working)
-(add-hook 'MATLAB-mode
-          (lambda()
-            (local-unset-key (kbd "M-;"))));; overrides matlab's inferior commenting :)
- (eval-after-load 'MATLAB-mode 
-                    '(define-key MATLAB-mode-map (kbd "M-;" 'comment-dwim-line)))
-(add-hook 'MATLAB-mode 
-          (lambda()
-            (define-key MATLAB-mode-map (kbd "M-;" 'comment-dwim-line))))
+;; reset the cursor (mark) position
+(define-key global-map [M-left]
+  (lambda ()
+    (interactive)
+    (set-mark-command t)))
 
 
 ;; MINOR MODES
@@ -580,15 +640,4 @@ there's a region, all lines that region covers will be duplicated."
   (add-hook 'text-mode-hook 'flyspell-mode)
   (add-hook 'markdown-mode-hook 'flyspell-mode)
 
-;; Paragraph edit mode for balancing parentheses
-(define-key js-mode-map "{" 'paredit-open-curly)
-(define-key js-mode-map "}" 'paredit-close-curly-and-newline)
-
-(defun my-paredit-nonlisp ()
-  "Turn on paredit mode for non-lisps."
-  (interactive)
-  (set (make-local-variable 'paredit-space-for-delimiter-predicates)
-       '((lambda (endp delimiter) nil)))
-  (paredit-mode 1))
-(add-hook 'js-mode-hook 'my-paredit-nonlisp)
 
