@@ -155,6 +155,8 @@
        (cons '("\\.js$" . js2-mode) auto-mode-alist))
 ;; (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode)) ;; same thing as above
 
+(require 'js2-refactor)
+(js2r-add-keybindings-with-prefix "C-c C-m")
 
 
 ;; MATLAB-MODE
@@ -252,6 +254,10 @@
 
 
 ;; TEXT EDITING
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/elisp/expand-region"))
+(require 'expand-region)
+;; (require 'expand-region/expand-region-core.el)
+(global-set-key (kbd "C-=") 'er/expand-region)
 
 (defun comment-or-uncomment-region-or-line ()
     "Comments or uncomments the region or the current line if there's no active region."
@@ -333,8 +339,6 @@
 
 (global-set-key [(f9)] 'buffer-stack-bury)
 (global-set-key [(control f9)] 'buffer-stack-bury-and-kill)
-(global-set-key [(f10)] 'buffer-stack-up)
-(global-set-key [(f11)] 'buffer-stack-down)
 (global-set-key [(f12)] 'buffer-stack-track)
 (global-set-key [(control f12)] 'buffer-stack-untrack)
 
@@ -342,6 +346,8 @@
 (global-set-key [C-tab] 'buffer-stack-down)
 (global-set-key [C-S-iso-lefttab] 'buffer-stack-up);Linux
 (global-set-key [C-S-tab] 'buffer-stack-up);Windows/Linux
+;; (global-set-key [(f10)] 'buffer-stack-up)
+;; (global-set-key [(f11)] 'buffer-stack-down)
 ;; end buffer-stack keybindings
 
 ;; (global-set-key [C-tab] 'next-buffer)
@@ -621,7 +627,7 @@ there's a region, all lines that region covers will be duplicated."
 
 
 ;; MISC KEY-BINDINGS
-(global-set-key (kbd "C-z") 'undo)
+;; (global-set-key (kbd "C-z") 'undo)
 (dolist (key '("\C-Caps_Lock" "\C-x \C-z"))
   (global-unset-key key))
 ;; reset the cursor (mark) position
