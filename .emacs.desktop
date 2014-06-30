@@ -2,7 +2,7 @@
 ;; --------------------------------------------------------------------------
 ;; Desktop File for Emacs
 ;; --------------------------------------------------------------------------
-;; Created Tue Jun 10 04:15:39 2014
+;; Created Fri Jun 27 15:33:44 2014
 ;; Desktop file format version 206
 ;; Emacs version 24.3.1
 
@@ -16,3 +16,14 @@
 (setq file-name-history nil)
 
 ;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 206
+  "/home/lucas/projects/ecostartup/ecometrix_site-api/.git/rebase-merge/git-rebase-todo"
+  "git-rebase-todo"
+  'git-rebase-mode
+  '(yas-minor-mode)
+  1
+  '(nil nil)
+  t
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+

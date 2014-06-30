@@ -178,11 +178,13 @@
 ;; (add-to-list 'custom-theme-load-path "~/workspace/emacs/.emacs.d/elisp/themes/color-theme-6.6.0/color-theme.el")
 (add-to-list 'load-path "~/.emacs.d/elisp/themes/color-theme-6.6.0")
 ;; (load-theme 'light-blue t)
-    (require 'color-theme)
-    (color-theme-initialize);; try "color-theme-select" to try out themes
+(require 'color-theme)
+(color-theme-initialize);; try "color-theme-select" to try out themes
     ;; (color-theme-charcoal-black)
-    (color-theme-renegade)
-
+    ;; (color-theme-renegade)
+(add-to-list 'custom-theme-load-path "~/.emacs.d/elisp/themes/")
+(load-theme 'zenburn t)
+;; (load-theme zenburn-theme.el) ;; not working...
 ;; ;; switch to dark mode and back
 ;; (defun toggle-night-color-theme ()
 ;;       "Switch to/from night color scheme."
@@ -211,8 +213,11 @@
 
 ;; TERMINAL
 ;; (setq term-default-bg-color "#D787FF")
-(setq term-default-bg-color "#6334A8") ;; background
-(setq term-default-fg-color "#FAFAFA") ;; letters
+;; (setq term-default-bg-color "#370023") ;; background
+;; (setq term-default-fg-color "#F7F7F7") ;; letters
+
+;; (setq term-default-bg-color "#6334A8") ;; background
+;; (setq term-default-fg-color "#FAFAFA") ;; letters
 ;; (setq term-default-fg-color "#D787FF")
 ;; (add-to-list 'load-path "~/workspace/emacs/.emacs.d/elisp/mult-term.el")
 ;;  (require 'multi-term)
@@ -259,15 +264,15 @@
 ;; (require 'expand-region/expand-region-core.el)
 (global-set-key (kbd "C-=") 'er/expand-region)
 
-(defun comment-or-uncomment-region-or-line ()
-    "Comments or uncomments the region or the current line if there's no active region."
-    (interactive)
-    (let (beg end)
-        (if (region-active-p)
-            (setq beg (region-beginning) end (region-end))
-            (setq beg (line-beginning-position) end (line-end-position)))
-        (comment-or-uncomment-region beg end)
-        (next-line)))
+;; (defun comment-or-uncomment-region-or-line ()
+;;     "Comments or uncomments the region or the current line if there's no active region."
+;;     (interactive)
+;;     (let (beg end)
+;;         (if (region-active-p)
+;;             (setq beg (region-beginning) end (region-end))
+;;             (setq beg (line-beginning-position) end (line-end-position)))
+;;         (comment-or-uncomment-region beg end)
+;;         (next-line)))
 (require 'cl)
 (require 'recentf)
 
@@ -292,6 +297,33 @@
 	(unless (memq this-command
 		      '(isearch-abort abort-recursive-edit exit-minibuffer keyboard-quit))
 	  (ding))))
+(defun comment-or-uncomment-region-or-line ()
+  "Comments or uncomments the region or the current line if there's no active region."
+  (interactive)
+  (let (beg end)
+    (if (region-active-p)
+        (setq beg (region-beginning) end (region-end))
+      (setq beg (line-beginning-position) end (line-end-position)))
+    (comment-or-uncomment-region beg end)))
+
+(defun comment-eclipse (&optional arg)
+  (interactive)
+  (let ((start (line-beginning-position))
+        (end (line-end-position)))
+    (when (or (not transient-mark-mode) (region-active-p))
+      (setq start (save-excursion
+                    (goto-char (region-beginning))
+                    (beginning-of-line)
+                    (point))
+            end (save-excursion
+                  (goto-char (region-end))
+                  (end-of-line)
+                  (point))))
+    (comment-or-uncomment-region start end)))
+  ;; (if (not (region-active-p))
+  ;; (comment-dwim arg)))
+
+(global-set-key (kbd "C-/") 'comment-eclipse)
 
 ;; Original idea from
 ;; http://www.opensubscriber.com/message/emacs-devel@gnu.org/10971693.html
@@ -306,7 +338,7 @@
       (comment-or-uncomment-region (line-beginning-position) (line-end-position))
     (comment-dwim arg)))
 (global-set-key "\M-;" 'comment-dwim-line)
-(global-set-key (kbd "C-/") 'comment-dwim-line)
+(global-set-key (kbd "C-?") 'comment-dwim-line)
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
@@ -628,6 +660,9 @@ there's a region, all lines that region covers will be duplicated."
 
 ;; MISC KEY-BINDINGS
 ;; (global-set-key (kbd "C-z") 'undo)
+(dolist (key '("\C-z"))
+  (global-unset-key key))
+
 (dolist (key '("\C-Caps_Lock" "\C-x \C-z"))
   (global-unset-key key))
 ;; reset the cursor (mark) position
@@ -646,4 +681,30 @@ there's a region, all lines that region covers will be duplicated."
   (add-hook 'text-mode-hook 'flyspell-mode)
   (add-hook 'markdown-mode-hook 'flyspell-mode)
 
+;; Add highlighting to the current pointer line.
+;; Change the color of the highlighted line.
+(global-hl-line-mode)
+;; (if term-mode
+;;     (hl-line-mode -1))
+(make-variable-buffer-local 'global-hl-line-mode)
+(add-hook 'ansi-term-mode-hook (lambda () (setq global-hl-line-mode nil)))
+(add-hook 'Java/l-mode-hook (lambda () (setq global-hl-line-mode nil)))
+(add-hook 'Lisp-mode-hook (lambda () (setq global-hl-line-mode nil)))
 
+;; (add-hook 'term-mode
+;;   (lambda()
+;;     (hl-line-mode -1)
+;;     (global-hl-line-mode -1))
+;;   't
+;; )
+;; (add-hook 'Java/l-mode
+;;   (lambda()
+;;     (hl-line-mode -1)
+;;     (global-hl-line-mode -1))
+;;   't
+;; )
+;;    ;; (hl-line-mode))
+;; (add-hook 'coding-hook 'turn-on-hl-line-mode)
+;; (set-face-background hl-line-face "gray13")
+(set-face-background hl-line-face "gray40")
+(tool-bar-mode -1)
