@@ -24,7 +24,7 @@
 ;; (add-to-list 'load-path "~/.emacs.d/plugins")
 
 ;; Load Luke's personal settings.
-(load "~/Dropbox/workspaces/emacs/.emacs.d/my-config.el")
+(load "~/.emacs.d/my-config.el")
 ;; (load "~/.emacs.d/my-config.el")
 
 ;; -------------------- extra nice things --------------------

@@ -1,4 +1,5 @@
 storage/
 *~
 *.elc
+elpa/archives/melpa/*
 tramp
