@@ -176,14 +176,16 @@
 
 ;; THEMING
 ;; (add-to-list 'custom-theme-load-path "~/workspace/emacs/.emacs.d/elisp/themes/color-theme-6.6.0/color-theme.el")
-(add-to-list 'load-path "~/.emacs.d/elisp/themes/color-theme-6.6.0")
 ;; (load-theme 'light-blue t)
+(add-to-list 'load-path "~/.emacs.d/elisp/themes/color-theme-6.6.0")
 (require 'color-theme)
-(color-theme-initialize);; try "color-theme-select" to try out themes
+;; (color-theme-initialize);; try "color-theme-select" to try out themes
     ;; (color-theme-charcoal-black)
     ;; (color-theme-renegade)
+
 (add-to-list 'custom-theme-load-path "~/.emacs.d/elisp/themes/")
 (load-theme 'zenburn t)
+
 ;; (load-theme zenburn-theme.el) ;; not working...
 ;; ;; switch to dark mode and back
 ;; (defun toggle-night-color-theme ()
@@ -212,12 +214,21 @@
 ;; ;; in mini-buffer, this is "load-theme"
 
 ;; TERMINAL
-;; (setq term-default-bg-color "#D787FF")
-;; (setq term-default-bg-color "#370023") ;; background
-;; (setq term-default-fg-color "#F7F7F7") ;; letters
+(setq term-default-bg-color "#6F6F6F") ;; light grey
+(setq term-default-fg-color "#FAFAFA") ;; letters
+(add-hook 'ansi-term-mode-hook
+    (lambda ()
+      ;; (set-face-attribute 'term-color-blue nil :foreground "#5555FF")
+      ;; (set-face-attribute 'term-color-green nil :foreground "#55FF55")
+      ;; (set-face-attribute 'term-color-red nil :foreground "#FF5555")
+      ;; (set-face-attribute 'term-color-magenta nil :foreground "#FF55FF")
+      ;; (set-face-attribute 'term-color-cyan nil :foreground "#FF55FF")
+      ;; (set-face-attribute 'term-color-yellow nil :foreground "#FFFF55")
+      ;; (set-background-color "6F6F6F")
 
-;; (setq term-default-bg-color "#6334A8") ;; background
-;; (setq term-default-fg-color "#FAFAFA") ;; letters
+      (local-set-key (kbd "C-j") 'term-line-mode)
+      (local-set-key (kbd "C-k") 'term-char-mode)))
+      
 ;; (setq term-default-fg-color "#D787FF")
 ;; (add-to-list 'load-path "~/workspace/emacs/.emacs.d/elisp/mult-term.el")
 ;;  (require 'multi-term)
@@ -683,9 +694,11 @@ there's a region, all lines that region covers will be duplicated."
 
 ;; Add highlighting to the current pointer line.
 ;; Change the color of the highlighted line.
+
 (global-hl-line-mode)
+
 ;; (if term-mode
-;;     (hl-line-mode -1))
+    ;; (hl-line-mode -1))
 (make-variable-buffer-local 'global-hl-line-mode)
 (add-hook 'ansi-term-mode-hook (lambda () (setq global-hl-line-mode nil)))
 (add-hook 'Java/l-mode-hook (lambda () (setq global-hl-line-mode nil)))
@@ -705,6 +718,6 @@ there's a region, all lines that region covers will be duplicated."
 ;; )
 ;;    ;; (hl-line-mode))
 ;; (add-hook 'coding-hook 'turn-on-hl-line-mode)
-;; (set-face-background hl-line-face "gray13")
-(set-face-background hl-line-face "gray40")
+;; (set-face-background hl-line-face "gray13") 
+(set-face-background hl-line-face "gray30") ;lighter grey
 (tool-bar-mode -1)

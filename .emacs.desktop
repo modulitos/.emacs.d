@@ -2,7 +2,7 @@
 ;; --------------------------------------------------------------------------
 ;; Desktop File for Emacs
 ;; --------------------------------------------------------------------------
-;; Created Fri Jun 27 15:33:44 2014
+;; Created Mon Jun 30 18:01:26 2014
 ;; Desktop file format version 206
 ;; Emacs version 24.3.1
 
@@ -17,13 +17,13 @@
 
 ;; Buffer section -- buffers listed in same order as in buffer list:
 (desktop-create-buffer 206
-  "/home/lucas/projects/ecostartup/ecometrix_site-api/.git/rebase-merge/git-rebase-todo"
-  "git-rebase-todo"
-  'git-rebase-mode
-  '(yas-minor-mode)
-  1
+  "/home/lucas/Dropbox/projects/ecostartup/ecometrix_site-api/.git/MERGE_MSG"
+  "MERGE_MSG"
+  'git-commit-mode
+  '(auto-fill-mode yas-minor-mode flyspell-mode)
+  262
   '(nil nil)
-  t
   nil
-  '((buffer-file-coding-system . undecided-unix)))
+  nil
+  '((buffer-file-coding-system . undecided-unix) (fill-column . 72)))
 
