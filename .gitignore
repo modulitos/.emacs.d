@@ -1,5 +1,10 @@
 storage/
 *~
 *.elc
-elpa/archives/melpa/*
+elpa
 tramp
+.emacs.desktop
+.emacs.desktop.lock
+.session
+auto-save-list
+url
