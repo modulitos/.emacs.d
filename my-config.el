@@ -708,15 +708,28 @@ there's a region, all lines that region covers will be duplicated."
 ;; (global-set-key (kbd "C-z") 'undo)
 (dolist (key '("\C-z"))
   (global-unset-key key))
-
 (dolist (key '("\C-Caps_Lock" "\C-x \C-z"))
   (global-unset-key key))
-;; reset the cursor (mark) position
 (define-key global-map [M-left]
   (lambda ()
     (interactive)
     (set-mark-command t)))
 
+;; rect-mark.el 
+;; Rectangular mode editing - "C-x r" prefix, followed by normal mark/edit command.
+;; reset the cursor (mark) position
+    (global-set-key (kbd "C-x r C-SPC") 'rm-set-mark)
+    (global-set-key (kbd "C-x r C-x") 'rm-exchange-point-and-mark)
+    (global-set-key (kbd "C-x r C-w") 'rm-kill-region)
+    (global-set-key (kbd "C-x r M-w") 'rm-kill-ring-save)
+    (autoload 'rm-set-mark "rect-mark"
+      "Set mark for rectangle." t)
+    (autoload 'rm-exchange-point-and-mark "rect-mark"
+      "Exchange point and mark for rectangle." t)
+    (autoload 'rm-kill-region "rect-mark"
+      "Kill a rectangular region and save it in the kill ring." t)
+    (autoload 'rm-kill-ring-save "rect-mark"
+      "Copy a rectangular region to the kill ring." t)
 
 ;; MINOR MODES
 ;; Camel Case subword mode
