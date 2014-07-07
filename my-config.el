@@ -270,6 +270,41 @@
 
 
 ;; TEXT EDITING
+
+;; maintain highlighting after buffer refresh
+(defun testing-MapAppLog.txt ()
+  "Toggle highlighting `TestQueryLogic' or `invoking fork-join' and `testGudermann'."
+  (interactive)
+  (cond
+   ((get this-command 'state)
+    ;; (highlight-regexp "TestQueryLogic"     font-lock-variable-name-face) ;orange
+    (highlight-regexp "TestQueryLogic"     font-lock-preprocessor-face) ;bold blue
+    (highlight-regexp "invoking fork-join" font-lock-constant-face) ;green
+    (unhighlight-regexp "testGudermann")
+    (message "Highlighting: TestQueryLogic, invoking fork-join")
+    (put this-command 'state nil))
+   (t
+    (unhighlight-regexp "TestQueryLogic")
+    (unhighlight-regexp "invoking fork-join")
+    (highlight-regexp "testGudermann" font-lock-preprocessor-face) ;bold blue
+    (message "Highlighting: testGudermann") 
+    (put this-command 'state t))))
+;; Font-lock faces to choose from:
+;; font-lock-warning-face
+;; font-lock-function-name-face
+;; font-lock-variable-name-face
+;; font-lock-keyword-face
+;; font-lock-comment-face
+;; font-lock-comment-delimiter-face
+;; font-lock-type-face
+;; font-lock-constant-face
+;; font-lock-builtin-face
+;; font-lock-preprocessor-face
+;; font-lock-string-face
+;; font-lock-doc-face
+;; font-lock-negation-char-face
+(define-key text-mode-map (kbd "M-s t") 'testing-MapAppLog.txt)
+
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/elisp/expand-region"))
 (require 'expand-region)
 ;; (require 'expand-region/expand-region-core.el)
