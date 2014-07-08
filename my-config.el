@@ -271,7 +271,39 @@
 
 ;; TEXT EDITING
 
-;; maintain highlighting after buffer refresh
+;; Custom highlighting modes (useful for job searches/tracking)
+
+(defvar text-mode-buffer-regexp '("contacts.md" "jobs.md")
+  ;; More examples:
+  ;; "\\.txt" "\\.md" "\\.pm" "\\.conf" "\\.htaccess" "\\.html" "\\.tex" "\\.el"
+  ;; "\\.yasnippet" "user_prefs" "\\.shtml" "\\.cgi" "\\.pl" "\\.js" "\\.css"
+  ;; "\\*eshell\\*")
+"Regexp of file / buffer names that will be matched using `regexp-match-p` function.")
+
+;; https://github.com/kentaro/auto-save-buffers-enhanced
+;; `regexp-match-p` function modified by @sds on stackoverflow
+;; http://stackoverflow.com/a/20343715/2112489
+(defun regexp-match-p (regexps string)
+  (and string
+       (catch 'matched
+         (let ((inhibit-changing-match-data t)) ; small optimization
+           (dolist (regexp regexps)
+             (when (string-match regexp string)
+               (throw 'matched t)))))))
+
+;; (add-hook 'text-mode-hook (lambda ()
+;;   (if (regexp-match-p text-mode-buffer-regexp (buffer-name))
+;;       ;; condition true:
+;;       (highlight-regexp "^\\([^(\#,)]*\\),"     font-lock-keyword-face) 
+;;     ;; condition false:
+;;       'nil) ) )
+(add-hook 'markdown-mode-hook (lambda ()
+  (if (regexp-match-p text-mode-buffer-regexp (buffer-name))
+      ;; condition true:
+      (highlight-regexp "^\\([^(\#,)]*\\),"     font-lock-keyword-face) 
+    ;; condition false:
+      'nil) ) )
+
 (defun testing-MapAppLog.txt ()
   "Toggle highlighting `TestQueryLogic' or `invoking fork-join' and `testGudermann'."
   (interactive)
@@ -279,27 +311,32 @@
    ((get this-command 'state)
     ;; (highlight-regexp "TestQueryLogic"     font-lock-variable-name-face) ;orange
     (highlight-regexp "TestQueryLogic"     font-lock-preprocessor-face) ;bold blue
-    (highlight-regexp "invoking fork-join" font-lock-constant-face) ;green
+    (highlight-regexp "Global logger is initialized" font-lock-keyword-face) ;
     (unhighlight-regexp "testGudermann")
     (message "Highlighting: TestQueryLogic, invoking fork-join")
     (put this-command 'state nil))
    (t
     (unhighlight-regexp "TestQueryLogic")
-    (unhighlight-regexp "invoking fork-join")
+    (unhighlight-regexp "Global logger is initialized")
     (highlight-regexp "testGudermann" font-lock-preprocessor-face) ;bold blue
     (message "Highlighting: testGudermann") 
     (put this-command 'state t))))
+(defun highlight-contacts.md ()
+  "Toggle highlighting `TestQueryLogic' or `invoking fork-join' and `testGudermann'."
+  (interactive)
+    (highlight-regexp "^\\([^(\#,)]*\\),"     font-lock-keyword-face) 
+    (message "Highlighting: contacts"))
 ;; Font-lock faces to choose from:
 ;; font-lock-warning-face
-;; font-lock-function-name-face
+;; font-lock-function-name-face ;orange
 ;; font-lock-variable-name-face
-;; font-lock-keyword-face
-;; font-lock-comment-face
-;; font-lock-comment-delimiter-face
+;; font-lock-keyword-face ; bold yellow
+;; font-lock-comment-face ;; bold green
+;; font-lock-comment-delimiter-face ;dark green
 ;; font-lock-type-face
-;; font-lock-constant-face
+;; font-lock-constant-face  green
 ;; font-lock-builtin-face
-;; font-lock-preprocessor-face
+;; font-lock-preprocessor-face ;bold blue
 ;; font-lock-string-face
 ;; font-lock-doc-face
 ;; font-lock-negation-char-face
