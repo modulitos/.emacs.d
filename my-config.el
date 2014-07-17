@@ -169,6 +169,8 @@
   ;; (setq latex-run-command "pdflatex")
   (setq latex-run-command "xelatex")
   (add-hook 'latex-mode-hook 'flyspell-mode)
+(add-hook 'doc-view-mode-hook 'auto-revert-mode)
+(add-hook 'latex-mode-hook 'auto-revert-mode)
 
 ;; MARKDOWN 
   (custom-set-variables
@@ -273,7 +275,7 @@
 
 ;; Custom highlighting modes (useful for job searches/tracking)
 
-(defvar text-mode-buffer-regexp '("contacts.md" "jobs.md")
+(defvar networks-list-buffer-regexp '("contacts.md")
   ;; More examples:
   ;; "\\.txt" "\\.md" "\\.pm" "\\.conf" "\\.htaccess" "\\.html" "\\.tex" "\\.el"
   ;; "\\.yasnippet" "user_prefs" "\\.shtml" "\\.cgi" "\\.pl" "\\.js" "\\.css"
@@ -298,11 +300,22 @@
 ;;     ;; condition false:
 ;;       'nil) ) )
 (add-hook 'markdown-mode-hook (lambda ()
-  (if (regexp-match-p text-mode-buffer-regexp (buffer-name))
+  (if (regexp-match-p networks-list-buffer-regexp (buffer-name))
       ;; condition true:
       (highlight-regexp "^\\([^(\#,)]*\\),"     font-lock-keyword-face) 
     ;; condition false:
       'nil) ) )
+
+;; (defvar logs-list-buffer-regexp '("MapAppLog.txt")
+;; (add-hook 'text-mode-hook (lambda ()
+;;  (if (regexp-match-p logs-list-buffer-regexp (buffer-name))
+;;       ;; condition true:
+;;       ;; ((get this-command 'state)
+;;      (highlight-regexp "TestQueryLogic" font-lock-keyword-face) 
+;;       ;; (highlight-regexp "BEGINS" font-lock-preprecessor-face) 
+;;       ;; (put this-command 'state nil))
+;;     ;; condition false:
+;;      'nil) ) )
 
 (defun testing-MapAppLog.txt ()
   "Toggle highlighting `TestQueryLogic' or `invoking fork-join' and `testGudermann'."
@@ -312,6 +325,7 @@
     ;; (highlight-regexp "TestQueryLogic"     font-lock-variable-name-face) ;orange
     (highlight-regexp "TestQueryLogic"     font-lock-preprocessor-face) ;bold blue
     (highlight-regexp "Global logger is initialized" font-lock-keyword-face) ;
+    (highlight-regexp "BEGINS" font-lock-keyword-face) ;
     (unhighlight-regexp "testGudermann")
     (message "Highlighting: TestQueryLogic, invoking fork-join")
     (put this-command 'state nil))
@@ -767,6 +781,29 @@ there's a region, all lines that region covers will be duplicated."
       "Kill a rectangular region and save it in the kill ring." t)
     (autoload 'rm-kill-ring-save "rect-mark"
       "Copy a rectangular region to the kill ring." t)
+
+;; copy line
+  (defun copy-line (arg)
+    "Copy lines (as many as prefix argument) in the kill ring.
+      Ease of use features:
+      - Move to start of next line.
+      - Appends the copy on sequential calls.
+      - Use newline as last char even on the last line of the buffer.
+      - If region is active, copy its lines."
+    (interactive "p")
+    (let ((beg (line-beginning-position))
+          (end (line-end-position arg)))
+      (when mark-active
+        (if (> (point) (mark))
+            (setq beg (save-excursion (goto-char (mark)) (line-beginning-position)))
+          (setq end (save-excursion (goto-char (mark)) (line-end-position)))))
+      (if (eq last-command 'copy-line)
+          (kill-append (buffer-substring beg end) (< end beg))
+        (kill-ring-save beg end)))
+    (kill-append "\n" nil)
+    (beginning-of-line (or (and arg (1+ arg)) 2))
+    (if (and arg (not (= 1 arg))) (message "%d lines copied" arg)))
+(global-set-key (kbd "C-+") 'copy-line)
 
 ;; MINOR MODES
 ;; Camel Case subword mode
