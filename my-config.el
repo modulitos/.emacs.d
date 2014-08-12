@@ -394,6 +394,20 @@
 	(unless (memq this-command
 		      '(isearch-abort abort-recursive-edit exit-minibuffer keyboard-quit))
 	  (ding))))
+
+(defun string/reverse (str)
+  "Reverse the str where str is a string"
+  (apply #'string 
+         (reverse 
+          (string-to-list str))))
+
+(defun cm-reverse-region (&optional arg)
+  "Reverse current region, like this: \"a(bc) d\" -> \"d )cb(a\"."
+  (interactive "P")
+  (let ((reversed (apply 'string (reverse (string-to-list (buffer-substring-no-properties (region-beginning) (region-end)))))))
+    (delete-region (region-beginning) (region-end))
+    (insert reversed)))
+
 (defun comment-or-uncomment-region-or-line ()
   "Comments or uncomments the region or the current line if there's no active region."
   (interactive)
@@ -413,8 +427,11 @@
                     (beginning-of-line)
                     (point))
             end (save-excursion
-                  (goto-char (region-end))
+                  (goto-char (region-end));;move point to region end
+                  ;; (end-of-line);;move point to end of line
+                  (forward-line -1) ;; Exclude line with cursor as part of region
                   (end-of-line)
+                  ;; (print (concat "current point: " (number-to-string (point))))
                   (point))))
     (comment-or-uncomment-region start end)))
   ;; (if (not (region-active-p))
@@ -651,6 +668,12 @@
 ;;        (setq buffer-read-only nil))
 ;;   (save-buffer)
 ;;   (vc-find-file-hook))
+
+;; Cycle forward through the kill ring
+(defun yank-pop-forwards (arg)
+  (interactive "p")
+  (yank-pop (- arg)))
+(global-set-key "\M-Y" 'yank-pop-forwards) ; M-Y (Meta-Shift-Y)
 
 
 ;; Duplicates the line or selection.
