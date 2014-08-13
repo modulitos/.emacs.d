@@ -2,10 +2,19 @@
 (require 'package)
 (package-initialize)
 
+;; PACKAGE MANAGEMENT
 ;; Paused due to slow connection
 (add-to-list 'package-archives 
   '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
+;; ;; Install extensions if they're missing
+;; (defun init--install-packages ()
+;;   (packages-install
+;;    '(
+;;      flycheck
+;;      flycheck
+;;      markdown-mode
+     ;; clojure-mode)))
 
 ;; (add-to-list 'package-archives
 ;; 	     '("melpa" . "http://melpa.milkbox.net/packages/"))
@@ -23,23 +32,36 @@
 (add-to-list 'load-path "~/workspace/emacs/.emacs.d/plugins")
 ;; (add-to-list 'load-path "~/.emacs.d/plugins")
 
-;; Load Luke's personal settings.
-(load "~/.emacs.d/my-config.el")
-;; (load "~/.emacs.d/my-config.el")
+;; SYSTEM DIRECTORY
+(setq default-directory "~/")        
+;; (setq default-directory "~/workspace/emacs/")
+(message "Default Dir: %S" default-directory)
 
-;; -------------------- extra nice things --------------------
-;; use shift to move around windows
-(windmove-default-keybindings 'shift)
-(show-paren-mode t)
- ; Turn beep off
-(setq visible-bell nil)
+;; SESSION MANAGEMENT - Windows Mode
+  ;; (require 'desktop-menu)
+;; (add-to-list 'load-path "~/workspace/emacs/.emacs.d/elisp/windows2.el") 
+  (add-to-list 'load-path (expand-file-name "~/.emacs.d/elisp"))
+  ;; (add-to-list 'load-path "~/workspace/emacs/.emacs.d/elisp/windows.el")
+  (require 'windows)
+  (win:startup-with-window)
+  (define-key ctl-x-map "C" 'see-you-again)
 
-(desktop-save-mode 1)
+  (require 'uniquify)
+  (setq uniquify-buffer-name-style 'reverse)
 
-;; Not needed - use MELPA
-;; xquery mode
-;; (load "~/Dropbox/workspaces/emacs/.emacs.d/plugins/xquery-mode.el")
-;; (require 'xquery-mode)
-;; (autoload 'xquery-mode "xquery-mode" "XQuery mode" t )
-;; (setq auto-mode-alist
-;;       (append '(("\\.xqy$" . xquery-mode)) auto-mode-alist))
+;; REQUIREMENTS
+(load "~/.emacs.d/load_packages")
+
+;; MAJOR MODES
+(load "~/.emacs.d/modes")
+
+;; FUNCTIONS
+(load "~/.emacs.d/functions")
+
+;; SETTINGS
+(load "~/.emacs.d/settings")
+;; KEY BINDINGS
+(load "~/.emacs.d/keybindings")
+
+
+
