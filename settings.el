@@ -21,15 +21,19 @@
 ;; YASNIPPET AND AUTO-COMPLETION
 ;;; yasnippet
 ;;; should be loaded before auto complete so that they can work together
+;; (require 'yasnippet)
+;; (yas-global-mode 1)
+;; help from: http://stackoverflow.com/questions/8225183/emacs-yasnippet-install
+;; (require 'yasnippet "~/.emacs.d/elpa//yasnippet-20140514.1649/yasnippet.el")
+(add-to-list 'load-path "~/.emacs.d/elpa/yasnippet-20140514.1649/yasnippet.el")
 (require 'yasnippet)
 (yas-global-mode 1)
-;; help from: http://stackoverflow.com/questions/8225183/emacs-yasnippet-install
-(require 'yasnippet "~/.emacs.d/elpa//yasnippet-20140514.1649/yasnippet.el")
 ;; (yas/initialize)
 (setq yas/root-directory "~/.emacs.d/elpa/yasnippet-20140514.1649/snippets")
 (yas/load-directory yas/root-directory)
 (add-hook 'term-mode-hook (lambda()
         (setq yas-dont-activate t)))
+(add-hook 'term-mode-hook 'evil-emacs-state)
 
 ;;; auto complete mod
 ;;; should be loaded after yasnippet so that they can work together
@@ -121,3 +125,4 @@
 
 (desktop-save-mode 1)
 
+(fset 'yes-or-no-p 'y-or-n-p)

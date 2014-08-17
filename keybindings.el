@@ -68,12 +68,13 @@
 ;; (global-set-key (kbd "C-z") 'undo)
 (dolist (key '("\C-z"))
   (global-unset-key key))
-(dolist (key '("\C-Caps_Lock" "\C-x \C-z"))
-  (global-unset-key key))
+;; (dolist (key '("\C-Caps_Lock" "\C-x \C-z"))
+;;   (global-unset-key key))
 (define-key global-map [M-left]
   (lambda ()
     (interactive)
     (set-mark-command t)))
+
 
 ;; rect-mark.el 
 ;; Rectangular mode editing - "C-x r" prefix, followed by normal mark/edit command.
@@ -90,6 +91,7 @@
       "Kill a rectangular region and save it in the kill ring." t)
     (autoload 'rm-kill-ring-save "rect-mark"
       "Copy a rectangular region to the kill ring." t)
+
 (global-set-key (kbd "C-+") 'copy-line)
 
 (global-set-key (kbd "C-S-SPC") 'duplicate-current-line-or-region)

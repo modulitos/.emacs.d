@@ -163,3 +163,15 @@
     ;; condition false:
       'nil) ) )
 
+;; ORG MODE
+(setq org-log-done t)
+(define-key global-map "\C-cl" 'org-store-link)
+(define-key global-map "\C-ca" 'org-agenda)
+
+(add-hook 'org-mode-hook
+          (lambda()
+            (local-unset-key [C-tab])))
+            ;; (local-unset-key (kbd "C-tab"))))
+            ;; (local-unset-key (kbd "<C-tab>"))))
+;; (org-force-cycle-archived) It is bound to <C-tab>.
+
