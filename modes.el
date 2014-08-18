@@ -175,3 +175,20 @@
             ;; (local-unset-key (kbd "<C-tab>"))))
 ;; (org-force-cycle-archived) It is bound to <C-tab>.
 
+;; EVIL MODE
+(add-hook 'evil-mode-hook
+          (lambda()
+            (local-unset-key "C-/")
+            (local-unset-key "C-z")))
+(eval-after-load "evil-maps"
+  (dolist (map '(evil-motion-state-map
+                 evil-insert-state-map
+                 evil-emacs-state-map))
+    (define-key (eval map) "\C-z" nil)))
+
+(define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
+(define-key evil-visual-state-map (kbd "C-u") 'evil-scroll-up)
+(define-key evil-insert-state-map (kbd "C-u")
+  (lambda ()
+    (interactive)
+    (evil-delete (point-at-bol) (point))))

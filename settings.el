@@ -34,6 +34,7 @@
 (add-hook 'term-mode-hook (lambda()
         (setq yas-dont-activate t)))
 (add-hook 'term-mode-hook 'evil-emacs-state)
+(add-hook 'ansi-term-mode-hook 'evil-emacs-state)
 
 ;;; auto complete mod
 ;;; should be loaded after yasnippet so that they can work together
