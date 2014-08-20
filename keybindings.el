@@ -5,7 +5,10 @@
 (global-set-key (kbd "C-=") 'er/expand-region)
 
 
-(global-set-key (kbd "C-/") 'comment-eclipse)
+;; (add-hook 'undo-tree-mode (lambda () (local-unset-key "C-/")))
+(global-set-key (kbd "C-;") 'comment-eclipse)
+;; (global-set-key (kbd "C-;") 'comment-eclipse)
+(global-set-key (kbd "C-:") 'comment-dwim-line)
 
 (global-set-key "\M-;" 'comment-dwim-line)
 (global-set-key (kbd "C-?") 'comment-dwim-line)

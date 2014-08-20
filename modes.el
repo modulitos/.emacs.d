@@ -176,15 +176,20 @@
 ;; (org-force-cycle-archived) It is bound to <C-tab>.
 
 ;; EVIL MODE
+(evil-mode 1)
 (add-hook 'evil-mode-hook
           (lambda()
             (local-unset-key "C-/")
             (local-unset-key "C-z")))
 (eval-after-load "evil-maps"
   (dolist (map '(evil-motion-state-map
+
                  evil-insert-state-map
                  evil-emacs-state-map))
     (define-key (eval map) "\C-z" nil)))
+;;    (define-key (eval map) (kbd "C-/") nil)))
+
+(add-hook 'undo-tree-mode (lambda () (local-unset-key "C-/")))
 
 (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
 (define-key evil-visual-state-map (kbd "C-u") 'evil-scroll-up)
@@ -192,3 +197,21 @@
   (lambda ()
     (interactive)
     (evil-delete (point-at-bol) (point))))
+(define-key evil-insert-state-map "k" #'cofi/maybe-exit)
+
+;; Set 'kj' to exit insert mode
+(evil-define-command cofi/maybe-exit ()
+  :repeat change
+  (interactive)
+  (let ((modified (buffer-modified-p)))
+    (insert "k")
+    (let ((evt (read-event (format "Insert %c to exit insert state" ?j)
+               nil 0.5)))
+      (cond
+       ((null evt) (message ""))
+       ((and (integerp evt) (char-equal evt ?j))
+    (delete-char -1)
+    (set-buffer-modified-p modified)
+    (push 'escape unread-command-events))
+       (t (setq unread-command-events (append unread-command-events
+                          (list evt))))))))
