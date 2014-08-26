@@ -22,16 +22,26 @@
   (interactive)
     (highlight-regexp "^\\([^(\#,)]*\\),"     font-lock-keyword-face) 
     (message "Highlighting: contacts"))
+
+(defun highlight-untangler ()
+  "Toggle highlighting `Found relationship' or `updated region' or 'SEVERE' or 'WARNING'."
+  (interactive)
+    (highlight-regexp "SEVERE"                font-lock-type-face) 
+    (highlight-regexp "WARNING"               font-lock-type-face) 
+    (highlight-regexp "Found relationship"     font-lock-warning-face) 
+    (highlight-regexp "updated region"     font-lock-type-face) 
+    (highlight-regexp "new region"     font-lock-type-face) 
+    (message "Highlighting: untangler log file"))
 ;; Font-lock faces to choose from:
-;; font-lock-warning-face
-;; font-lock-function-name-face ;orange
+;; font-lock-warning-face ;gold
+;; font-lock-function-name-face ;blue
 ;; font-lock-variable-name-face
 ;; font-lock-keyword-face ; bold yellow
 ;; font-lock-comment-face ;; bold green
 ;; font-lock-comment-delimiter-face ;dark green
-;; font-lock-type-face
+;; font-lock-type-face ;blue
 ;; font-lock-constant-face  green
-;; font-lock-builtin-face
+;; font-lock-builtin-face ;white
 ;; font-lock-preprocessor-face ;bold blue
 ;; font-lock-string-face
 ;; font-lock-doc-face

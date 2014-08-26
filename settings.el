@@ -127,3 +127,7 @@
 (desktop-save-mode 1)
 
 (fset 'yes-or-no-p 'y-or-n-p)
+;; (global-visual-line-mode)
+;; (toggle-truncate-lines)
+;; (setq-default truncate-lines t)
+(setq-default global-visual-line-mode t)
