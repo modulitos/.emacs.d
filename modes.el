@@ -122,11 +122,15 @@
 
 
 ;; LATEX
-  ;; (setq latex-run-command "pdflatex")
-  (setq latex-run-command "xelatex")
+  (setq latex-run-command "pdflatex")
+  ;; (setq latex-run-command "xelatex")
   (add-hook 'latex-mode-hook 'flyspell-mode)
 (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 (add-hook 'latex-mode-hook 'auto-revert-mode)
+(add-hook 'flyspell-mode-hook
+          (lambda()
+            (local-unset-key (kbd "C-;"))
+            (local-set-key (kbd "C-;") 'comment-eclipse)))
 
 ;; MARKDOWN 
 (custom-set-variables

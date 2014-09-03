@@ -98,3 +98,5 @@
 (global-set-key (kbd "C-+") 'copy-line)
 
 (global-set-key (kbd "C-S-SPC") 'duplicate-current-line-or-region)
+
+(global-set-key (kbd "C-c C-t") 'ansi-term)
