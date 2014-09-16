@@ -5,13 +5,6 @@
 (global-set-key (kbd "C-=") 'er/expand-region)
 
 
-;; (add-hook 'undo-tree-mode (lambda () (local-unset-key "C-/")))
-(global-set-key (kbd "C-;") 'comment-eclipse)
-;; (global-set-key (kbd "C-;") 'comment-eclipse)
-(global-set-key (kbd "C-:") 'comment-dwim-line)
-
-(global-set-key "\M-;" 'comment-dwim-line)
-(global-set-key (kbd "C-?") 'comment-dwim-line)
 
 (global-set-key (kbd "C-c k") 'delete-this-buffer-and-file)
 
@@ -100,3 +93,23 @@
 (global-set-key (kbd "C-S-SPC") 'duplicate-current-line-or-region)
 
 (global-set-key (kbd "C-c C-t") 'ansi-term)
+
+;; COMMENTING OUT
+;; (add-hook 'undo-tree-mode (lambda () (local-unset-key "C-/")))
+(global-set-key (kbd "C-;") 'comment-eclipse)
+;; (global-set-key (kbd "C-;") 'comment-eclipse)
+(global-set-key (kbd "C-:") 'comment-dwim-line)
+
+(global-set-key "\M-;" 'comment-dwim-line)
+(global-set-key (kbd "C-?") 'comment-dwim-line)
+
+;; Minor mode to prevent keybindings from getting overidden
+(defvar my-keys-minor-mode-map (make-keymap) "my-keys-minor-mode keymap.")
+
+(define-key my-keys-minor-mode-map (kbd "C-;") 'comment-eclipse)
+
+(define-minor-mode my-keys-minor-mode
+  "A minor mode so that my key settings override annoying major modes."
+  t " my-keys" 'my-keys-minor-mode-map)
+
+(my-keys-minor-mode 1)
