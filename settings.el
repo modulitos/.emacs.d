@@ -131,3 +131,5 @@
 ;; (toggle-truncate-lines)
 ;; (setq-default truncate-lines t)
 (setq-default global-visual-line-mode t)
+(setq visual-line-mode t)
+(setq make-backup-files nil) 

@@ -31,6 +31,7 @@
     (highlight-regexp "Found relationship"     font-lock-warning-face) 
     (highlight-regexp "updated region"     font-lock-type-face) 
     (highlight-regexp "new region"     font-lock-type-face) 
+    (highlight-regexp "new line region"     font-lock-type-face) 
     (message "Highlighting: untangler log file"))
 ;; Font-lock faces to choose from:
 ;; font-lock-warning-face ;gold

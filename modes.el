@@ -128,6 +128,7 @@
 (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 (add-hook 'latex-mode-hook 'auto-revert-mode)
 (add-hook 'flyspell-mode-hook
+;; (add-hook 'latex-mode-hook
           (lambda()
             (local-unset-key (kbd "C-;"))
             (local-set-key (kbd "C-;") 'comment-eclipse)))
@@ -195,6 +196,8 @@
 
 (add-hook 'undo-tree-mode (lambda () (local-unset-key "C-/")))
 
+(define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
+(define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
 (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
 (define-key evil-visual-state-map (kbd "C-u") 'evil-scroll-up)
 (define-key evil-insert-state-map (kbd "C-u")
