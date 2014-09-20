@@ -96,6 +96,8 @@
 
 ;; COMMENTING OUT
 ;; (add-hook 'undo-tree-mode (lambda () (local-unset-key "C-/")))
+(eval-after-load "flyspell"
+  '(define-key flyspell-mode-map (kbd "C-;") nil))
 (global-set-key (kbd "C-;") 'comment-eclipse)
 ;; (global-set-key (kbd "C-;") 'comment-eclipse)
 (global-set-key (kbd "C-:") 'comment-dwim-line)
@@ -103,13 +105,14 @@
 (global-set-key "\M-;" 'comment-dwim-line)
 (global-set-key (kbd "C-?") 'comment-dwim-line)
 
-;; Minor mode to prevent keybindings from getting overidden
-(defvar my-keys-minor-mode-map (make-keymap) "my-keys-minor-mode keymap.")
-
-(define-key my-keys-minor-mode-map (kbd "C-;") 'comment-eclipse)
 
 (define-minor-mode my-keys-minor-mode
   "A minor mode so that my key settings override annoying major modes."
   t " my-keys" 'my-keys-minor-mode-map)
+
+;; Minor mode to prevent keybindings from getting overidden
+(defvar my-keys-minor-mode-map (make-keymap) "my-keys-minor-mode keymap.")
+
+(define-key my-keys-minor-mode-map (kbd "C-;") 'comment-eclipse)
 
 (my-keys-minor-mode 1)
