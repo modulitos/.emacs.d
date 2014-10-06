@@ -240,3 +240,20 @@
     (push 'escape unread-command-events))
        (t (setq unread-command-events (append unread-command-events
                           (list evt))))))))
+
+;; DOC-VIEW
+;; adjust docview mode
+(setq doc-view-continuous nil)
+(defun adjust-doc-view ()
+  (local-unset-key (kbd "k"))
+  (local-unset-key (kbd "j"))
+  (local-set-key (kbd "k") 
+    'doc-view-previous-line-or-previous-page)
+  (local-set-key (kbd "j") 
+    'doc-view-next-line-or-next-page)
+  ;; (-local-set-key (kbd "M-i")
+  ;;   'doc-view-previous-line-or-previous-page)
+  ;; (ergoemacs-local-set-key (kbd "M-k")
+  ;;   'doc-view-next-line-or-next-page)
+)
+(add-hook 'doc-view-mode-hook 'adjust-doc-view)
