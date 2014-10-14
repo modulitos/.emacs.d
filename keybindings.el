@@ -112,13 +112,9 @@
 ;;   "A minor mode so that my key settings override annoying major modes."
 ;;   t " my-keys" 'my-keys-minor-mode-map)
 
-<<<<<<< HEAD
 (define-key my-keys-minor-mode-map (kbd "C-;") 'comment-eclipse)
-=======
 ;; ;; Minor mode to prevent keybindings from getting overidden
 ;; (defvar my-keys-minor-mode-map (make-keymap) "my-keys-minor-mode keymap.")
 
 ;; (define-key my-keys-minor-mode-map (kbd "C-;") 'comment-eclipse)
->>>>>>> 861dc1d9c2fa7dbfac7daed899b441fc35b7e5d5
-
 ;; (my-keys-minor-mode 1)
