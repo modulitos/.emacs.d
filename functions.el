@@ -55,13 +55,7 @@
     (loop for file in recentf-list
           unless (member file active-files) return (find-file file))))
 
-(defun string/reverse (str)
-  "Reverse the str where str is a string"
-  (apply #'string 
-         (reverse 
-          (string-to-list str))))
-
-(defun cm-reverse-region (&optional arg)
+(defun reverse-characters-in-region (&optional arg)
   "Reverse current region, like this: \"a(bc) d\" -> \"d )cb(a\"."
   (interactive "P")
   (let ((reversed (apply 'string (reverse (string-to-list (buffer-substring-no-properties (region-beginning) (region-end)))))))
