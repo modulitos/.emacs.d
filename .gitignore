@@ -6,6 +6,7 @@ tramp
 .emacs.desktop
 .emacs.desktop.lock
 .session
+session*
 auto-save-list
 url
 semanticdb*
