@@ -3,4 +3,5 @@
 (require 'expand-region)
 (require 'buffer-stack)
 (require 'evil)
+(require 'znc)
 ;; (require 'org)
