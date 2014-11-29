@@ -205,8 +205,68 @@
     (interactive)
     (evil-delete (point-at-bol) (point))))
 
-(define-key evil-insert-state-map "k" #'cofi/maybe-exit-kj)
 
+;;; esc quits pretty much anything (like pending prompts in the minibuffer)
+
+(define-key evil-normal-state-map [escape] 'keyboard-quit)
+(define-key evil-visual-state-map [escape] 'keyboard-quit)
+(define-key minibuffer-local-map [escape] 'minibuffer-keyboard-quit)
+(define-key minibuffer-local-ns-map [escape] 'minibuffer-keyboard-quit)
+(define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
+(define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
+(define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
+
+;; (define-key evil-insert-state-map "ㅏ" #'cofi/maybe-exit-ㅏㅓ)
+;; ;; Set 'ㅏㅓ' to exit insert mode
+;; (evil-define-command cofi/maybe-exit-ㅏㅓ ()
+;;   :repeat change
+;;   (interactive)
+;;   (let ((modified (buffer-modified-p)))
+;;     (insert "ㅏ")
+;;     (let ((evt (read-event (format "Insert %c to exit insert state" ?ㅓ)
+;;                nil 0.5)))
+;;       (cond
+;;        ((null evt) (message ""))
+;;        ((and (integerp evt) (char-equal evt ?ㅓ))
+;;     (delete-char -1)
+;;     (set-buffer-modified-p modified)
+;;     (push 'escape unread-command-events))
+;;        (t (setq unread-command-events (append unread-command-events
+;;                           (list evt))))))))
+
+;; (evil-define-command cofi/maybe-exit-kj-korean ()
+;;   :repeat change
+;;   (interactive)
+;;   (let ((modified (buffer-modified-p)))
+;;     (self-insert-command 1)
+;;     (let ((evt (read-event (format "Insert %c to exit insert state"
+;;                                    (if (equal current-input-method
+;;                                               "arabic") ; "korean-hangul"
+;;                                        ?ؤ               ; ?ㅓ
+;;                                      ?j))
+;;                            nil 0.5)))
+;;       (cond
+;;        ((null evt) (message ""))
+;;        ((and (integerp evt) (memq evt '(?j ?ؤ))) ; '(?j ?ㅓ)
+;;         (delete-char -1)
+;;         (set-buffer-modified-p modified)
+;;         (push 'escape unread-command-events))
+;;        (t
+;;         (setq unread-command-events (append unread-command-events
+;;                                             (list evt))))))))
+
+;; (define-key evil-insert-state-map "ر" #'cofi/maybe-exit-kj-korean) ; "ㅏ"
+
+;; (defun test-my-key ()
+;;   (interactive)
+;;   (self-insert-command 1)
+;;   (message "This key works!")
+;;   (sit-for 2))
+
+;; (define-key evil-insert-state-map "a" #'test-my-key)
+;; (define-key evil-insert-state-map "ㅏ" #'test-my-key) ; Not working
+
+(define-key evil-insert-state-map "k" #'cofi/maybe-exit-kj)
 ;; Set 'kj' to exit insert mode
 (evil-define-command cofi/maybe-exit-kj ()
   :repeat change
@@ -257,3 +317,90 @@
   ;;   'doc-view-next-line-or-next-page)
 )
 (add-hook 'doc-view-mode-hook 'adjust-doc-view)
+
+;; ERC page-me 
+;; from http://www.emacswiki.org/emacs/ErcPageMe#toc4
+
+;; setting keywords is based off of the default erc-match.el
+;; http://www.emacswiki.org/emacs/ErcChannelTracking
+;; (setq erc-keywords `("^\(?!***\).*lswart"))
+(makunbound 'erc-keywords)
+;; (setq erc-keywords `("blah"))
+(setq erc-keywords `("^\\(***\\).*lswart" "^\\(***\\).*barbar"))
+;; (setq erc-keywords `("^(?!***).*gslug"))
+(erc-match-mode 1)
+(defvar my-erc-page-message "%s is calling your name."
+  "Format of message to display in dialog box")
+
+(defvar my-erc-page-nick-alist nil
+  "Alist of nicks and the last time they tried to trigger a
+notification")
+
+(defvar my-erc-page-timeout 30
+  "Number of seconds that must elapse between notifications from
+the same person.")
+
+;; Uses DBUS notification (Ubuntu only?)
+(require 'notifications)
+(defun erc-global-notify (match-type nick message)
+  "Notify when a message is recieved."
+  (notifications-notify
+   :title nick
+   :body message
+   :app-icon "/usr/share/notify-osd/icons/gnome/scalable/status/notification-message-im.svg"
+   :urgency 'low))
+
+(add-hook 'erc-text-matched-hook 'erc-global-notify)
+;; (defun my-erc-page-popup-notification (nick)
+;;   (when window-system
+;;     ;; must set default directory, otherwise start-process is unhappy
+;;     ;; when this is something remote or nonexistent
+;;     (let ((default-directory "~/"))
+;;       ;; 8640000 milliseconds = 1 day
+;;       (start-process "page-me" nil "notify-send"
+;;                      "-u" "normal" "-t" "8640000" "ERC"
+;;                      (format my-erc-page-message nick)))))
+
+(defun my-erc-page-allowed (nick &optional delay)
+  "Return non-nil if a notification should be made for NICK.
+If DELAY is specified, it will be the minimum time in seconds
+that can occur between two notifications.  The default is
+`my-erc-page-timeout'."
+  (unless delay (setq delay my-erc-page-timeout))
+  (let ((cur-time (time-to-seconds (current-time)))
+        (cur-assoc (assoc nick my-erc-page-nick-alist))
+        (last-time))
+    (if cur-assoc
+        (progn
+          (setq last-time (cdr cur-assoc))
+          (setcdr cur-assoc cur-time)
+          (> (abs (- cur-time last-time)) delay))
+      (push (cons nick cur-time) my-erc-page-nick-alist)
+      t)))
+
+(defun my-erc-page-me (match-type nick message)
+  "Notify the current user when someone sends a message that
+matches a regexp in `erc-keywords'."
+  (interactive)
+  (when (and (eq match-type 'keyword)
+             ;; I don't want to see anything from the erc server
+             (null (string-match "\\`\\([sS]erver\\|localhost\\)" nick))
+             ;; or bots
+             (null (string-match "\\(bot\\|serv\\)!" nick))
+             ;; or from those who abuse the system
+             (my-erc-page-allowed nick))
+    ;; (my-erc-page-popup-notification nick)))
+    (erc-global-notify match-type nick msg)))
+(add-hook 'erc-text-matched-hook 'my-erc-page-me)
+
+(defun my-erc-page-me-PRIVMSG (proc parsed)
+  (let ((nick (car (erc-parse-user (erc-response.sender parsed))))
+        (target (car (erc-response.command-args parsed)))
+        (msg (erc-response.contents parsed)))
+    (when (and (erc-current-nick-p target)
+               (not (erc-is-message-ctcp-and-not-action-p msg))
+               (my-erc-page-allowed nick))
+      ;; (my-erc-page-popup-notification nick)
+      (erc-global-notify proc nick msg)
+      nil)))
+(add-hook 'erc-server-PRIVMSG-functions 'my-erc-page-me-PRIVMSG)
