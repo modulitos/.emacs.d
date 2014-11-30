@@ -343,9 +343,12 @@ the same person.")
 (defun erc-global-notify (match-type nick message)
   "Notify when a message is recieved."
   (when (and  ;; I don't want to see anything from the erc server
-             (null (string-match "\\`\\([sS]erver:\\|localhost\\|~lucas@\\)" nick))
+             (null (string-match "\\`\\([sS]erver:\\|localhost\\)" nick))
+             ;; or my ZNC bouncer
+             (null (string-match "!~lucas@" nick))
              ;; or bots
              (null (string-match "\\(bot\\|serv\\)!" nick)))
+             ;; (null (string-match "\\(bot\\|serv\\)!" nick))
              ;; or from those who abuse the system
              ;; (my-erc-page-allowed nick))
     (notifications-notify
