@@ -323,13 +323,9 @@
 
 ;; setting keywords is based off of the default erc-match.el
 ;; http://www.emacswiki.org/emacs/ErcChannelTracking
-;; (setq erc-keywords `("^\(?!***\).*lswart"))
 (makunbound 'erc-keywords)
-;; (setq erc-keywords `("blah"))
-;; (setq erc-keywords `("^\\(***\\).*lswart" ))
 (setq erc-keywords `("lswart" ))
 ;; ("MYNICK *[,:;]" "\\bMY-FIRST-NAME[!?.]+$" "hey MY-FIRST-NAME")
-;; (setq erc-keywords `("^(?!***).*gslug"))
 (erc-match-mode 1)
 (defvar my-erc-page-message "%s is calling your name."
   "Format of message to display in dialog box")
@@ -346,11 +342,6 @@ the same person.")
 (require 'notifications)
 (defun erc-global-notify (match-type nick message)
   "Notify when a message is recieved."
-  (message "Inside erc-global-notify")
-  (message "match-type: %s " match-type)
-  (message "nick: %s " nick)
-  (message "message: %s " message)
-  (message "message: %s " message)
   (when (and  ;; I don't want to see anything from the erc server
              (null (string-match "\\`\\([sS]erver:\\|localhost\\|~lucas@\\)" nick))
              ;; or bots
@@ -361,19 +352,9 @@ the same person.")
      :title nick
      :body message
      :app-icon "/usr/share/notify-osd/icons/gnome/scalable/status/notification-message-im.svg"
-     :urgency 'low)
-    (message "erc-global-notify message is notified")))
+     :urgency 'low)))
 
 (add-hook 'erc-text-matched-hook 'erc-global-notify)
-;; (defun my-erc-page-popup-notification (nick)
-;;   (when window-system
-
-;;     ;; when this is something remote or nonexistent
-;;     (let ((default-directory "~/"))
-;;       ;; 8640000 milliseconds = 1 day
-;;       (start-process "page-me" nil "notify-send"
-;;                      "-u" "normal" "-t" "8640000" "ERC"
-;;                      (format my-erc-page-message nick)))))
 
 (defun my-erc-page-allowed (nick &optional delay)
   "Return non-nil if a notification should be made for NICK.
@@ -405,12 +386,7 @@ matches a regexp in `erc-keywords'."
              ;; or from those who abuse the system
              (my-erc-page-allowed nick))
     ;; (my-erc-page-popup-notification nick)))
-    (message "logging erc-page-me statement!")
-    (message "match-type is: %s" match-type)
-    (message "nick is: %s" nick)
-    (message "msg is: %s" message)
-    (erc-global-notify match-type nick message)
-    (message "finished calling erc-global-notify from prviate message")))
+    (erc-global-notify match-type nick message)))
 (add-hook 'erc-text-matched-hook 'my-erc-page-me)
 
 (defun my-erc-page-me-PRIVMSG (proc parsed)
