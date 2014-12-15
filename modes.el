@@ -324,7 +324,7 @@
 ;; setting keywords is based off of the default erc-match.el
 ;; http://www.emacswiki.org/emacs/ErcChannelTracking
 (makunbound 'erc-keywords)
-(setq erc-keywords `("lswart" ))
+(setq erc-keywords `("lswart" "JakeRake"))
 ;; ("MYNICK *[,:;]" "\\bMY-FIRST-NAME[!?.]+$" "hey MY-FIRST-NAME")
 (erc-match-mode 1)
 (defvar my-erc-page-message "%s is calling your name."
