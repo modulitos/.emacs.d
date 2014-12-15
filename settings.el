@@ -124,6 +124,7 @@
  ; Turn beep off
 (setq visible-bell nil)
 
+;; Prompt to save the desktop upon exit
 (desktop-save-mode 1)
 
 (fset 'yes-or-no-p 'y-or-n-p)

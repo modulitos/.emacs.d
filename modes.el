@@ -217,22 +217,24 @@
 (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
 
 ;; (define-key evil-insert-state-map "ㅏ" #'cofi/maybe-exit-ㅏㅓ)
-;; ;; Set 'ㅏㅓ' to exit insert mode
-;; (evil-define-command cofi/maybe-exit-ㅏㅓ ()
-;;   :repeat change
-;;   (interactive)
-;;   (let ((modified (buffer-modified-p)))
-;;     (insert "ㅏ")
-;;     (let ((evt (read-event (format "Insert %c to exit insert state" ?ㅓ)
-;;                nil 0.5)))
-;;       (cond
-;;        ((null evt) (message ""))
-;;        ((and (integerp evt) (char-equal evt ?ㅓ))
-;;     (delete-char -1)
-;;     (set-buffer-modified-p modified)
-;;     (push 'escape unread-command-events))
-;;        (t (setq unread-command-events (append unread-command-events
-;;                           (list evt))))))))
+;;(define-key evil-insert-state-map "j" #'cofi/maybe-exit-ㅏㅓ)
+;; Set 'ㅏㅓ' to exit insert mode
+;;(evil-define-command cofi/maybe-exit-ㅏㅓ ()
+;;  :repeat change
+;;  (interactive)
+;;  (let ((modified (buffer-modified-p)))
+;;    (insert "ㅏ")
+;;    (let ((evt (read-event (format "Insert %c to exit insert state" ?ㅓ)
+    ;; (let ((evt (read-event (format "Insert %c to exit insert state" ?)
+;;               nil 0.5)))
+;;      (cond
+;;       ((null evt) (message ""))
+;;       ((and (integerp evt) (char-equal evt ?ㅓ))
+;;    (delete-char -1)
+;;    (set-buffer-modified-p modified)
+;;    (push 'escape unread-command-events))
+;;       (t (setq unread-command-events (append unread-command-events
+;;                          (list evt))))))))
 
 ;; (evil-define-command cofi/maybe-exit-kj-korean ()
 ;;   :repeat change
@@ -257,15 +259,15 @@
 
 ;; (define-key evil-insert-state-map "ر" #'cofi/maybe-exit-kj-korean) ; "ㅏ"
 
-;; (defun test-my-key ()
-;;   (interactive)
-;;   (self-insert-command 1)
-;;   (message "This key works!")
-;;   (sit-for 2))
-
-;; (define-key evil-insert-state-map "a" #'test-my-key)
-;; (define-key evil-insert-state-map "ㅏ" #'test-my-key) ; Not working
-
+;;(defun test-my-key ()
+;;  (interactive)
+;;  (self-insert-command 1)
+;;  (message "This key works!")
+;;  (sit-for 2))
+;;
+;;(define-key evil-insert-state-map "a" #'test-my-key)
+;;(define-key evil-insert-state-map "ㅏ" #'test-my-key) ; Not working!
+;;
 (define-key evil-insert-state-map "k" #'cofi/maybe-exit-kj)
 ;; Set 'kj' to exit insert mode
 (evil-define-command cofi/maybe-exit-kj ()
