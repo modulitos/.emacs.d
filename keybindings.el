@@ -118,3 +118,6 @@
 
 ;; (define-key my-keys-minor-mode-map (kbd "C-;") 'comment-eclipse)
 ;; (my-keys-minor-mode 1)
+
+;; INPUT METHODS
+(global-set-key (kbd "C-M-/") 'toggle-input-method)
