@@ -77,7 +77,6 @@
           (lambda ()
             (make-local-variable 'kill-ring)))
 
-
 ;; BUFFER NAVIGATION
 
 ;; Sentence navigation

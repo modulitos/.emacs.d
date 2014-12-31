@@ -26,7 +26,7 @@
  (define-key yas-minor-mode-map (kbd "C-c e") 'yas-expand)
  ;; Fixing another key binding bug in iedit mode
  (define-key global-map (kbd "C-c o") 'iedit-mode)
-
+(add-hook 'python-mode-hook #'linum-on)
 
 ;; SQL
 ;; Capitalizes all mySQL words
@@ -79,6 +79,7 @@
 (setq ac-ignore-case nil)
 
 (add-hook 'js-mode-hook 'js2-minor-mode)
+(add-hook 'js2-mode-hook #'linum-on)
 (add-hook 'js2-mode-hook 'ac-js2-mode)
 ;; js2-mode provides 4 level of syntax highlighting. They are * 0 or a negative value means none. * 1 adds basic syntax highlighting. * 2 adds highlighting of some Ecma built-in properties. * 3 adds highlighting of many Ecma built-in functions.
 (setq js2-highlight-level 3)
