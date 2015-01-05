@@ -178,7 +178,8 @@
 
 (add-hook 'org-mode-hook
           (lambda()
-            (local-unset-key [C-tab])))
+            (local-unset-key [C-tab])
+            (org-indent-mode t)))
             ;; (local-unset-key (kbd "C-tab"))))
             ;; (local-unset-key (kbd "<C-tab>"))))
 ;; (org-force-cycle-archived) It is bound to <C-tab>.
