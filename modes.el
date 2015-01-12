@@ -28,6 +28,7 @@
  (define-key global-map (kbd "C-c o") 'iedit-mode)
 ;;(add-hook 'python-mode-hook #'linum-on)
 (add-hook 'python-mode-hook 'linum-mode)
+(add-to-list 'auto-mode-alist '("\\.po\\'" . python-mode))
 
 ;; SQL
 ;; Capitalizes all mySQL words
@@ -49,7 +50,7 @@
 ; TODO: error here! 
 ;; (eval-after-load "sql"
 ;;   '(load-library "sql-indent.el"))
-
+(add-hook 'sql-mode-hook 'linum-mode)
 
 (setq-default indent-tabs-mode nil)
 (add-hook 'ruby-mode-hook
@@ -79,10 +80,11 @@
 ; case sensitivity is important when finding matches
 (setq ac-ignore-case nil)
 
-(add-hook 'js-mode-hook 'js2-minor-mode)
+;; (add-hook 'js-mode-hook 'js2-minor-mode)
 ;;(add-hook 'js2-mode-hook #'linum-on)
-(add-hook 'js2-mode-hook 'linum-mode)
-(add-hook 'js2-mode-hook 'ac-js2-mode)
+;; (add-hook 'js2-mode-hook 'linum-mode)
+;; (add-hook 'js2-mode-hook 'ac-js2-mode)
+
 ;; js2-mode provides 4 level of syntax highlighting. They are * 0 or a negative value means none. * 1 adds basic syntax highlighting. * 2 adds highlighting of some Ecma built-in properties. * 3 adds highlighting of many Ecma built-in functions.
 (setq js2-highlight-level 3)
 ;;keybindings
@@ -103,6 +105,9 @@
 
             (local-set-key (kbd "C-j") 'ac-js2-jump-to-definition)
             (define-key js2-mode-map (kbd "C-j") 'ac-js2-jump-to-definition)
+            (linum-mode)
+            (js2-minor-mode)
+            (ac-js2-mode)
             )
 )
 
@@ -117,17 +122,20 @@
 (require 'js2-refactor)
 (js2r-add-keybindings-with-prefix "C-c C-m")
 
+;; HTML mode
+(add-hook 'html-mode-hook 'linum-mode)
+
 
 ;; MATLAB-MODE
 ;; '.m' confilcts with obj-c mode. Default to matlab for '.m' files.
 (setq auto-mode-alist
        (cons '("\\.m$" . matlab-mode) auto-mode-alist))
-
+(add-hook 'matlab-mode-hook 'linum-mode)
 
 ;; LATEX
   (setq latex-run-command "pdflatex")
   ;; (setq latex-run-command "xelatex")
-  (add-hook 'latex-mode-hook 'flyspell-mode)
+(add-hook 'latex-mode-hook 'flyspell-mode)
 (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 (add-hook 'latex-mode-hook 'auto-revert-mode)
 (add-hook 'flyspell-mode-hook
