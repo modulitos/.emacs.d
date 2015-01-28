@@ -437,3 +437,9 @@ matches a regexp in `erc-keywords'."
       (message "finished calling erc-global-notify from prviate message")
       nil)))
 (add-hook 'erc-server-PRIVMSG-functions 'my-erc-page-me-PRIVMSG)
+
+;; Shell Script Mode
+(add-hook 'shell-script-mode-hook 'linum-mode)
+
+;; Conf mode
+(add-hook 'conf-mode-hook 'linum-mode)
