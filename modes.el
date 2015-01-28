@@ -30,6 +30,17 @@
 (add-hook 'python-mode-hook 'linum-mode)
 (add-to-list 'auto-mode-alist '("\\.po\\'" . python-mode))
 
+;; Use jedi instead of ropemacs when TRAMP is detected
+;; Taken here: https://github.com/jorgenschaefer/elpy/issues/170
+(defadvice elpy-rpc--open (around native-rpc-for-tramp activate)
+  (interactive)
+  (let ((elpy-rpc-backend
+         (if (ignore-errors (tramp-tramp-file-p (elpy-project-root)))
+             "native"
+           elpy-rpc-backend)))
+     (message "Using elpy backend: %s for %s" elpy-rpc-backend (elpy-project-root))
+     ad-do-it))
+
 ;; SQL
 ;; Capitalizes all mySQL words
 (defun point-in-comment ()
