@@ -1,13 +1,10 @@
 ;; Requisites: Emacs >= 24
-(require 'package)
-(package-initialize)
 
 ;; PACKAGE MANAGEMENT
-;; Paused due to slow connection
-(add-to-list 'package-archives 
-  '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(require 'package)
+;; (package-initialize)
 
-;; ;; Install extensions if they're missing
+;; ;; Install extensions if they're missing:
 ;; (defun init--install-packages ()
 ;;   (packages-install
 ;;    '(
@@ -16,16 +13,13 @@
 ;;      markdown-mode
      ;; clojure-mode)))
 
-;; (add-to-list 'package-archives
-;; 	     '("melpa" . "http://melpa.milkbox.net/packages/"))
+;; Update list of packages:
 ;; (add-to-list 'package-archives
 ;;   '("melpa" . "http://melpa.milkbox.net/packages/") t)
- ;; (add-to-list 'package-archives
- ;; 	     '("marmalade" . "http://marmalade-repo.org/packages/") t)
- ;; (add-to-list 'package-archives
- ;; 	     '("marmalade" . "http://marmalade-repo.org/packages/"))
+;;  (add-to-list 'package-archives
+;;  	     '("marmalade" . "http://marmalade-repo.org/packages/") t)
+;; (package-refresh-contents)	     
 
-(package-refresh-contents)	     
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/elisp"))
 ;; (add-to-list 'load-path (expand-file-name "~/workspace/emacs/.emacs.d/elisp"))
