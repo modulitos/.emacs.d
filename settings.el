@@ -10,6 +10,37 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/elisp/themes/")
 (load-theme 'zenburn t)
 
+;; Add highlighting to the current pointer line.
+;; Change the color of the highlighted line.
+
+(global-hl-line-mode)
+;; (set-face-background hl-line-face "gray30") ;lighter grey
+
+
+;; Transparency:
+ ;;(set-frame-parameter (selected-frame) 'alpha '(<active> [<inactive>]))
+(set-frame-parameter (selected-frame) 'alpha '(90 75))
+(add-to-list 'default-frame-alist '(alpha 90 75))
+;; (add-to-list 'default-frame-alist '(alpha 100 100))
+(set-face-attribute 'default nil :foreground "white")
+(set-face-attribute 'default nil :background "#2E2E2E")
+(set-face-attribute 'region nil :background "#4E4E4E")
+;; (set-face-background 'hl-line "#9A9A9A")
+(set-face-foreground 'highlight nil)
+
+(eval-when-compile (require 'cl))
+(defun toggle-transparency ()
+  (interactive)
+  (if (/=
+       (cadr (frame-parameter nil 'alpha))
+       100)
+      (set-frame-parameter nil 'alpha '(100 100))
+    (set-frame-parameter nil 'alpha '(98 80))))
+;; (global-set-key (kbd "C-t t") 'toggle-transparency)
+;; (global-set-key (kbd "C-;") 'comment-eclipse)
+;; (global-unset-key (kbd "C-c t"))
+
+
 ;; TERMINAL
 (setq term-default-bg-color "#6F6F6F") ;; light grey
 (setq term-default-fg-color "#FAFAFA") ;; letters
@@ -102,11 +133,6 @@
   (add-hook 'text-mode-hook 'flyspell-mode)
   (add-hook 'markdown-mode-hook 'flyspell-mode)
 
-;; Add highlighting to the current pointer line.
-;; Change the color of the highlighted line.
-
-(global-hl-line-mode)
-
 ;; (if term-mode
     ;; (hl-line-mode -1))
 (make-variable-buffer-local 'global-hl-line-mode)
@@ -114,7 +140,6 @@
 (add-hook 'Java/l-mode-hook (lambda () (setq global-hl-line-mode nil)))
 (add-hook 'Lisp-mode-hook (lambda () (setq global-hl-line-mode nil)))
 
-(set-face-background hl-line-face "gray30") ;lighter grey
 (tool-bar-mode -1)
 
 ;; use shift to move around windows
