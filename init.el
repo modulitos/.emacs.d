@@ -2,7 +2,7 @@
 
 ;; PACKAGE MANAGEMENT
 (require 'package)
-;; (package-initialize)
+(package-initialize)
 
 ;; ;; Install extensions if they're missing:
 ;; (defun init--install-packages ()
@@ -18,7 +18,7 @@
 ;;   '("melpa" . "http://melpa.milkbox.net/packages/") t)
 ;;  (add-to-list 'package-archives
 ;;  	     '("marmalade" . "http://marmalade-repo.org/packages/") t)
-;; (package-refresh-contents)	     
+;;(package-refresh-contents)	     
 
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/elisp"))
