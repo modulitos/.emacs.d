@@ -1,5 +1,4 @@
 (define-key text-mode-map (kbd "M-s t") 'testing-MapAppLog.txt)
-(define-key global-map (kbd "C-S-t") 'find-last-killed-file)
 (global-set-key (kbd "C-x C-;") 'comment-or-uncomment-region-or-line)
 
 (global-set-key (kbd "C-=") 'er/expand-region)
@@ -36,6 +35,10 @@
 ;; (global-set-key [C-tab] 'next-buffer)
 ;; (global-set-key [C-S-iso-lefttab] 'previous-buffer);Linux
 ;; (global-set-key [C-S-tab] 'previous-buffer);Windows/Linux
+
+; Re-open recently killed buffers
+(global-set-key (kbd "C-S-t") 'reopen-killed-file)
+;; (define-key global-map (kbd "C-S-t") 'find-last-killed-file)
 
 ;; Start eshell or switch to it if it's active.
 (global-set-key (kbd "C-x m") 'eshell)
