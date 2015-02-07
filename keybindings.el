@@ -7,6 +7,7 @@
 
 (global-set-key (kbd "C-c k") 'delete-this-buffer-and-file)
 
+;; WINDOWS AND BUFFERS
 ; Cycle between windows
 (global-set-key (kbd "C-~") 'other-window)
 (global-set-key (kbd "C-`") 
@@ -14,8 +15,6 @@
       (interactive)
       (other-window -1)))
 ; Cycle between buffers
-
-
 (global-set-key [(f9)] 'buffer-stack-bury)
 (global-set-key [(control f9)] 'buffer-stack-bury-and-kill)
 (global-set-key [(f12)] 'buffer-stack-track)
@@ -40,6 +39,7 @@
 (global-set-key (kbd "C-S-t") 'reopen-killed-file)
 ;; (define-key global-map (kbd "C-S-t") 'find-last-killed-file)
 
+;; SHELLS
 ;; Start eshell or switch to it if it's active.
 (global-set-key (kbd "C-x m") 'eshell)
 
