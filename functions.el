@@ -1,4 +1,12 @@
-;; Custom highlighting
+;; UTILITIES
+(defun reverse-characters-in-region (&optional arg)
+  "Reverse current region, like this: \"a(bc) d\" -> \"d )cb(a\"."
+  (interactive "P")
+  (let ((reversed (apply 'string (reverse (string-to-list (buffer-substring-no-properties (region-beginning) (region-end)))))))
+    (delete-region (region-beginning) (region-end))
+    (insert reversed)))
+
+;; CUSTOM HIGHLIGHTING
 (defun testing-MapAppLog.txt ()
   "Toggle highlighting `TestQueryLogic' or `invoking fork-join' and `testGudermann'."
   (interactive)
@@ -48,13 +56,49 @@
 ;; font-lock-doc-face
 ;; font-lock-negation-char-face
 
-(defun reverse-characters-in-region (&optional arg)
-  "Reverse current region, like this: \"a(bc) d\" -> \"d )cb(a\"."
-  (interactive "P")
-  (let ((reversed (apply 'string (reverse (string-to-list (buffer-substring-no-properties (region-beginning) (region-end)))))))
-    (delete-region (region-beginning) (region-end))
-    (insert reversed)))
+;; BUFFER AND FILE OPS
+(defun delete-this-buffer-and-file ()
+  "Removes file connected to current buffer and kills buffer."
+  (interactive)
+  (let ((filename (buffer-file-name))
+        (buffer (current-buffer))
+        (name (buffer-name)))
+    (if (not (and filename (file-exists-p filename)))
+        (error "Buffer '%s' is not visiting a file!" name)
+      (when (yes-or-no-p "Are you sure you want to remove this file? ")
+        (delete-file filename)
+        (kill-buffer buffer)
+        (message "File '%s' successfully removed" filename)))))
 
+;; Re-open recently killed buffers
+;; source: http://emacs.stackexchange.com/questions/3330/how-to-reopen-just-killed-buffer-like-c-s-t-in-firefox-browser
+;; more fancier versions of opening killed files are on the link
+(defvar killed-file-list nil
+  "List of recently killed files.")
+
+(defun add-file-to-killed-file-list ()
+  "If buffer is associated with a file name, add that file to the
+`killed-file-list' when killing the buffer."
+  (when buffer-file-name
+    (push buffer-file-name killed-file-list)))
+
+(add-hook 'kill-buffer-hook #'add-file-to-killed-file-list)
+
+(defun reopen-killed-file ()
+  "Reopen the most recently killed file, if one exists."
+  (interactive)
+  (when killed-file-list
+    (find-file (pop killed-file-list))))
+; alternative:
+(defun find-last-killed-file ()
+  (interactive)
+  (let ((active-files (loop for buf in (buffer-list)
+                            when (buffer-file-name buf) collect it)))
+    (loop for file in recentf-list
+          unless (member file active-files) return (find-file file))))
+
+
+;; TEXT EDITING
 (defun comment-or-uncomment-region-or-line ()
   "Comments or uncomments the region or the current line if there's no active region."
   (interactive)
@@ -83,19 +127,6 @@
     (comment-or-uncomment-region start end)))
   ;; (if (not (region-active-p))
   ;; (comment-dwim arg)))
-
-(defun delete-this-buffer-and-file ()
-  "Removes file connected to current buffer and kills buffer."
-  (interactive)
-  (let ((filename (buffer-file-name))
-        (buffer (current-buffer))
-        (name (buffer-name)))
-    (if (not (and filename (file-exists-p filename)))
-        (error "Buffer '%s' is not visiting a file!" name)
-      (when (yes-or-no-p "Are you sure you want to remove this file? ")
-        (delete-file filename)
-        (kill-buffer buffer)
-        (message "File '%s' successfully removed" filename)))))
 
 (defun shift-region (distance)
   (let ((mark (mark)))
@@ -208,7 +239,6 @@ there's a region, all lines that region covers will be duplicated."
         (setq end (point)))
       (goto-char (+ origin (* (length region) arg) arg)))))
 
-;; BUFFER NAVIGATION
 ;; Emulate Eclipse's text movement for regions and lines.
 ;; Moves text up or down.
 (defun move-text-internal (arg)
@@ -284,33 +314,6 @@ there's a region, all lines that region covers will be duplicated."
     (kill-append "\n" nil)
     (beginning-of-line (or (and arg (1+ arg)) 2))
     (if (and arg (not (= 1 arg))) (message "%d lines copied" arg)))
-
-;; Re-open recently killed buffers
-;; source: http://emacs.stackexchange.com/questions/3330/how-to-reopen-just-killed-buffer-like-c-s-t-in-firefox-browser
-;; more fancier versions of opening killed files are on the link
-(defvar killed-file-list nil
-  "List of recently killed files.")
-
-(defun add-file-to-killed-file-list ()
-  "If buffer is associated with a file name, add that file to the
-`killed-file-list' when killing the buffer."
-  (when buffer-file-name
-    (push buffer-file-name killed-file-list)))
-
-(add-hook 'kill-buffer-hook #'add-file-to-killed-file-list)
-
-(defun reopen-killed-file ()
-  "Reopen the most recently killed file, if one exists."
-  (interactive)
-  (when killed-file-list
-    (find-file (pop killed-file-list))))
-; alternative:
-(defun find-last-killed-file ()
-  (interactive)
-  (let ((active-files (loop for buf in (buffer-list)
-                            when (buffer-file-name buf) collect it)))
-    (loop for file in recentf-list
-          unless (member file active-files) return (find-file file))))
 
 
 ;; Original idea from
