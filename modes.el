@@ -41,6 +41,9 @@
      (message "Using elpy backend: %s for %s" elpy-rpc-backend (elpy-project-root))
      ad-do-it))
 
+;; CONF MODE
+(add-to-list 'auto-mode-alist '("Dockerfile" . conf-mode))
+
 ;; SQL
 ;; Capitalizes all mySQL words
 (defun point-in-comment ()
@@ -377,6 +380,8 @@ the same person.")
              (null (string-match "\\`\\([sS]erver:\\|localhost\\)" nick))
              ;; or my ZNC bouncer
              (null (string-match "!~lucas@" nick))
+             (null (string-match "zncuser!" nick))
+             (null (string-match "lswart!" nick))
              ;; or bots
              (null (string-match "\\(bot\\|serv\\)!" nick)))
              ;; (null (string-match "\\(bot\\|serv\\)!" nick))
