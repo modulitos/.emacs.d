@@ -198,9 +198,18 @@
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
 
+(setq org-todo-keywords
+  '((sequence "TODO" "IN-PROGRESS" "WAITING" "DONE")))
+(setq org-html-xml-declaration (quote (("html" . "")
+                                       ("was-html" . "<?xml version=\"1.0\" encoding=\"%s\"?>")
+                                       ("php" . "<?php echo \"<?xml version=\\\"1.0\\\" encoding=\\\"%s\\\" ?>\"; ?>"))))
+
 (add-hook 'org-mode-hook
           (lambda()
             (local-unset-key [C-tab])
+            ;; (local-unset-key [C-u])
+            (local-unset-key (kbd "C-u"))
+            (local-set-key (kbd "C-c C-c") 'org-table-align)
             (org-indent-mode t)))
             ;; (local-unset-key (kbd "C-tab"))))
             ;; (local-unset-key (kbd "<C-tab>"))))
@@ -231,6 +240,12 @@
     (interactive)
     (evil-delete (point-at-bol) (point))))
 
+;; key translations
+;; ie: translate zh to C-h and zx to C-x
+(define-key evil-normal-state-map "z" nil)
+(define-key evil-motion-state-map "zu" 'universal-argument)
+(define-key key-translation-map (kbd "zh") (kbd "C-h"))
+(define-key key-translation-map (kbd "zx") (kbd "C-x"))
 
 ;;; esc quits pretty much anything (like pending prompts in the minibuffer)
 
