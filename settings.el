@@ -40,6 +40,10 @@
 ;; (global-set-key (kbd "C-;") 'comment-eclipse)
 ;; (global-unset-key (kbd "C-c t"))
 
+;; MODELINE-POSN
+(column-number-mode 1)
+(size-indication-mode 1) ; Turn on Size Indication mode
+
 
 ;; TERMINAL
 (setq term-default-bg-color "#6F6F6F") ;; light grey

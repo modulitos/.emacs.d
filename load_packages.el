@@ -5,3 +5,4 @@
 (require 'evil)
 (require 'znc)
 ;; (require 'org)
+(require 'modeline-posn)
