@@ -162,3 +162,4 @@
 (setq-default global-visual-line-mode t)
 (setq visual-line-mode t)
 (setq make-backup-files nil) 
+(setq auto-save-default nil)
