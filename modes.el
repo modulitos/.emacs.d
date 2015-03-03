@@ -161,6 +161,15 @@
 ;; MARKDOWN 
 (custom-set-variables
  '(markdown-command "/usr/bin/pandoc"))
+
+(autoload 'markdown-mode "markdown-mode"
+    "Major mode for editing Markdown files" t)
+(add-to-list 'auto-mode-alist '("\\.markdown\\'". markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'". markdown-mode))
+
+(add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
+(setq markdown-command "pandoc -c file:///home/beaujean/.emacs.d/github-pandoc.css --from markdown_github -t html5 --mathjax --highlight-style pygments --standalone")
+
 ;; Custom highlighting modes (useful for job searches/tracking)
 (defvar networks-list-buffer-regexp '("contacts.md")
   ;; More examples:
