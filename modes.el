@@ -219,6 +219,7 @@
             ;; (local-unset-key [C-u])
             (local-unset-key (kbd "C-u"))
             (local-set-key (kbd "C-c C-c") 'org-table-align)
+            (local-set-key (kbd "C-c C-f") 'org-table-calc-current-TBLFM)
             (org-indent-mode t)))
             ;; (local-unset-key (kbd "C-tab"))))
             ;; (local-unset-key (kbd "<C-tab>"))))
