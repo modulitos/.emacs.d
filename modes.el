@@ -217,7 +217,9 @@
           (lambda()
             (local-unset-key [C-tab])
             ;; (local-unset-key [C-u])
-            (local-unset-key (kbd "C-u"))
+            ;; (local-unset-key (kbd "C-u"))
+            ;; (lambda()
+              ;; (define-key evil-mode-map (kbd "C-c C-c") nil))
             (local-set-key (kbd "C-c C-c") 'org-table-align)
             (local-set-key (kbd "C-c C-f") 'org-table-calc-current-TBLFM)
             (org-indent-mode t)))
@@ -243,8 +245,8 @@
 
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
 (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
-(define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
-(define-key evil-visual-state-map (kbd "C-u") 'evil-scroll-up)
+;; (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up) ;; C-u interferes with org-mode bindings
+;; (define-key evil-visual-state-map (kbd "C-u") 'evil-scroll-up)
 (define-key evil-insert-state-map (kbd "C-u")
   (lambda ()
     (interactive)
