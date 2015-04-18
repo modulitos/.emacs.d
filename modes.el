@@ -94,11 +94,6 @@
 ; case sensitivity is important when finding matches
 (setq ac-ignore-case nil)
 
-;; (add-hook 'js-mode-hook 'js2-minor-mode)
-;;(add-hook 'js2-mode-hook #'linum-on)
-;; (add-hook 'js2-mode-hook 'linum-mode)
-;; (add-hook 'js2-mode-hook 'ac-js2-mode)
-
 ;; js2-mode provides 4 level of syntax highlighting. They are * 0 or a negative value means none. * 1 adds basic syntax highlighting. * 2 adds highlighting of some Ecma built-in properties. * 3 adds highlighting of many Ecma built-in functions.
 (setq js2-highlight-level 3)
 ;;keybindings
@@ -120,7 +115,7 @@
             (local-set-key (kbd "C-j") 'ac-js2-jump-to-definition)
             (define-key js2-mode-map (kbd "C-j") 'ac-js2-jump-to-definition)
             (linum-mode)
-            (js2-minor-mode)
+            (js2-reparse t)
             (ac-js2-mode)
             )
 )
@@ -136,7 +131,7 @@
 (require 'js2-refactor)
 (js2r-add-keybindings-with-prefix "C-c C-m")
 
-;; HTML mode
+;; HTML MODE
 (add-hook 'html-mode-hook 'linum-mode)
 
 
@@ -324,6 +319,7 @@
 
 ;; Clipboard bypassing END
 
+;; Enable Evil mode as defuault
 (evil-mode 1)
 (add-hook 'evil-mode-hook
           (lambda()
@@ -416,9 +412,9 @@
 ;;
 ;;(define-key evil-insert-state-map "a" #'test-my-key)
 ;;(define-key evil-insert-state-map "ㅏ" #'test-my-key) ; Not working!
-;;
+
+;; Enable smash escape
 (define-key evil-insert-state-map "k" #'cofi/maybe-exit-kj)
-;; Set 'kj' to exit insert mode
 (evil-define-command cofi/maybe-exit-kj ()
   :repeat change
   (interactive)
