@@ -14,6 +14,13 @@
     (lambda ()
       (interactive)
       (other-window -1)))
+
+(global-set-key (kbd "M-j") 'other-window)
+(global-set-key (kbd "M-k") 
+    (lambda ()
+      (interactive)
+      (other-window -1)))
+
 ; Cycle between buffers
 (global-set-key [(f9)] 'buffer-stack-bury)
 (global-set-key [(control f9)] 'buffer-stack-bury-and-kill)
