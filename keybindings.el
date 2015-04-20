@@ -21,6 +21,9 @@
       (interactive)
       (other-window -1)))
 
+(global-set-key (kbd "M-h") 'enlarge-window-horizontally)
+(global-set-key (kbd "M-l") 'shrink-window-horizontally)
+
 ; Cycle between buffers
 (global-set-key [(f9)] 'buffer-stack-bury)
 (global-set-key [(control f9)] 'buffer-stack-bury-and-kill)
