@@ -437,24 +437,32 @@
 ;; adjust docview mode
 (setq doc-view-continuous nil)
 (defun adjust-doc-view ()
+  (local-unset-key (kbd "u"))
+  (local-unset-key (kbd "d"))
+
   (local-unset-key (kbd "k"))
   (local-unset-key (kbd "j"))
   (local-unset-key (kbd "l"))
   (local-unset-key (kbd "h"))
+
+  (local-set-key (kbd "d")
+                 ;; (message "scrolling down")
+                 'image-scroll-up)
+  (local-set-key (kbd "u")
+                 ;; (message "scrolling down")
+                 'image-scroll-down)
+
   (local-set-key (kbd "k") 
-    'doc-view-previous-line-or-previous-page)
+                 'doc-view-previous-line-or-previous-page)
   (local-set-key (kbd "j") 
-    'doc-view-next-line-or-next-page)
+                 'doc-view-next-line-or-next-page)
   (local-set-key (kbd "h") 
-    'image-backward-hscroll)
+                 'image-backward-hscroll)
   (local-set-key (kbd "l") 
-    'image-forward-hscroll)
-  ;; (-local-set-key (kbd "M-i")
-  ;;   'doc-view-previous-line-or-previous-page)
-  ;; (ergoemacs-local-set-key (kbd "M-k")
-  ;;   'doc-view-next-line-or-next-page)
-)
-(add-hook 'doc-view-mode-hook 'adjust-doc-view)
+                 'image-forward-hscroll))
+  
+(add-hook 'doc-view-mode-hook 
+          'adjust-doc-view)
 
 ;; ERC page-me 
 ;; from http://www.emacswiki.org/emacs/ErcPageMe#toc4
