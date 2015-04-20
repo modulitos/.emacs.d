@@ -414,12 +414,13 @@
 ;;(define-key evil-insert-state-map "ㅏ" #'test-my-key) ; Not working!
 
 ;; Enable smash escape
-(define-key evil-insert-state-map "k" #'cofi/maybe-exit-kj)
-(evil-define-command cofi/maybe-exit-kj ()
+;; Type 'jj' for smash escape
+(define-key evil-insert-state-map "j" #'cofi/maybe-exit-jj)
+(evil-define-command cofi/maybe-exit-jj ()
   :repeat change
   (interactive)
   (let ((modified (buffer-modified-p)))
-    (insert "k")
+    (insert "j")
     (let ((evt (read-event (format "Insert %c to exit insert state" ?j)
                nil 0.5)))
       (cond
@@ -431,22 +432,6 @@
        (t (setq unread-command-events (append unread-command-events
                           (list evt))))))))
 
-(define-key evil-insert-state-map "j" #'cofi/maybe-exit-jk)
-(evil-define-command cofi/maybe-exit-jk ()
-  :repeat change
-  (interactive)
-  (let ((modified (buffer-modified-p)))
-    (insert "j")
-    (let ((evt (read-event (format "Insert %c to exit insert state" ?k)
-               nil 0.5)))
-      (cond
-       ((null evt) (message ""))
-       ((and (integerp evt) (char-equal evt ?k))
-    (delete-char -1)
-    (set-buffer-modified-p modified)
-    (push 'escape unread-command-events))
-       (t (setq unread-command-events (append unread-command-events
-                          (list evt))))))))
 
 ;; DOC-VIEW
 ;; adjust docview mode
