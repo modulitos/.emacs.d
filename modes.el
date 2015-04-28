@@ -468,6 +468,41 @@
 (add-hook 'doc-view-mode-hook 
           'adjust-doc-view)
 
+;; IMAGE MODE
+(setq image-continuous nil)
+(evil-set-initial-state 'image-mode 'emacs)
+(defun adjust-image-view ()
+  (local-unset-key (kbd "l"))
+  (local-unset-key (kbd "h"))
+  (local-unset-key (kbd "j"))
+  (local-unset-key (kbd "k"))
+  (local-unset-key (kbd "d"))
+  (local-unset-key (kbd "u"))
+  
+  (local-set-key (kbd "j") 
+                 'image-next-line)
+  (local-set-key (kbd "k") 
+                 'image-previous-line)
+  (local-set-key (kbd "d") 
+                 'image-scroll-up)
+  (local-set-key (kbd "u") 
+                 'image-scroll-down)
+  (local-set-key (kbd "l") 
+                 'image-forward-hscroll)
+  (local-set-key (kbd "h") 
+                 'image-backward-hscroll))
+(add-hook 'image-mode-hook 
+          'adjust-image-view)
+;; Image+ extension
+;; https://github.com/mhayashi1120/Emacs-imagex
+;;  C-c + / C-c -: Zoom in/out image.
+;; C-c M-m: Adjust image to current frame size.
+;; C-c C-x C-s: Save current image.
+;; C-c M-r / C-c M-l: Rotate image.
+;; C-c M-o: Show image image+ have not modified.
+(eval-after-load 'image '(require 'image+))
+(eval-after-load 'image+ '(imagex-global-sticky-mode 1))
+
 ;; ERC page-me 
 ;; from http://www.emacswiki.org/emacs/ErcPageMe#toc4
 
