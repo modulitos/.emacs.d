@@ -211,6 +211,10 @@
 (add-hook 'org-mode-hook
           (lambda()
             (local-unset-key [C-tab])
+            ;; allow window resizing via M-l and M-h
+            (local-unset-key (kbd "M-l")) 
+            (local-unset-key (kbd "M-h"))
+            
             ;; (local-unset-key [C-u])
             ;; (local-unset-key (kbd "C-u"))
             ;; (lambda()
