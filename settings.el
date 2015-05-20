@@ -137,6 +137,11 @@
   (add-hook 'text-mode-hook 'flyspell-mode)
   (add-hook 'markdown-mode-hook 'flyspell-mode)
 
+;; define linum-mode size separately so it doesn't depent on default-face (when changing font size)
+;; http://unix.stackexchange.com/questions/29786/font-size-issues-with-emacs-in-linum-mode/30087#30087
+(eval-after-load "linum"
+  '(set-face-attribute 'linum nil :height 100))
+
 ;; (if term-mode
     ;; (hl-line-mode -1))
 (make-variable-buffer-local 'global-hl-line-mode)
