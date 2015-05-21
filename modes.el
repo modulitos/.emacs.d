@@ -523,28 +523,29 @@ notification")
   "Number of seconds that must elapse between notifications from
 the same person.")
 
-;; Uses DBUS notification (Ubuntu only?)
-(require 'notifications)
-(defun erc-global-notify (match-type nick message)
+;; Notify via alarm bell and save all messages to a buffer
+(defun erc-global-notify-arch (match-type nick message)
   "Notify when a message is recieved."
+  
+  ;; (message (concat "just got message inside erc-global-notify-arch:" message))
+  ;; (message message)
   (when (and  ;; I don't want to see anything from the erc server
              (null (string-match "\\`\\([sS]erver:\\|localhost\\)" nick))
              ;; or my ZNC bouncer
-             (null (string-match "!~lucas@" nick))
              (null (string-match "zncuser!" nick))
-             (null (string-match "lswart!" nick))
              ;; or bots
              (null (string-match "\\(bot\\|serv\\)!" nick)))
-             ;; (null (string-match "\\(bot\\|serv\\)!" nick))
-             ;; or from those who abuse the system
-             ;; (my-erc-page-allowed nick))
-    (notifications-notify
-     :title nick
-     :body message
-     :app-icon "/usr/share/notify-osd/icons/gnome/scalable/status/notification-message-im.svg"
-     :urgency 'low)))
-
-(add-hook 'erc-text-matched-hook 'erc-global-notify)
+    ;; This only works on Ubuntu, or when configured with DBUS notifications
+    ;; (notifications-notify
+    ;;  :title nick
+    ;;  :body message
+    ;;  :app-icon "/usr/share/notify-osd/icons/gnome/scalable/status/notification-message-im.svg"
+    ;;  :urgency 'low)))
+    (progn
+      (start-process-shell-command "whatever" nil "ffplay -t 0.5 -autoexit -nodisp ~/Music/sounds/bell-ringing-04.wav")
+      (append-message-to-buffer "ERC Notifications" (concat nick "\n\t" message))
+      )
+    ))
 
 (defun my-erc-page-allowed (nick &optional delay)
   "Return non-nil if a notification should be made for NICK.
@@ -574,23 +575,26 @@ matches a regexp in `erc-keywords'."
              ;; or bots
              (null (string-match "\\(bot\\|serv\\)!" nick))
              ;; or from those who abuse the system
-             (my-erc-page-allowed nick))
+             (my-erc-page-allowed nick 1))
     ;; (my-erc-page-popup-notification nick)))
-    (erc-global-notify match-type nick message)))
+      (erc-global-notify-arch match-type nick message)))
 (add-hook 'erc-text-matched-hook 'my-erc-page-me)
 
 (defun my-erc-page-me-PRIVMSG (proc parsed)
   (let ((nick (car (erc-parse-user (erc-response.sender parsed))))
         (target (car (erc-response.command-args parsed)))
         (msg (erc-response.contents parsed)))
+    ;; (message (concat "just got a private page: " message))
+    ;; (append-message-to-buffer "ERC Notifications" (concat nick "\n\t" msg))
     (when (and (erc-current-nick-p target)
                (not (erc-is-message-ctcp-and-not-action-p msg))
-               (my-erc-page-allowed nick))
+               (my-erc-page-allowed nick 1))
       ;; (my-erc-page-popup-notification nick)
+      ;; (append-message-to-buffer "ERC Notifications" (concat nick "\n\t" msg))
       (message "logging erc-page-me-PRIVMSG statement!")
       (message "proc is: %s" proc)
-      (erc-global-notify nil nick msg)
-      (message "finished calling erc-global-notify from prviate message")
+      (erc-global-notify-arch nil nick msg)
+      (message "finished calling erc-global-notify-arch from prviate message")
       nil)))
 (add-hook 'erc-server-PRIVMSG-functions 'my-erc-page-me-PRIVMSG)
 
