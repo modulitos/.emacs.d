@@ -571,12 +571,10 @@ matches a regexp in `erc-keywords'."
   (when (and (eq match-type 'keyword)
              ;; I don't want to see anything from the erc server
              (null (string-match "\\`\\([sS]erver\\|localhost\\)" nick))
-             ;; (null (string-match "\\`\\([sS]erver\\|localhost\\)" nick))
              ;; or bots
              (null (string-match "\\(bot\\|serv\\)!" nick))
              ;; or from those who abuse the system
              (my-erc-page-allowed nick 1))
-    ;; (my-erc-page-popup-notification nick)))
       (erc-global-notify-arch match-type nick message)))
 (add-hook 'erc-text-matched-hook 'my-erc-page-me)
 
@@ -584,13 +582,9 @@ matches a regexp in `erc-keywords'."
   (let ((nick (car (erc-parse-user (erc-response.sender parsed))))
         (target (car (erc-response.command-args parsed)))
         (msg (erc-response.contents parsed)))
-    ;; (message (concat "just got a private page: " message))
-    ;; (append-message-to-buffer "ERC Notifications" (concat nick "\n\t" msg))
     (when (and (erc-current-nick-p target)
                (not (erc-is-message-ctcp-and-not-action-p msg))
                (my-erc-page-allowed nick 1))
-      ;; (my-erc-page-popup-notification nick)
-      ;; (append-message-to-buffer "ERC Notifications" (concat nick "\n\t" msg))
       (message "logging erc-page-me-PRIVMSG statement!")
       (message "proc is: %s" proc)
       (erc-global-notify-arch nil nick msg)

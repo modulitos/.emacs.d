@@ -112,15 +112,9 @@ MSG specifies the string that will be appended at the end of the buffer."
            )
       (set-buffer append-to)
       (message (concat "set-buffer to: " (prin1-to-string append-to)))
-      ;; (setq point (point))
       (end-of-buffer)
       (barf-if-buffer-read-only)
-      ;; (message "passed barf check")
       (insert msg)
-      ;; Resets the point to the original value after the added text has been added
-      ;; (dolist (window windows)
-      ;;   (when (= (window-point window) point)
-      ;;     (set-window-point window (point))))
       ))
 )
 ;; For testing:
