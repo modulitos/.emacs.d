@@ -541,6 +541,9 @@
 ;; ERC page-me 
 ;; from http://www.emacswiki.org/emacs/ErcPageMe#toc4
 
+(add-hook 'erc-mode-hook
+          (lambda () 
+            (flyspell-mode)))
 ;; setting keywords is based off of the default erc-match.el
 ;; http://www.emacswiki.org/emacs/ErcChannelTracking
 (makunbound 'erc-keywords)
@@ -561,9 +564,6 @@ the same person.")
 ;; Notify via alarm bell and save all messages to a buffer
 (defun erc-global-notify-arch (match-type nick message)
   "Notify when a message is recieved."
-  
-  ;; (message (concat "just got message inside erc-global-notify-arch:" message))
-  ;; (message message)
   (when (and  ;; I don't want to see anything from the erc server
              (null (string-match "\\`\\([sS]erver:\\|localhost\\)" nick))
              ;; or my ZNC bouncer
@@ -578,7 +578,7 @@ the same person.")
     ;;  :urgency 'low)))
     (progn
       (start-process-shell-command "whatever" nil "ffplay -t 0.5 -autoexit -nodisp ~/Music/sounds/bell-ringing-04.wav")
-      (append-message-to-buffer "ERC Notifications" (concat nick "\n\t" message))
+      (append-message-to-buffer "erc notifications" (concat nick "\n\t" message))
       )
     ))
 
