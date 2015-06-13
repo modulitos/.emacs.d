@@ -84,6 +84,7 @@
 ;; (add-to-list 'load-path "~/path-to/auto-complete")
 ; Load the default configuration
 (require 'auto-complete-config)
+
 ; Make sure we can find the dictionaries
 ;; (add-to-list 'ac-dictionary-directories "~/.emacs.d/elpa/auto-complete/dict")
 ; Use dictionaries by default
@@ -112,6 +113,12 @@
             ;; (local-set-key [<f3>] 'ac-js2-jump-to-definition)
             ;; (define-key js2-mode-map [<f3>] 'ac-js2-jump-to-definition)
 
+            ;; allow window resizing via M-l and M-h
+            (local-unset-key (kbd "M-l")) 
+            (local-unset-key (kbd "M-h"))
+            (local-unset-key (kbd "M-j"))
+            (local-unset-key (kbd "M-"))
+            
             (local-set-key (kbd "C-j") 'ac-js2-jump-to-definition)
             (define-key js2-mode-map (kbd "C-j") 'ac-js2-jump-to-definition)
             (linum-mode)
