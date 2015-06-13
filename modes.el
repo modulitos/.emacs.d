@@ -632,3 +632,9 @@ matches a regexp in `erc-keywords'."
 
 ;; Conf mode
 (add-hook 'conf-mode-hook 'linum-mode)
+
+;; YAML mode
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+(add-hook 'yaml-mode-hook
+          '(lambda ()
+             (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
