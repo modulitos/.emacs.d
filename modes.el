@@ -239,6 +239,44 @@
             ;; (local-unset-key (kbd "<C-tab>"))))
 ;; (org-force-cycle-archived) It is bound to <C-tab>.
 
+;; ORG-TRELLO
+(custom-set-variables '(org-trello-files '("~/Documents/mgmt-docs/haxgeo-trello.trello")))
+
+;; org-trello major mode for all .trello files
+(add-to-list 'auto-mode-alist '("\\.trello$" . org-mode))
+
+;; add a hook function to check if this is trello file, then activate the org-trello minor mode.
+;; (add-hook 'org-mode-hook
+;;           (lambda ()
+;;             (let ((filename (buffer-file-name (current-buffer))))
+;;               (when (and filename (string= "trello" (file-name-extension filename)))
+;;               (org-trello-mode)))))
+
+(add-hook 'org-trello-mode-hook
+          (lambda ()
+            (org-indent-mode t)
+            (toggle-truncate-lines 0)))
+            
+
+(require 'dash-functional)
+;; Markdown imports bug fix by Antoine Dumont
+;; https://github.com/org-trello/org-trello/issues/276#issuecomment-120961047
+(defun orgtrello-buffer/--prepare-comment (comment) "Prepare COMMENT string for writing on disk.
+This to avoid clash conflict between `org-mode' and markdown syntax."
+  (->> (s-split "\n" comment)
+       (-map (-rpartial #'s-append "  "))
+       (s-join "\n")))
+
+(defun orgtrello-buffer/--serialize-comment (comment)
+  "Serialize COMMENT as string."
+  (let* ((comment-user (orgtrello-data/entity-comment-user comment))
+         (comment-date (orgtrello-data/entity-comment-date comment))
+         (comment-string (orgtrello-data/entity-comment-text comment))
+         (comment-id (orgtrello-data/entity-comment-id comment))
+         (prepared-comment-str (orgtrello-buffer/--prepare-comment comment-string)))
+    ;; (message "preparing comment: %s" prepared-comment-str)
+    (format "\n** COMMENT %s, %s\n:PROPERTIES:\n:orgtrello-id: %s\n:END:\n%s\n" comment-user comment-date comment-id prepared-comment-str)))
+
 ;; EVIL MODE
 
 ;; Clipboard bypassing START

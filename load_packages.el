@@ -6,3 +6,5 @@
 (require 'znc)
 ;; (require 'org)
 (require 'modeline-posn)
+(require 'org-trello)
+
