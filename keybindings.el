@@ -45,6 +45,8 @@
 ;; (global-set-key [C-S-iso-lefttab] 'previous-buffer);Linux
 ;; (global-set-key [C-S-tab] 'previous-buffer);Windows/Linux
 
+;; Kill buffer
+(global-set-key (kbd "C-w ") 'kill-buffer)
 ; Re-open recently killed buffers
 (global-set-key (kbd "C-S-t") 'reopen-killed-file)
 ;; (define-key global-map (kbd "C-S-t") 'find-last-killed-file)
