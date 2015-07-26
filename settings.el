@@ -40,6 +40,26 @@
 ;; (global-set-key (kbd "C-;") 'comment-eclipse)
 ;; (global-unset-key (kbd "C-c t"))
 
+
+;; FONT DISPLAY
+
+(defun font-big ()
+ (interactive)
+ (set-face-attribute 'default nil :height 
+  (min 720
+   (+ (face-attribute 'default :height) 10))))
+
+(defun font-small ()
+ (interactive)
+ (set-face-attribute 'default nil :height 
+  (max 80
+   (- (face-attribute 'default :height) 10))))
+
+;; (global-set-key (kbd "<C-wheel-down>") 'font-small)
+;; (global-set-key (kbd "<C-wheel-up>") 'font-big)
+(global-set-key (kbd "<C-mouse-5>") 'font-small)
+(global-set-key (kbd "<C-mouse-4>") 'font-big)
+
 ;; MODELINE-POSN
 (column-number-mode 1)
 (size-indication-mode 1) ; Turn on Size Indication mode
