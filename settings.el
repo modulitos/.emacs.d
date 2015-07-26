@@ -137,6 +137,10 @@
   (add-hook 'text-mode-hook 'flyspell-mode)
   (add-hook 'markdown-mode-hook 'flyspell-mode)
 
+;; http://www.aaronbedra.com/emacs.d/
+(global-set-key (kbd "C-+") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
+
 ;; define linum-mode size separately so it doesn't depent on default-face (when changing font size)
 ;; http://unix.stackexchange.com/questions/29786/font-size-issues-with-emacs-in-linum-mode/30087#30087
 (eval-after-load "linum"
