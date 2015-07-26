@@ -164,10 +164,12 @@
 (custom-set-variables
  '(markdown-command "/usr/bin/pandoc"))
 
-(autoload 'markdown-mode "markdown-mode"
-    "Major mode for editing Markdown files" t)
-(add-to-list 'auto-mode-alist '("\\.markdown\\'". markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.md\\'". markdown-mode))
+;; (autoload 'markdown-mode "markdown-mode"
+(autoload 'markdown-mode "gfm-mode"
+  "Major mode for editing Markdown files" t)
+(add-to-list 'auto-mode-alist '("\\.text\\'" . gfm-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown\\'". gfm-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'". gfm-mode))
 
 (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
 (setq markdown-command "pandoc -c file:///home/beaujean/.emacs.d/github-pandoc.css --from markdown_github -t html5 --mathjax --highlight-style pygments --standalone")
