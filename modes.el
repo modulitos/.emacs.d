@@ -210,6 +210,10 @@
 (setq org-log-done t)
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
+(setq org-export-html-style
+      "<link rel=\"stylesheet\" type=\"text/css\" href=\"org-style.css\" />")
+(setq org-export-html-style-include-scripts nil
+      org-export-html-style-include-default nil)
 
 (setq org-todo-keywords
   '((sequence "TODO" "IN-PROGRESS" "WAITING" "DONE")))
