@@ -505,6 +505,27 @@ This to avoid clash conflict between `org-mode' and markdown syntax."
        (t (setq unread-command-events (append unread-command-events
                           (list evt))))))))
 
+;; CALENDAR MODE
+(evil-set-initial-state 'calendar-mode 'emacs)
+(defun adjust-calendar-view ()
+  ;; (local-unset-key (kbd "u"))
+  ;; (local-unset-key (kbd "d"))
+
+  (local-unset-key (kbd "k"))
+  (local-unset-key (kbd "j"))
+  (local-unset-key (kbd "l"))
+  (local-unset-key (kbd "h"))
+
+  (local-set-key (kbd "k")
+                 'calendar-backward-week)
+  (local-set-key (kbd "j")
+                 'calendar-forward-week)
+  (local-set-key (kbd "h")
+                 'calendar-backward-day)
+  (local-set-key (kbd "l")
+                 'calendar-forward-day))
+(add-hook 'calendar-mode-hook
+          'adjust-calendar-view)
 
 ;; DOC-VIEW
 ;; adjust docview mode
