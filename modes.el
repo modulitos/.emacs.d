@@ -221,6 +221,24 @@
                                        ("was-html" . "<?xml version=\"1.0\" encoding=\"%s\"?>")
                                        ("php" . "<?php echo \"<?xml version=\\\"1.0\\\" encoding=\\\"%s\\\" ?>\"; ?>"))))
 
+(org-babel-do-load-languages
+      'org-babel-load-languages
+      '((python . t)
+        (js . t)
+        (org . t)
+        (sh . t)
+        (R . t)))
+
+(setq org-src-fontify-natively t)
+(defun indent-org-block-automatically ()
+  (when (org-in-src-block-p)
+   (org-edit-special)
+    (indent-region (point-min) (point-max))
+    (org-edit-src-exit)))
+
+;; (run-at-time 1 10 'indent-org-block-automatically)
+
+(setq org-mode-hook nil)
 (add-hook 'org-mode-hook
           (lambda()
             (local-unset-key [C-tab])
