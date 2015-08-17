@@ -245,14 +245,18 @@
             ;; allow window resizing via M-l and M-h
             (local-unset-key (kbd "M-l")) 
             (local-unset-key (kbd "M-h"))
-            
-            ;; (local-unset-key [C-u])
-            ;; (local-unset-key (kbd "C-u"))
-            ;; (lambda()
-              ;; (define-key evil-mode-map (kbd "C-c C-c") nil))
+
             (local-set-key (kbd "C-c C-c") 'org-table-align)
             (local-set-key (kbd "C-c C-f") 'org-table-calc-current-TBLFM)
-            (org-indent-mode t)))
+            (toggle-truncate-lines 0)
+
+            (org-indent-mode t))
+          ;; http://stackoverflow.com/questions/6886643/file-extension-hook-in-emacs
+          (when (and (stringp buffer-file-name)
+                     (string-match "\\.trello\\'" buffer-file-name))
+            (insert "OK")
+            (org-trello-mode))
+          )
             ;; (local-unset-key (kbd "C-tab"))))
             ;; (local-unset-key (kbd "<C-tab>"))))
 ;; (org-force-cycle-archived) It is bound to <C-tab>.
