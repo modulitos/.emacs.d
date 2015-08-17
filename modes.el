@@ -300,7 +300,11 @@ This to avoid clash conflict between `org-mode' and markdown syntax."
     (format "\n** COMMENT %s, %s\n:PROPERTIES:\n:orgtrello-id: %s\n:END:\n%s\n" comment-user comment-date comment-id prepared-comment-str)))
 
 ;; EVIL MODE
-
+(eval-after-load "evil-maps"
+  (dolist (map '(evil-motion-state-map
+                 evil-insert-state-map
+                 evil-emacs-state-map))
+    (define-key (eval map) "\C-w" nil)))
 ;; Clipboard bypassing START
 ;; http://www.codejury.com/bypassing-the-clipboard-in-emacs-evil-mode/
 ;;;; Support
