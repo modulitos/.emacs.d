@@ -118,8 +118,6 @@
 		      '(isearch-abort abort-recursive-edit exit-minibuffer keyboard-quit))
 	  (ding))))
 
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/elisp/expand-region"))
-
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
@@ -133,7 +131,6 @@
             (make-local-variable 'kill-ring)))
 
 ;; BUFFER NAVIGATION
-
 ;; Sentence navigation
 (setq sentence-end-double-space nil)   
 
