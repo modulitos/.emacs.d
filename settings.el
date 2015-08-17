@@ -79,13 +79,9 @@
 ;; (require 'yasnippet)
 ;; (yas-global-mode 1)
 ;; help from: http://stackoverflow.com/questions/8225183/emacs-yasnippet-install
-;; (require 'yasnippet "~/.emacs.d/elpa//yasnippet-20140514.1649/yasnippet.el")
-(add-to-list 'load-path "~/.emacs.d/elpa/yasnippet-20140514.1649/yasnippet.el")
 (require 'yasnippet)
 (yas-global-mode 1)
 ;; (yas/initialize)
-(setq yas/root-directory "~/.emacs.d/elpa/yasnippet-20140514.1649/snippets")
-(yas/load-directory yas/root-directory)
 (add-hook 'term-mode-hook (lambda()
         (setq yas-dont-activate t)))
 (add-hook 'term-mode-hook 'evil-emacs-state)
