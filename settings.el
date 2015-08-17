@@ -79,8 +79,6 @@
 ;; (require 'yasnippet)
 ;; (yas-global-mode 1)
 ;; help from: http://stackoverflow.com/questions/8225183/emacs-yasnippet-install
-(require 'yasnippet)
-(yas-global-mode 1)
 ;; (yas/initialize)
 (add-hook 'term-mode-hook (lambda()
         (setq yas-dont-activate t)))
