@@ -20,7 +20,6 @@
 (setenv "PYTHONPATH” “/usr/bin/python") 
 ;; For Python 3
 ;;(setenv "PYTHONPATH” “/usr/bin/python3") 
-(package-initialize)
  (elpy-enable)
  ;; Fixing a key binding bug in elpy
  (define-key yas-minor-mode-map (kbd "C-c e") 'yas-expand)
@@ -29,6 +28,7 @@
 ;;(add-hook 'python-mode-hook #'linum-on)
 (add-hook 'python-mode-hook 'linum-mode)
 (add-to-list 'auto-mode-alist '("\\.po\\'" . python-mode))
+(defalias 'workon 'pyvenv-workon)
 
 ;; Use jedi instead of ropemacs when TRAMP is detected
 ;; Taken here: https://github.com/jorgenschaefer/elpy/issues/170
