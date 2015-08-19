@@ -7,6 +7,10 @@
 (require 'modeline-posn)
 (require 'org-trello)
 
+(require 'erc-hl-nicks)
+
+(require 'dired+)
+
 
 ;;; yasnippet
 ;;; should be loaded before auto complete so that they can work together
