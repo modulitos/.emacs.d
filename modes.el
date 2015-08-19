@@ -588,6 +588,14 @@ This to avoid clash conflict between `org-mode' and markdown syntax."
 (eval-after-load 'image '(require 'image+))
 (eval-after-load 'image+ '(imagex-global-sticky-mode 1))
 
+;; DIRED
+(defun dired-mode-activate ()
+  "Turn on modes for `dired-mode' function."
+  (interactive)
+  (dired-hide-details-mode 0))
+
+(add-hook 'dired-mode-hook 'dired-mode-activate)
+
 ;; IMAGE-DIRED
 (evil-set-initial-state 'image-dired-thumbnail-mode 'emacs)
 (add-hook 'image-dired-thumbnail-mode-hook
