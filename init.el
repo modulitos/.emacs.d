@@ -2,7 +2,6 @@
 
 ;; PACKAGE MANAGEMENT
 (require 'package)
-(package-initialize)
 
 ;; ;; Install extensions if they're missing:
 ;; (defun init--install-packages ()
@@ -14,21 +13,21 @@
      ;; clojure-mode)))
 
 ;; Update list of packages:
-;; (add-to-list 'package-archives
-;;   '("melpa" . "http://melpa.milkbox.net/packages/") t)
+;;  (add-to-list 'package-archives
+;; 	      '("melpa" . "http://melpa.milkbox.net/packages/") t)
+;; (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+
 ;;  (add-to-list 'package-archives
 ;;  	     '("marmalade" . "http://marmalade-repo.org/packages/") t)
-;;(package-refresh-contents)	     
-
+;; gnu tls error? ^
+;; (package-refresh-contents)
+(package-initialize)
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/elisp"))
-;; (add-to-list 'load-path (expand-file-name "~/workspace/emacs/.emacs.d/elisp"))
 (add-to-list 'load-path "~/workspace/emacs/.emacs.d/plugins")
-;; (add-to-list 'load-path "~/.emacs.d/plugins")
 
 ;; SYSTEM DIRECTORY
 (setq default-directory "~/")        
-;; (setq default-directory "~/workspace/emacs/")
 (message "Default Dir: %S" default-directory)
 
 ;; SESSION MANAGEMENT - Windows Mode
