@@ -137,7 +137,7 @@
 ;; Paragraph edit mode for balancing parentheses
 ;; (define-key js-mode-map "{" 'paredit-open-curly)
 ;; (define-key js-mode-map "}" 'paredit-close-curly-and-newline)
-(add-hook 'js-mode-hook 'my-paredit-nonlisp)
+;; (add-hook 'js-mode-hook 'my-paredit-nonlisp)
 
 ;; MINOR MODES
 ;; Camel Case subword mode
