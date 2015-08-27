@@ -110,9 +110,7 @@
             (define-key js2-mode-map (kbd "C-j") 'ac-js2-jump-to-definition)
             (linum-mode)
             (js2-reparse t)
-            (ac-js2-mode)
-            )
-)
+            (ac-js2-mode)))
 
 ;; (global-unset-key [<f3>])
 ;; (global-set-key [<f3>] nil)
@@ -151,15 +149,14 @@
 (custom-set-variables
  '(markdown-command "/usr/bin/pandoc"))
 
+;; github-flavored-markdown is not longer available...
 ;; (autoload 'markdown-mode "markdown-mode"
-(autoload 'markdown-mode "gfm-mode"
-  "Major mode for editing Markdown files" t)
-(add-to-list 'auto-mode-alist '("\\.text\\'" . gfm-mode))
-(add-to-list 'auto-mode-alist '("\\.markdown\\'". gfm-mode))
-(add-to-list 'auto-mode-alist '("\\.md\\'". gfm-mode))
+;; (autoload 'markdown-mode "gfm-mode"
+;;   "Major mode for editing Markdown files" t)
+(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown\\'". markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'". markdown-mode))
 
-(add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
-(setq markdown-command "pandoc -c file:///home/beaujean/.emacs.d/github-pandoc.css --from markdown_github -t html5 --mathjax --highlight-style pygments --standalone")
 
 ;; Custom highlighting modes (useful for job searches/tracking)
 (defvar networks-list-buffer-regexp '("contacts.md")
@@ -186,12 +183,19 @@
 ;;       (highlight-regexp "^\\([^(\#,)]*\\),"     font-lock-keyword-face) 
 ;;     ;; condition false:
 ;;       'nil) ) )
-(add-hook 'markdown-mode-hook (lambda ()
-  (if (regexp-match-p networks-list-buffer-regexp (buffer-name))
-      ;; condition true:
-      (highlight-regexp "^\\([^(\#,)]*\\),"     font-lock-keyword-face) 
-    ;; condition false:
-      'nil) ) )
+
+;; Required for 'markdown-export-and-preview:
+;; NOTE: in some installs, this may be `markdown-command`
+(setq markdown-open-command "pandoc -c file:///home/lucas/.emacs.d/github-pandoc.css --from markdown_github -t html5 --mathjax --highlight-style pygments --standalone")
+
+(add-hook 'markdown-mode-hook
+          (lambda ()
+            (if (regexp-match-p networks-list-buffer-regexp (buffer-name))
+                ;; condition true:
+                (highlight-regexp "^\\([^(\#,)]*\\),"     font-lock-keyword-face) 
+              ;; condition false:
+              'nil)
+            (local-set-key (kbd "C-c o") 'markdown-export-and-preview)))
 
 ;; ORG MODE
 (setq org-log-done t)
@@ -233,7 +237,8 @@
             (local-unset-key (kbd "M-l")) 
             (local-unset-key (kbd "M-h"))
 
-            (local-set-key (kbd "C-c C-c") 'org-table-align)
+            ;; (local-set-key (kbd "C-c C-c") 'org-table-align)
+            ;; (local-unset-key (kbd "C-c C-c"))
             (local-set-key (kbd "C-c C-f") 'org-table-calc-current-TBLFM)
             (toggle-truncate-lines 0)
 
