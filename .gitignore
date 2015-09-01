@@ -2,6 +2,7 @@ ac-comphist.dat
 storage/
 *~
 *.elc
+.trello
 elpa
 tramp
 .emacs.desktop
