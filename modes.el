@@ -25,8 +25,14 @@
  (define-key yas-minor-mode-map (kbd "C-c e") 'yas-expand)
  ;; Fixing another key binding bug in iedit mode
  (define-key global-map (kbd "C-c o") 'iedit-mode)
-;;(add-hook 'python-mode-hook #'linum-on)
-(add-hook 'python-mode-hook 'linum-mode)
+(add-hook 'python-mode-hook
+          (lambda ()
+            (local-unset-key (kbd "M-."))
+            (local-set-key (kbd "f3") 'elpy-goto-definition)
+            (add-hook 'before-save-hook (lambda () (delete-trailing-whitespace)))
+            (linum-mode)
+            ))
+
 (add-to-list 'auto-mode-alist '("\\.po\\'" . python-mode))
 (defalias 'workon 'pyvenv-workon)
 
@@ -107,6 +113,8 @@
             (local-unset-key (kbd "M-"))
             
             (local-set-key (kbd "C-j") 'ac-js2-jump-to-definition)
+            (local-set-key (kbd "C-c C-n") 'js2-next-error)
+            (add-hook 'before-save-hook (lambda () (delete-trailing-whitespace)))
             (define-key js2-mode-map (kbd "C-j") 'ac-js2-jump-to-definition)
             (linum-mode)
             (js2-reparse t)
