@@ -25,12 +25,10 @@
 (global-set-key (kbd "M-l") 'shrink-window-horizontally)
 
 ; Cycle between buffers
-(global-set-key [(f9)] 'buffer-stack-bury)
 (global-set-key [(control f9)] 'buffer-stack-bury-and-kill)
 (global-set-key [(f12)] 'buffer-stack-track)
 (global-set-key [(control f12)] 'buffer-stack-untrack)
 
-(global-set-key (kbd "C-q") 'buffer-stack-bury)
 (global-set-key [C-tab] 'buffer-stack-down)
 (global-set-key [C-S-iso-lefttab] 'buffer-stack-up);Linux
 (global-set-key [C-S-tab] 'buffer-stack-up);Windows/Linux
