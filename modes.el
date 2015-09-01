@@ -486,6 +486,10 @@
        (t (setq unread-command-events (append unread-command-events
                           (list evt))))))))
 
+;; Hooks to enabe/disable evil in other modes
+(add-hook 'term-mode-hook 'evil-emacs-state)
+(add-hook 'ansi-term-mode-hook 'evil-emacs-state)
+
 ;; CALENDAR MODE
 (evil-set-initial-state 'calendar-mode 'emacs)
 (defun adjust-calendar-view ()

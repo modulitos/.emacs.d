@@ -82,8 +82,10 @@
 ;; (yas/initialize)
 (add-hook 'term-mode-hook (lambda()
         (setq yas-dont-activate t)))
-(add-hook 'term-mode-hook 'evil-emacs-state)
-(add-hook 'ansi-term-mode-hook 'evil-emacs-state)
+;; http://stackoverflow.com/questions/8225183/emacs-yasnippet-install
+(yas/initialize)
+(setq yas/root-directory "~/.emacs.d/snippets")
+(yas/load-directory yas/root-directory)
 
 ;;; auto complete mod
 ;;; should be loaded after yasnippet so that they can work together
