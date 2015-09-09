@@ -45,13 +45,13 @@
 
 (defun font-big ()
  (interactive)
- (set-face-attribute 'default nil :height 
+ (set-face-attribute 'default nil :height
   (min 720
    (+ (face-attribute 'default :height) 10))))
 
 (defun font-small ()
  (interactive)
- (set-face-attribute 'default nil :height 
+ (set-face-attribute 'default nil :height
   (max 80
    (- (face-attribute 'default :height) 10))))
 
@@ -72,7 +72,7 @@
     (lambda ()
       (local-set-key (kbd "C-j") 'term-line-mode)
       (local-set-key (kbd "C-k") 'term-char-mode)))
-      
+
 ;; YASNIPPET AND AUTO-COMPLETION
 ;;; yasnippet
 ;;; should be loaded before auto complete so that they can work together
@@ -108,7 +108,7 @@
                            (y-or-n-p (format "Directory %s does not exist. Create it?" dir)))
                   (make-directory dir t))))))
 
-(setq ring-bell-function 
+(setq ring-bell-function
       (lambda ()
 	(unless (memq this-command
 		      '(isearch-abort abort-recursive-edit exit-minibuffer keyboard-quit))
@@ -128,7 +128,7 @@
 
 ;; BUFFER NAVIGATION
 ;; Sentence navigation
-(setq sentence-end-double-space nil)   
+(setq sentence-end-double-space nil)
 
 ;; Scrolling
 (setq scroll-conservatively 10000)
@@ -198,5 +198,5 @@
 
 (setq-default global-visual-line-mode t)
 (setq visual-line-mode t)
-(setq make-backup-files nil) 
+(setq make-backup-files nil)
 (setq auto-save-default nil)

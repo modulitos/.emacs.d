@@ -5,7 +5,7 @@
 (setq defer-loading-jde t)
 (if defer-loading-jde
     (progn
-      (autoload 'jde-mode "jde" "JDE mode." t) 
+      (autoload 'jde-mode "jde" "JDE mode." t)
       (setq auto-mode-alist
         (append
          '(("\\.java\\'" . jde-mode))
@@ -16,10 +16,10 @@
 ;; Andreas' python-mode support
 ;; (eval-after-load "Python"
 ;;   '(load "~/.emacs.d/minimal-emacs-python-configuration.el"))
-;;rnj			       
-(setenv "PYTHONPATH” “/usr/bin/python") 
+;;rnj
+(setenv "PYTHONPATH” “/usr/bin/python")
 ;; For Python 3
-;;(setenv "PYTHONPATH” “/usr/bin/python3") 
+;;(setenv "PYTHONPATH” “/usr/bin/python3")
  (elpy-enable)
  ;; Fixing a key binding bug in elpy
  (define-key yas-minor-mode-map (kbd "C-c e") 'yas-expand)
@@ -61,13 +61,13 @@
   (interactive)
   (require 'sql)
   (save-excursion
-    (dolist (keywords sql-mode-mysql-font-lock-keywords) 
+    (dolist (keywords sql-mode-mysql-font-lock-keywords)
       (goto-char (point-min))
       (while (re-search-forward (car keywords) nil t)
         (unless (point-in-comment)
           (goto-char (match-beginning 0))
           (upcase-word 1))))))
-; TODO: error here! 
+;; TODO: error here!
 ;; (eval-after-load "sql"
 ;;   '(load-library "sql-indent.el"))
 (add-hook 'sql-mode-hook 'linum-mode)
@@ -77,7 +77,7 @@
 	  (lambda ()
 	    (define-key ruby-mode-map "\C-c#" 'comment-or-uncomment-region)
 	    )
- )	
+ )
 (defadvice comment-or-uncomment-region (before slick-comment activate compile)
   "When called interactively with no active region, comment a single line instead."
   (interactive
@@ -107,11 +107,11 @@
             ;; (define-key js2-mode-map [<f3>] 'ac-js2-jump-to-definition)
 
             ;; allow window resizing via M-l and M-h
-            (local-unset-key (kbd "M-l")) 
+            (local-unset-key (kbd "M-l"))
             (local-unset-key (kbd "M-h"))
             (local-unset-key (kbd "M-j"))
             (local-unset-key (kbd "M-"))
-            
+
             (local-set-key (kbd "C-j") 'ac-js2-jump-to-definition)
             (local-set-key (kbd "C-c C-n") 'js2-next-error)
             (add-hook 'before-save-hook (lambda () (delete-trailing-whitespace)))
@@ -153,7 +153,7 @@
             (local-unset-key (kbd "C-;"))
             (local-set-key (kbd "C-;") 'comment-eclipse)))
 
-;; MARKDOWN 
+;; MARKDOWN
 (custom-set-variables
  '(markdown-command "/usr/bin/pandoc"))
 
@@ -188,7 +188,7 @@
 ;; (add-hook 'text-mode-hook (lambda ()
 ;;   (if (regexp-match-p text-mode-buffer-regexp (buffer-name))
 ;;       ;; condition true:
-;;       (highlight-regexp "^\\([^(\#,)]*\\),"     font-lock-keyword-face) 
+;;       (highlight-regexp "^\\([^(\#,)]*\\),"     font-lock-keyword-face)
 ;;     ;; condition false:
 ;;       'nil) ) )
 
@@ -200,7 +200,7 @@
           (lambda ()
             (if (regexp-match-p networks-list-buffer-regexp (buffer-name))
                 ;; condition true:
-                (highlight-regexp "^\\([^(\#,)]*\\),"     font-lock-keyword-face) 
+                (highlight-regexp "^\\([^(\#,)]*\\),"     font-lock-keyword-face)
               ;; condition false:
               'nil)
             (local-set-key (kbd "C-c o") 'markdown-export-and-preview)))
@@ -246,8 +246,8 @@
       '((python . t)
         (js . t)
         (org . t)
-        (sh . t)
-        (R . t)))
+        (sh . t)))
+        ;; (R . t)))
 
 (setq org-src-fontify-natively t)
 (defun indent-org-block-automatically ()
@@ -263,7 +263,7 @@
           (lambda()
             (local-unset-key [C-tab])
             ;; allow window resizing via M-l and M-h
-            (local-unset-key (kbd "M-l")) 
+            (local-unset-key (kbd "M-l"))
             (local-unset-key (kbd "M-h"))
             (local-unset-key (kbd "C-q"))
 
@@ -291,7 +291,7 @@
           (lambda ()
             (org-indent-mode t)
             (toggle-truncate-lines 0)))
-            
+
 
 ;; EVIL MODE
 (eval-after-load "evil-maps"
@@ -552,16 +552,16 @@
                  ;; (message "scrolling down")
                  'image-scroll-down)
 
-  (local-set-key (kbd "k") 
+  (local-set-key (kbd "k")
                  'doc-view-previous-line-or-previous-page)
-  (local-set-key (kbd "j") 
+  (local-set-key (kbd "j")
                  'doc-view-next-line-or-next-page)
-  (local-set-key (kbd "h") 
+  (local-set-key (kbd "h")
                  'image-backward-hscroll)
-  (local-set-key (kbd "l") 
+  (local-set-key (kbd "l")
                  'image-forward-hscroll))
-  
-(add-hook 'doc-view-mode-hook 
+
+(add-hook 'doc-view-mode-hook
           'adjust-doc-view)
 
 ;; IMAGE MODE
@@ -574,20 +574,20 @@
   (local-unset-key (kbd "k"))
   (local-unset-key (kbd "d"))
   (local-unset-key (kbd "u"))
-  
-  (local-set-key (kbd "j") 
+
+  (local-set-key (kbd "j")
                  'image-next-line)
-  (local-set-key (kbd "k") 
+  (local-set-key (kbd "k")
                  'image-previous-line)
-  (local-set-key (kbd "d") 
+  (local-set-key (kbd "d")
                  'image-scroll-up)
-  (local-set-key (kbd "u") 
+  (local-set-key (kbd "u")
                  'image-scroll-down)
-  (local-set-key (kbd "l") 
+  (local-set-key (kbd "l")
                  'image-forward-hscroll)
-  (local-set-key (kbd "h") 
+  (local-set-key (kbd "h")
                  'image-backward-hscroll))
-(add-hook 'image-mode-hook 
+(add-hook 'image-mode-hook
           'adjust-image-view)
 ;; Image+ extension
 ;; https://github.com/mhayashi1120/Emacs-imagex
@@ -635,11 +635,11 @@
            (replace-regexp-in-string "-strip" "-auto-orient -strip" image-dired-cmd-create-temp-image-options))))
 
 
-;; ERC page-me 
+;; ERC page-me
 ;; from http://www.emacswiki.org/emacs/ErcPageMe#toc4
 
 (add-hook 'erc-mode-hook
-          (lambda () 
+          (lambda ()
             (flyspell-mode)))
 ;; setting keywords is based off of the default erc-match.el
 ;; http://www.emacswiki.org/emacs/ErcChannelTracking
