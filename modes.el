@@ -645,6 +645,17 @@
 ;; http://www.emacswiki.org/emacs/ErcChannelTracking
 (makunbound 'erc-keywords)
 (setq erc-keywords `("lswart" "JakeRake"))
+
+;; from http://bradyt.com/#sec-3
+(setq erc-hide-list '("JOIN" "PART" "QUIT" "MODE"))
+(add-hook 'erc-send-pre-hook 'tl-erc-send-pre-hook)
+(defun tl-erc-send-pre-hook (string)
+  (require 'cl-lib)
+  (when (and (or (>= (cl-count ?\n string) 2)
+                 (>= (length string) 400))
+             (not (y-or-n-p "Long message! Send?")))
+    (setq erc-send-this nil)))
+
 ;; ("MYNICK *[,:;]" "\\bMY-FIRST-NAME[!?.]+$" "hey MY-FIRST-NAME")
 (erc-match-mode 1)
 (defvar my-erc-page-message "%s is calling your name."
