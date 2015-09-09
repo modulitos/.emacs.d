@@ -141,6 +141,19 @@
 ;; (define-key js-mode-map "}" 'paredit-close-curly-and-newline)
 ;; (add-hook 'js-mode-hook 'my-paredit-nonlisp)
 
+;; LANGUAGES (INPUT METHOD)
+;; toggle input method: C-M-/
+(defun set-input-to-korean ()
+  (interactive)
+  (set-input-method "korean-hangul"))
+
+(defun set-input-to-espanol ()
+  (interactive)
+  (set-input-method "spanish-postfix"))
+
+(global-set-key (kbd "C-M-k") 'set-input-to-korean)
+(global-set-key (kbd "C-M-e") 'set-input-to-espanol)
+
 ;; MINOR MODES
 ;; Camel Case subword mode
   (add-hook 'prog-mode-hook 'subword-mode)
