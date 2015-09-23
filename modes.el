@@ -28,8 +28,8 @@
 (add-hook 'python-mode-hook
           (lambda ()
             (local-unset-key (kbd "M-."))
-            (local-set-key (kbd "f3") 'elpy-goto-definition)
-            (add-hook 'before-save-hook (lambda () (delete-trailing-whitespace)))
+            (local-set-key (kbd "C-c d") 'elpy-goto-definition)
+            ;; (add-hook 'before-save-hook (lambda () (delete-trailing-whitespace)))
             (linum-mode)
             ))
 
@@ -110,11 +110,11 @@
             (local-unset-key (kbd "M-l"))
             (local-unset-key (kbd "M-h"))
             (local-unset-key (kbd "M-j"))
-            (local-unset-key (kbd "M-"))
+            ;; (local-unset-key (kbd "M-"))
 
             (local-set-key (kbd "C-j") 'ac-js2-jump-to-definition)
             (local-set-key (kbd "C-c C-n") 'js2-next-error)
-            (add-hook 'before-save-hook (lambda () (delete-trailing-whitespace)))
+            ;; (add-hook 'before-save-hook (lambda () (delete-trailing-whitespace)))
             (define-key js2-mode-map (kbd "C-j") 'ac-js2-jump-to-definition)
             (linum-mode)
             (js2-reparse t)
@@ -209,6 +209,7 @@
 ;; http://web-mode.org/
 ;; (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.css?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
@@ -221,8 +222,9 @@
   ;; (setq web-mode-markup-indent-offset 2)
   (setq web-mode-code-indent-offset 2)
   (setq web-mode-enable-current-element-highlight t)
-  (lambda ()
-    (linum-mode))
+  ;; This does not turn linum mode on by default?
+  ;; (lambda ()
+  ;;   (linum-mode))
 )
 (add-hook 'web-mode-hook  'my-web-mode-hook)
 
@@ -383,12 +385,12 @@
   (evil-paste-before 1 register))
 
 ;; Clipboard bypass key rebindings
-(define-key evil-normal-state-map "s" 'evil-destroy)
-(define-key evil-normal-state-map "S" 'evil-destroy-line)
+;; (define-key evil-normal-state-map "s" 'evil-destroy)
+;; (define-key evil-normal-state-map "S" 'evil-destroy-line)
 (define-key evil-normal-state-map "c" 'evil-destroy-change)
 (define-key evil-normal-state-map "x" 'evil-destroy-char)
-(define-key evil-normal-state-map "X" 'evil-destroy-whole-line)
-(define-key evil-normal-state-map "Y" 'evil-copy-to-end-of-line)
+;; (define-key evil-normal-state-map "X" 'evil-destroy-whole-line)
+;; (define-key evil-normal-state-map "Y" 'evil-copy-to-end-of-line)
 (define-key evil-visual-state-map "P" 'evil-destroy-paste-before)
 (define-key evil-visual-state-map "p" 'evil-destroy-paste-after)
 
