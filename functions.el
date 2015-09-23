@@ -146,7 +146,7 @@ MSG specifies the string that will be appended at the end of the buffer."
                   (end-of-line)
                   ;; (print (concat "current point: " (number-to-string (point))))
                   (point))))
-    (comment-or-uncomment-region start end)))
+    (progn (comment-or-uncomment-region start end)(forward-line))))
   ;; (if (not (region-active-p))
   ;; (comment-dwim arg)))
 
