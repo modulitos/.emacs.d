@@ -101,6 +101,8 @@
     (autoload 'rm-kill-ring-save "rect-mark"
       "Copy a rectangular region to the kill ring." t)
 
+(global-set-key (kbd "C-M-c") 'whitespace-cleanup)
+
 (global-set-key (kbd "C-+") 'copy-line)
 
 (global-set-key (kbd "C-S-SPC") 'duplicate-current-line-or-region)
