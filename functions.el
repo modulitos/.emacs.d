@@ -130,7 +130,7 @@ MSG specifies the string that will be appended at the end of the buffer."
       (setq beg (line-beginning-position) end (line-end-position)))
     (comment-or-uncomment-region beg end)))
 
-(defun comment-eclipse (&optional arg)
+(defun comment-line-or-region (&optional arg)
   (interactive)
   (let ((start (line-beginning-position))
         (end (line-end-position)))
