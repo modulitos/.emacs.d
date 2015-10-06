@@ -73,16 +73,16 @@
 
 (setq-default indent-tabs-mode nil)
 (add-hook 'ruby-mode-hook
-	  (lambda ()
-	    (define-key ruby-mode-map "\C-c#" 'comment-or-uncomment-region)
-	    )
+          (lambda ()
+            (define-key ruby-mode-map "\C-c#" 'comment-or-uncomment-region)
+            )
  )
 (defadvice comment-or-uncomment-region (before slick-comment activate compile)
   "When called interactively with no active region, comment a single line instead."
   (interactive
    (if mark-active (list (region-beginning) (region-end))
      (list (line-beginning-position)
-	   (line-beginning-position 2)))))
+           (line-beginning-position 2)))))
 
 
 ;; JAVASCRIPT-MODE
@@ -122,10 +122,8 @@
 ;; (global-unset-key [<f3>])
 ;; (global-set-key [<f3>] nil)
 
-;; (autoload 'js2-mode "elp/js2-mode-20140603.1818/js2.el" nil t)
-(setq auto-mode-alist
-       (cons '("\\.js$" . js2-mode) auto-mode-alist))
-;; (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode)) ;; same thing as above
+(add-to-list 'auto-mode-alist
+      '("\\.js$" . js2-mode))
 
 (require 'js2-refactor)
 (js2r-add-keybindings-with-prefix "C-c C-m")
@@ -136,8 +134,8 @@
 
 ;; MATLAB-MODE
 ;; '.m' confilcts with obj-c mode. Default to matlab for '.m' files.
-(setq auto-mode-alist
-       (cons '("\\.m$" . matlab-mode) auto-mode-alist))
+(add-to-list 'auto-mode-alist
+       '("\\.m$" . matlab-mode))
 (add-hook 'matlab-mode-hook 'linum-mode)
 
 ;; LATEX
@@ -154,16 +152,9 @@
 
 ;; MARKDOWN
 (custom-set-variables
- '(markdown-command "/usr/bin/pandoc"))
+ '(markdown-command "~/.cabal/bin/pandoc"))
 
-;; github-flavored-markdown is not longer available...
-;; (autoload 'markdown-mode "markdown-mode"
-;; (autoload 'markdown-mode "gfm-mode"
-;;   "Major mode for editing Markdown files" t)
-(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.markdown\\'". markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.md\\'". markdown-mode))
-
+(add-to-list 'auto-mode-alist '("\\.text\\'" "\\.markdown\\'" "\\.md\\'" . markdown-mode))
 
 ;; Custom highlighting modes (useful for job searches/tracking)
 (defvar networks-list-buffer-regexp '("contacts.md")
@@ -611,7 +602,7 @@
 ;; IMAGE-DIRED
 (evil-set-initial-state 'image-dired-thumbnail-mode 'emacs)
 (add-hook 'image-dired-thumbnail-mode-hook
-	  (lambda ()
+          (lambda ()
             (define-key image-dired-thumbnail-mode-map (kbd "j") 'image-dired-next-line)
             (define-key image-dired-thumbnail-mode-map (kbd "k") 'image-dired-previous-line)
             (define-key image-dired-thumbnail-mode-map (kbd "l") 'image-dired-forward-image)
@@ -736,20 +727,18 @@ matches a regexp in `erc-keywords'."
       nil)))
 (add-hook 'erc-server-PRIVMSG-functions 'my-erc-page-me-PRIVMSG)
 
-;; Shell Script Mode
+;; SHELL SCRIPT MODE
 (add-hook 'shell-script-mode-hook 'linum-mode)
 
-;; Conf mode
+;; CONF MODE
 (add-hook 'conf-mode-hook 'linum-mode)
 
-;; YAML mode
-(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+;; YAML MODE
+(setq auto-mode-alist (cons '("\\.json$" . yaml-mode) (cons '("\\.yml$" . yaml-mode) auto-mode-alist)))
 (add-hook 'yaml-mode-hook
           '(lambda ()
              (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
 ;; PO MODE
-;; (add-to-list 'load-path "/usr/local/Cellar/gettext/0.19.5.1/share/emacs/site-lisp/")
-;; (autoload "po-mode" "po-mode")
 (setq auto-mode-alist
       (cons '("\\.po\\'\\|\\.po\\." . po-mode) auto-mode-alist))
 (autoload 'po-mode "po-mode" "Major mode for translators to edit PO files" t)
