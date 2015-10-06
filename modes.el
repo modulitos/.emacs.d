@@ -33,7 +33,6 @@
             (linum-mode)
             ))
 
-(add-to-list 'auto-mode-alist '("\\.po\\'" . python-mode))
 (defalias 'workon 'pyvenv-workon)
 
 ;; Use jedi instead of ropemacs when TRAMP is detected
@@ -748,3 +747,9 @@ matches a regexp in `erc-keywords'."
 (add-hook 'yaml-mode-hook
           '(lambda ()
              (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+;; PO MODE
+;; (add-to-list 'load-path "/usr/local/Cellar/gettext/0.19.5.1/share/emacs/site-lisp/")
+;; (autoload "po-mode" "po-mode")
+(setq auto-mode-alist
+      (cons '("\\.po\\'\\|\\.po\\." . po-mode) auto-mode-alist))
+(autoload 'po-mode "po-mode" "Major mode for translators to edit PO files" t)
