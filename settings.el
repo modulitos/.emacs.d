@@ -16,7 +16,6 @@
 (global-hl-line-mode)
 ;; (set-face-background hl-line-face "gray30") ;lighter grey
 
-
 ;; Transparency:
  ;;(set-frame-parameter (selected-frame) 'alpha '(<active> [<inactive>]))
 (set-frame-parameter (selected-frame) 'alpha '(90 75))
@@ -151,8 +150,13 @@
   (interactive)
   (set-input-method "spanish-postfix"))
 
+(defun set-input-to-vietnamese ()
+  (interactive)
+  (set-input-method "vietnamese-vni"))
+
 (global-set-key (kbd "C-M-k") 'set-input-to-korean)
 (global-set-key (kbd "C-M-e") 'set-input-to-espanol)
+(global-set-key (kbd "C-M-v") 'set-input-to-vietnamese)
 
 ;; MINOR MODES
 ;; Camel Case subword mode
