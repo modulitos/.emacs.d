@@ -771,6 +771,12 @@ matches a regexp in `erc-keywords'."
 (add-hook 'yaml-mode-hook
           '(lambda ()
              (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+
+;; C++ MODE
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (local-unset-key (kbd "M-j"))))
+
 ;; PO MODE
 (setq auto-mode-alist
       (cons '("\\.po\\'\\|\\.po\\." . po-mode) auto-mode-alist))
