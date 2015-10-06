@@ -207,16 +207,49 @@
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+(setq web-mode-enable-engine-detection t)
+(setq web-mode-engines-alist
+      '(("ctemplate"   .  "\\.html\\'")
+        ("php"    . "\\.phtml\\'")
+        ("blade"  . "\\.blade\\."))
+)
+(add-to-list 'auto-mode-alist '("\\.php\\'" . php-mode))
+
+;; Move to next line when commenting
+(defun luke-web-mode-comment (&optional arg)
+  (interactive)
+  (progn (web-mode-comment-or-uncomment)(forward-line)))
 (defun my-web-mode-hook ()
   "Hooks for Web mode."
   ;; (setq web-mode-markup-indent-offset 2)
   (setq web-mode-code-indent-offset 2)
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
   (setq web-mode-enable-current-element-highlight t)
-  ;; This does not turn linum mode on by default?
-  ;; (lambda ()
-  ;;   (linum-mode))
+  (local-set-key (kbd "C-;") 'luke-web-mode-comment)
+  (linum-mode 1)
 )
 (add-hook 'web-mode-hook  'my-web-mode-hook)
+
+;; PHP with WEB MODE
+(defun php-with-web-mode ()
+  ;; enable web mode
+  (web-mode)
+
+  (setq web-mode-comment-style 2)
+  (add-to-list 'web-mode-comment-formats '("php" . "^//"))
+
+  ;; make these variables local
+  (make-local-variable 'web-mode-code-indent-offset)
+  (make-local-variable 'web-mode-markup-indent-offset)
+  (make-local-variable 'web-mode-css-indent-offset)
+
+  ;; set indentation, can set different indentation level for different code type
+  (setq web-mode-code-indent-offset 4)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-markup-indent-offset 2))
+
+(add-to-list 'auto-mode-alist '("\\.phtml$" . php-with-web-mode))
 
 ;; ORG MODE
 (setq org-log-done t)
