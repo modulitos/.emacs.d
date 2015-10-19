@@ -282,6 +282,7 @@
                                        ("was-html" . "<?xml version=\"1.0\" encoding=\"%s\"?>")
                                        ("php" . "<?php echo \"<?xml version=\\\"1.0\\\" encoding=\\\"%s\\\" ?>\"; ?>"))))
 
+;; shortcut this with C-c C-v d then language
 (org-babel-do-load-languages
       'org-babel-load-languages
       '((python . t)
@@ -311,6 +312,9 @@
             ;; (local-set-key (kbd "C-c C-c") 'org-table-align)
             ;; (local-unset-key (kbd "C-c C-c"))
             (local-set-key (kbd "C-c C-f") 'org-table-calc-current-TBLFM)
+            ;; default is "C-c C-x C-j"
+            (local-set-key (kbd "C-c C-g c") 'org-clock-goto)
+
             (toggle-truncate-lines 0)
 
             (org-indent-mode t)
