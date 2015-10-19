@@ -114,44 +114,35 @@
 
 ;; js2-mode provides 4 level of syntax highlighting. They are * 0 or a negative value means none. * 1 adds basic syntax highlighting. * 2 adds highlighting of some Ecma built-in properties. * 3 adds highlighting of many Ecma built-in functions.
 (setq js2-highlight-level 3)
-;;keybindings
-;; (eval-after-load "js2-mode"
-  ;; '(progn
-     ;; Add an alternative local binding for the command
-     ;; bound to <f3>
-     ;; (define-key js2-mode <f3>
-       ;; 'ac-js2-jump-to-definition))
-     ;; Unbind <f3> from the local keymap
-     ;; (define-key js2-mode <f3> nil)
-;; ))
-(add-hook 'js2-mode-hook
-          (lambda ()
-            ;; (global-unset-key [<f1>])
-            ;; (local-set-key [<f3>] 'ac-js2-jump-to-definition)
-            ;; (define-key js2-mode-map [<f3>] 'ac-js2-jump-to-definition)
 
-            ;; allow window resizing via M-l and M-h
-            (local-unset-key (kbd "M-l"))
-            (local-unset-key (kbd "M-h"))
-            (local-unset-key (kbd "M-j"))
-            ;; (local-unset-key (kbd "M-"))
-
-            (local-set-key (kbd "C-j") 'ac-js2-jump-to-definition)
-            (local-set-key (kbd "C-c C-n") 'js2-next-error)
-            ;; (add-hook 'before-save-hook (lambda () (delete-trailing-whitespace)))
-            (define-key js2-mode-map (kbd "C-j") 'ac-js2-jump-to-definition)
-            (linum-mode)
-            (js2-reparse t)
-            (ac-js2-mode)))
-
-;; (global-unset-key [<f3>])
-;; (global-set-key [<f3>] nil)
+(add-to-list 'interpreter-mode-alist '("node" . js2-mode))
 
 (add-to-list 'auto-mode-alist
       '("\\.js$" . js2-mode))
 
 (require 'js2-refactor)
 (js2r-add-keybindings-with-prefix "C-c C-m")
+(add-hook 'js2-mode-hook #'js2-refactor-mode)
+
+(add-to-list 'load-path "~/.emacs.d/tern/emacs/")
+(autoload 'tern-mode "tern.el" nil t)
+(add-hook 'js-mode-hook (lambda () (tern-mode t)))
+
+(add-hook 'js2-mode-hook
+          (lambda ()
+
+            ;; allow window resizing via M-l and M-h
+            (local-unset-key (kbd "M-l"))
+            (local-unset-key (kbd "M-h"))
+            (local-unset-key (kbd "M-j"))
+
+            (local-set-key (kbd "C-j") 'tern-find-definition)
+            (local-set-key (kbd "M-.") 'tern-find-definition)
+            (local-set-key (kbd "C-c C-n") 'js2-next-error)
+            (define-key js2-mode-map (kbd "C-j") 'ac-js2-jump-to-definition)
+            (linum-mode)
+            (js2-reparse t)
+            (ac-js2-mode)))
 
 ;; HTML MODE
 (add-hook 'html-mode-hook 'linum-mode)
