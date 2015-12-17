@@ -41,10 +41,6 @@
   (require 'jde))
 
 ;; PYTHON
-;; Andreas' python-mode support
-;; (eval-after-load "Python"
-;;   '(load "~/.emacs.d/minimal-emacs-python-configuration.el"))
-;;rnj
 (setenv "PYTHONPATH” “/usr/bin/python")
 ;; For Python 3
 ;;(setenv "PYTHONPATH” “/usr/bin/python3")
@@ -114,6 +110,8 @@
 
 
 ;; JAVASCRIPT-MODE
+;; json files look better with js-mode:
+(add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
 
 ;; js2-mode provides 4 level of syntax highlighting. They are * 0 or a negative value means none. * 1 adds basic syntax highlighting. * 2 adds highlighting of some Ecma built-in properties. * 3 adds highlighting of many Ecma built-in functions.
 (setq js2-highlight-level 3)
@@ -139,8 +137,10 @@
             (local-unset-key (kbd "M-h"))
             (local-unset-key (kbd "M-j"))
 
+            (local-set-key (kbd "C-c r") 'tern-rename-variable)
             (local-set-key (kbd "C-j") 'tern-find-definition)
             (local-set-key (kbd "M-.") 'tern-find-definition)
+            (local-set-key (kbd "C-c d") 'tern-find-definition)
             (local-set-key (kbd "C-c C-n") 'js2-next-error)
             (define-key js2-mode-map (kbd "C-j") 'ac-js2-jump-to-definition)
             (linum-mode)
@@ -219,6 +219,7 @@
 ;; (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.css?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.scss?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
@@ -273,7 +274,6 @@
 ;; ORG MODE
 (setq org-log-done t)
 (define-key global-map "\C-cl" 'org-store-link)
-(define-key global-map "\C-ca" 'org-agenda)
 (setq org-export-html-style
       "<link rel=\"stylesheet\" type=\"text/css\" href=\"org-style.css\" />")
 (setq org-export-html-style-include-scripts nil
@@ -318,6 +318,8 @@
             ;; default is "C-c C-x C-j"
             (local-set-key (kbd "C-c C-g c") 'org-clock-goto)
 
+            (local-set-key (kbd "C-c C-b") 'org-babel-demarcate-block)
+
             (toggle-truncate-lines 0)
 
             (org-indent-mode t)
@@ -328,6 +330,9 @@
             ;; (local-unset-key (kbd "C-tab"))))
             ;; (local-unset-key (kbd "<C-tab>"))))
 ;; (org-force-cycle-archived) It is bound to <C-tab>.
+
+;; ORG-AGENDA
+(define-key global-map "\C-ca" 'org-agenda)
 
 ;; ORG-TRELLO
 (custom-set-variables '(org-trello-files '("~/Documents/mgmt-docs/calendar.trello" "~/Documents/mgmt-docs/haxgeo-trello.trello" "~/Documents/mgmt-docs/floortek-calendar.trello") ))
@@ -688,7 +693,9 @@
 
 (add-hook 'erc-mode-hook
           (lambda ()
-            (flyspell-mode)))
+            (flyspell-mode)
+            (local-set-key (kbd "C-c C-o") 'org-open-at-point)
+            ))
 ;; setting keywords is based off of the default erc-match.el
 ;; http://www.emacswiki.org/emacs/ErcChannelTracking
 (makunbound 'erc-keywords)
@@ -790,9 +797,11 @@ matches a regexp in `erc-keywords'."
 (add-hook 'conf-mode-hook 'linum-mode)
 
 ;; YAML MODE
-(setq auto-mode-alist (cons '("\\.json$" . yaml-mode) (cons '("\\.yml$" . yaml-mode) auto-mode-alist)))
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+;; (print auto-mode-alist)
 (add-hook 'yaml-mode-hook
           '(lambda ()
+             (linum-mode)
              (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
 
 ;; C++ MODE
