@@ -138,5 +138,17 @@
 ;; (define-key my-keys-minor-mode-map (kbd "C-;") 'comment-line-or-region)
 ;; (my-keys-minor-mode 1)
 
+;; CODE EDITING
+;; hide-show code folding methods:
+;; M-x hs-minor-mode
+;; M-x hs-hide-all
+;; M-x hs-show-all
+;; M-x hs-toggle-hiding
+;; rebind the default `C-c @ C-c` to something more usable:
+;; (global-set-key (kbd "C-c t") 'hs-toggle-hiding)
+(global-set-key (kbd "C-c h") 'hs-toggle-hiding)
+;; Can use it in combination the following to jump around:
+;; M-x imenu <my_func_name>
+
 ;; INPUT METHODS
 (global-set-key (kbd "C-M-/") 'toggle-input-method)
