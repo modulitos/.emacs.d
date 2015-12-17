@@ -146,6 +146,15 @@
 ;; (define-key js-mode-map "}" 'paredit-close-curly-and-newline)
 ;; (add-hook 'js-mode-hook 'my-paredit-nonlisp)
 
+;; Jump to last point
+(setq mark-ring-max 3)
+(global-set-key (kbd "M-SPC")
+                (lambda () (interactive)
+                  (let ((current-prefix-arg '(1))) ; C-u
+                  (call-interactively 'set-mark-command))))
+;; Equivalent keybinding:
+;; (global-set-key (kbd "M-SPC") (kbd "C-u C-SPC"))
+
 ;; LANGUAGES (INPUT METHOD)
 ;; toggle input method: C-M-/
 (defun set-input-to-korean ()
