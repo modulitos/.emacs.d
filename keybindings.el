@@ -23,6 +23,8 @@
 
 (global-set-key (kbd "M-h") 'enlarge-window-horizontally)
 (global-set-key (kbd "M-l") 'shrink-window-horizontally)
+(global-set-key (kbd "M-n") 'enlarge-window)
+(global-set-key (kbd "M-m") 'shrink-window)
 
 ; Cycle between buffers
 (global-set-key [(control f9)] 'buffer-stack-bury-and-kill)
@@ -109,6 +111,8 @@
 
 (global-set-key (kbd "C-c C-t") 'ansi-term)
 
+(global-set-key (kbd "M-;") 'eval-region)
+
 ;; COMMENTING OUT
 ;; (add-hook 'undo-tree-mode (lambda () (local-unset-key "C-/")))
 (eval-after-load "flyspell"
@@ -117,7 +121,7 @@
 ;; (global-set-key (kbd "C-;") 'comment-line-or-region)
 (global-set-key (kbd "C-:") 'comment-dwim-line)
 
-(global-set-key "\M-;" 'comment-dwim-line)
+;; (global-set-key "\M-;" 'comment-dwim-line)
 (global-set-key (kbd "C-?") 'comment-dwim-line)
 
 ;; Minor mode to prevent keybindings from getting overidden
