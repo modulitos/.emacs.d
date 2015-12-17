@@ -1,3 +1,6 @@
+;; INFO MODE
+(evil-set-initial-state 'Info-mode 'emacs)
+
 ;; HELM mode
 (require 'helm)
 (require 'helm-config)
