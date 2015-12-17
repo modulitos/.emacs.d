@@ -565,6 +565,24 @@
 (add-hook 'ansi-term-mode-hook 'evil-emacs-state)
 
 ;; CALENDAR MODE
+(copy-face 'default 'calendar-iso-week-header-face)
+(set-face-attribute 'calendar-iso-week-header-face nil
+                    :height 0.7)
+(setq calendar-intermonth-header
+      (propertize "Wk"                  ; or e.g. "KW" in Germany
+                  'font-lock-face 'calendar-iso-week-header-face))
+(copy-face font-lock-constant-face 'calendar-iso-week-face)
+(set-face-attribute 'calendar-iso-week-face nil
+                    :height 0.7)
+(setq calendar-intermonth-text
+      '(propertize
+        (format "%2d"
+                (car
+                 (calendar-iso-from-absolute
+                  (calendar-absolute-from-gregorian (list month day year)))))
+        'font-lock-face 'calendar-iso-week-face))
+
+
 (evil-set-initial-state 'calendar-mode 'emacs)
 (defun adjust-calendar-view ()
   ;; (local-unset-key (kbd "u"))
