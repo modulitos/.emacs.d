@@ -4,15 +4,16 @@
 (require 'package)
 
 ;; ;; Install extensions if they're missing:
-;; (defun init--install-packages ()
-;;   (packages-install
-;;    '(
-;;      flycheck
-;;      flycheck
-;;      markdown-mode
-     ;; clojure-mode)))
+(defun init--install-packages ()
+  (packages-install
+   '(
+     flycheck
+     flycheck
+     markdown-mode
+     clojure-mode)))
 
-;; Update list of packages:
+;; ;; Update list of packages:
+;; ;; does package-archives exist?
 ;; (add-to-list 'package-archives
 ;;              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 ;; (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
@@ -20,18 +21,21 @@
 ;; ;; (add-to-list 'package-archives
 ;; ;; 	     '("marmalade" . "http://marmalade-repo.org/packages/") t)
 ;; ;; gnu tls error? ^
+;; ;; leave this commented out v
 ;; (package-refresh-contents)
+
+;; tells use where the elpa folder is
 (package-initialize)
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/elisp"))
 
 ;; SYSTEM DIRECTORY
-(setq default-directory "~/")        
+(setq default-directory "~/")
 (message "Default Dir: %S" default-directory)
 
 ;; SESSION MANAGEMENT - Windows Mode
   ;; (require 'desktop-menu)
-;; (add-to-list 'load-path "~/workspace/emacs/.emacs.d/elisp/windows2.el") 
+;; (add-to-list 'load-path "~/workspace/emacs/.emacs.d/elisp/windows2.el")
   (add-to-list 'load-path (expand-file-name "~/.emacs.d/elisp"))
   ;; (add-to-list 'load-path "~/workspace/emacs/.emacs.d/elisp/windows.el")
   (require 'windows)
