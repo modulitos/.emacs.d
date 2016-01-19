@@ -113,6 +113,8 @@
 
 (global-set-key (kbd "M-;") 'eval-region)
 
+(global-set-key (kbd "C-c u") 'browse-url)
+
 ;; COMMENTING OUT
 ;; (add-hook 'undo-tree-mode (lambda () (local-unset-key "C-/")))
 (eval-after-load "flyspell"
