@@ -52,13 +52,18 @@
  (define-key yas-minor-mode-map (kbd "C-c e") 'yas-expand)
  ;; Fixing another key binding bug in iedit mode
  (define-key global-map (kbd "C-c o") 'iedit-mode)
-(add-hook 'python-mode-hook
-          (lambda ()
+(defun python-mode-config ()
             (local-unset-key (kbd "M-."))
             (local-set-key (kbd "C-c d") 'elpy-goto-definition)
+            (local-set-key (kbd "C-c r") 'elpy-refactor)
+            (local-set-key (kbd "C-c C-r") 'elpy-refactor)
+            ;; Refactor using 'C-c C-r r' (rename variables, etc)
             ;; (add-hook 'before-save-hook (lambda () (delete-trailing-whitespace)))
-            (linum-mode)
-            ))
+            (linum-mode 1)
+            ;; enable code folding "hideshow":
+            (hs-minor-mode))
+
+(add-hook 'python-mode-hook 'python-mode-config)
 
 (defalias 'workon 'pyvenv-workon)
 
@@ -441,12 +446,12 @@
 ;; Clipboard bypass key rebindings
 ;; (define-key evil-normal-state-map "s" 'evil-destroy)
 ;; (define-key evil-normal-state-map "S" 'evil-destroy-line)
-(define-key evil-normal-state-map "c" 'evil-destroy-change)
-(define-key evil-normal-state-map "x" 'evil-destroy-char)
-;; (define-key evil-normal-state-map "X" 'evil-destroy-whole-line)
-;; (define-key evil-normal-state-map "Y" 'evil-copy-to-end-of-line)
-(define-key evil-visual-state-map "P" 'evil-destroy-paste-before)
-(define-key evil-visual-state-map "p" 'evil-destroy-paste-after)
+;; (define-key evil-normal-state-map "c" 'evil-destroy-change)
+;; (define-key evil-normal-state-map "x" 'evil-destroy-char)
+;; ;; (define-key evil-normal-state-map "X" 'evil-destroy-whole-line)
+;; ;; (define-key evil-normal-state-map "Y" 'evil-copy-to-end-of-line)
+;; (define-key evil-visual-state-map "P" 'evil-destroy-paste-before)
+;; (define-key evil-visual-state-map "p" 'evil-destroy-paste-after)
 
 ;; Clipboard bypassing END
 
