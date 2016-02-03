@@ -643,6 +643,50 @@
 (add-hook 'doc-view-mode-hook
           'adjust-doc-view)
 
+(setq doc-view-resolution 300)
+
+;; PDF-View
+(evil-set-initial-state 'pdf-view-mode 'emacs)
+;; Start server
+(pdf-tools-install)
+
+
+(defun adjust-pdf-view ()
+  (local-unset-key (kbd "u"))
+  (local-unset-key (kbd "d"))
+
+  (local-unset-key (kbd "k"))
+  (local-unset-key (kbd "j"))
+  (local-unset-key (kbd "l"))
+  (local-unset-key (kbd "h"))
+
+  (local-unset-key (kbd "-"))
+  (local-unset-key (kbd "+"))
+
+  (local-set-key (kbd "d")
+                 ;; (message "scrolling down")
+                 'image-scroll-up)
+  (local-set-key (kbd "u")
+                 ;; (message "scrolling down")
+                 'image-scroll-down)
+
+  (local-set-key (kbd "k")
+                 'pdf-view-previous-line-or-previous-page)
+  (local-set-key (kbd "j")
+                 'pdf-view-next-line-or-next-page)
+  (local-set-key (kbd "h")
+                 'image-backward-hscroll)
+  (local-set-key (kbd "l")
+                 'image-forward-hscroll)
+
+  (local-set-key (kbd "-")
+                 'pdf-view-shrink)
+  (local-set-key (kbd "+")
+                 'pdf-view-enlarge))
+
+(add-hook 'pdf-view-mode-hook
+          'adjust-pdf-view)
+
 ;; IMAGE MODE
 (setq image-continuous nil)
 (evil-set-initial-state 'image-mode 'emacs)
