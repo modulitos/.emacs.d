@@ -480,6 +480,18 @@
     (interactive)
     (evil-delete (point-at-bol) (point))))
 
+;; evil-little-word bindings for camelCase:
+(define-key evil-normal-state-map (kbd "w") 'evil-forward-little-word-begin)
+(define-key evil-normal-state-map (kbd "b") 'evil-backward-little-word-begin)
+(define-key evil-operator-state-map (kbd "w") 'evil-forward-little-word-begin)
+(define-key evil-operator-state-map (kbd "b") 'evil-backward-little-word-begin)
+(define-key evil-visual-state-map (kbd "w") 'evil-forward-little-word-begin)
+(define-key evil-visual-state-map (kbd "b") 'evil-backward-little-word-begin)
+(define-key evil-visual-state-map (kbd "i w") 'evil-inner-little-word)
+;; (define-key evil-operator-state-map (kbd "b") 'evil-backward-little-word-begin)
+;; (define-key evil-normal-state-map (kbd "w") 'subword-right)
+;; (define-key evil-normal-state-map (kbd "b") 'subword-left)
+
 ;; key translations
 ;; ie: translate zh to C-h and zx to C-x
 (define-key evil-normal-state-map "z" nil)

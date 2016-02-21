@@ -10,7 +10,7 @@
 (require 'erc-hl-nicks)
 
 (require 'dired+)
-
+(require 'evil-little-word)
 
 ;;; yasnippet
 ;;; should be loaded before auto complete so that they can work together
