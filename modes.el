@@ -104,9 +104,11 @@
 (add-hook 'sql-mode-hook 'linum-mode)
 
 (setq-default indent-tabs-mode nil)
+;; RUBY-MODE
 (add-hook 'ruby-mode-hook
           (lambda ()
             (define-key ruby-mode-map "\C-c#" 'comment-or-uncomment-region)
+            (linum-mode)
             )
  )
 (defadvice comment-or-uncomment-region (before slick-comment activate compile)
