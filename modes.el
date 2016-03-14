@@ -78,8 +78,9 @@
      (message "Using elpy backend: %s for %s" elpy-rpc-backend (elpy-project-root))
      ad-do-it))
 
-;; CONF MODE
-(add-to-list 'auto-mode-alist '("Dockerfile" . conf-mode))
+;; Configurations
+(add-to-list 'auto-mode-alist '("Dockerfile" . conf-space-mode))
+(add-to-list 'auto-mode-alist '(".env" . conf-mode))
 
 ;; SQL
 ;; Capitalizes all mySQL words
