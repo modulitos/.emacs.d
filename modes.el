@@ -169,16 +169,30 @@
 (add-hook 'matlab-mode-hook 'linum-mode)
 
 ;; LATEX
-  (setq latex-run-command "pdflatex")
+  ;; (setq latex-run-command "pdflatex")
   ;; (setq latex-run-command "xelatex")
-(add-hook 'latex-mode-hook 'flyspell-mode)
+;; (add-hook 'latex-mode-hook 'flyspell-mode)
+;; (add-hook 'latex-mode-hook
+(add-hook 'latex-mode-hook
+          (lambda ()
+            (linum-mode)
+            (flyspell-mode)))
+
 (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 (add-hook 'latex-mode-hook 'auto-revert-mode)
-(add-hook 'flyspell-mode-hook
-;; (add-hook 'latex-mode-hook
-          (lambda()
-            (local-unset-key (kbd "C-;"))
-            (local-set-key (kbd "C-;") 'comment-eclipse)))
+;; (add-hook 'flyspell-mode-hook
+;; ;; (add-hook 'latex-mode-hook
+;;           (lambda()
+;;             ;; (local-unset-key (kbd "C-;"))
+;;             ;; (local-set-key (kbd "C-;") 'comment-line-or-region)
+;;             ))
+
+;; Add xelatex hook to our list of auctex commands:
+(add-hook 'LaTeX-mode-hook #'my-latex-mode-hook)
+
+(defun my-latex-mode-hook ()
+  (add-to-list 'TeX-command-list
+               '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t)))
 
 ;; MARKDOWN
 (custom-set-variables
