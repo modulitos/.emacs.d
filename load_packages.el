@@ -11,6 +11,7 @@
 
 (require 'dired+)
 (require 'evil-little-word)
+(require 'nginx-mode)
 
 ;;; yasnippet
 ;;; should be loaded before auto complete so that they can work together

@@ -81,6 +81,12 @@
 ;; Configurations
 (add-to-list 'auto-mode-alist '("Dockerfile" . conf-space-mode))
 (add-to-list 'auto-mode-alist '(".env" . conf-mode))
+(add-to-list 'auto-mode-alist '(".conf" . nginx-mode))
+
+;; NGINX
+(defun nginx-mode-config ()
+            (linum-mode 1))
+(add-hook 'nginx-mode-hook 'nginx-mode-config)
 
 ;; SQL
 ;; Capitalizes all mySQL words
