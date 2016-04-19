@@ -896,7 +896,7 @@ matches a regexp in `erc-keywords'."
 (add-hook 'erc-server-PRIVMSG-functions 'my-erc-page-me-PRIVMSG)
 
 ;; SHELL SCRIPT MODE
-(add-hook 'shell-script-mode-hook 'linum-mode)
+(add-hook 'sh-mode-hook 'linum-mode)
 
 ;; CONF MODE
 (add-hook 'conf-mode-hook 'linum-mode)
