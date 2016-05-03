@@ -39,6 +39,7 @@
 ;; (global-set-key (kbd "C-;") 'comment-eclipse)
 ;; (global-unset-key (kbd "C-c t"))
 
+(menu-bar-mode -1)
 
 ;; FONT DISPLAY
 
