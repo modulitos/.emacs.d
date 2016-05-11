@@ -467,14 +467,14 @@
   (evil-paste-before 1 register))
 
 ;; Clipboard bypass key rebindings
-;; (define-key evil-normal-state-map "s" 'evil-destroy)
-;; (define-key evil-normal-state-map "S" 'evil-destroy-line)
-;; (define-key evil-normal-state-map "c" 'evil-destroy-change)
-;; (define-key evil-normal-state-map "x" 'evil-destroy-char)
-;; ;; (define-key evil-normal-state-map "X" 'evil-destroy-whole-line)
-;; ;; (define-key evil-normal-state-map "Y" 'evil-copy-to-end-of-line)
-;; (define-key evil-visual-state-map "P" 'evil-destroy-paste-before)
-;; (define-key evil-visual-state-map "p" 'evil-destroy-paste-after)
+(define-key evil-normal-state-map "s" 'evil-destroy)
+(define-key evil-normal-state-map "S" 'evil-destroy-line)
+(define-key evil-normal-state-map "c" 'evil-destroy-change)
+(define-key evil-normal-state-map "x" 'evil-destroy-char)
+(define-key evil-normal-state-map "X" 'evil-destroy-whole-line)
+(define-key evil-normal-state-map "Y" 'evil-copy-to-end-of-line)
+(define-key evil-visual-state-map "P" 'evil-destroy-paste-before)
+(define-key evil-visual-state-map "p" 'evil-destroy-paste-after)
 
 ;; Clipboard bypassing END
 
