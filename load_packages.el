@@ -13,6 +13,9 @@
 (require 'evil-little-word)
 (require 'nginx-mode)
 
+(require 'haml-mode)
+(require 'sass-mode)
+
 ;;; yasnippet
 ;;; should be loaded before auto complete so that they can work together
 ;; (require 'yasnippet)
