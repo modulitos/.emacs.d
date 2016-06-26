@@ -284,6 +284,40 @@
 (add-hook 'web-mode-hook  'my-web-mode-hook)
 (add-hook 'web-mode-hook 'linum-mode)
 
+;; JSX with WEB MODE
+;; Source here: http://paste.lisp.org/display/317176
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.react.js\\'" . web-mode))
+
+(setq web-mode-content-types-alist
+      '(("jsx" . ".*.react.js$")))
+
+(defadvice web-mode-highlight-part (around tweak-jsx activate)
+  (if (or (equal web-mode-content-type "jsx"))
+      (let ((web-mode-enable-part-face nil))
+        ad-do-it)
+    ad-do-it))
+
+;;(setq-default flycheck-disabled-checkers
+;;              (append flycheck-disabled-checkers
+;;                      '(javascript-jshint)))
+
+;;(flycheck-add-mode 'javascript-eslint 'web-mode)
+;;(flycheck-add-mode 'javascript-eslint 'js-mode)
+;;(flycheck-add-mode 'javascript-eslint 'js2-mode)
+;;(flycheck-add-mode 'javascript-eslint 'jsx-mode)
+
+;;(setq-default flycheck-disabled-checkers
+;;              (append flycheck-disabled-checkers
+;;                      '(json-jsonlist)))
+
+(defun my-web-mode-hook ()
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-code-indent-offset 2))
+(add-hook 'web-mode-hook 'my-web-mode-hook)
+
+
 ;; PHP with WEB MODE
 (defun php-with-web-mode ()
   ;; enable web mode
