@@ -11,6 +11,8 @@
 
 (require 'dired+)
 (require 'evil-little-word)
+(dumb-jump-mode)
+
 (require 'nginx-mode)
 
 (require 'haml-mode)
