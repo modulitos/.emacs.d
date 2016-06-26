@@ -279,9 +279,10 @@
   (setq web-mode-css-indent-offset 2)
   (setq web-mode-enable-current-element-highlight t)
   (local-set-key (kbd "C-;") 'luke-web-mode-comment)
-  (linum-mode 1)
+  (linum-mode 1) ;; This doesn't work?!
 )
 (add-hook 'web-mode-hook  'my-web-mode-hook)
+(add-hook 'web-mode-hook 'linum-mode)
 
 ;; PHP with WEB MODE
 (defun php-with-web-mode ()
