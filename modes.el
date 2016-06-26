@@ -79,9 +79,9 @@
      ad-do-it))
 
 ;; Configurations
-(add-to-list 'auto-mode-alist '("Dockerfile" . conf-space-mode))
-(add-to-list 'auto-mode-alist '(".env" . conf-mode))
-(add-to-list 'auto-mode-alist '(".conf" . nginx-mode))
+(add-to-list 'auto-mode-alist '("Dockerfile\\'" . conf-space-mode))
+(add-to-list 'auto-mode-alist '("\\.env\\'" . conf-mode))
+(add-to-list 'auto-mode-alist '("\\.conf\\'" . nginx-mode))
 
 ;; NGINX
 (defun nginx-mode-config ()
@@ -258,6 +258,7 @@
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jinja2\\'" . web-mode))
 (setq web-mode-enable-engine-detection t)
 (setq web-mode-engines-alist
       '(("ctemplate"   .  "\\.html\\'")
@@ -301,6 +302,9 @@
   (setq web-mode-markup-indent-offset 2))
 
 (add-to-list 'auto-mode-alist '("\\.phtml$" . php-with-web-mode))
+
+;; SASS MODE
+(add-hook 'sass-mode-hook 'linum-mode)
 
 ;; ORG MODE
 (setq org-log-done t)
