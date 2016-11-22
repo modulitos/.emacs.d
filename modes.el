@@ -873,7 +873,7 @@ the same person.")
     ;;  :app-icon "/usr/share/notify-osd/icons/gnome/scalable/status/notification-message-im.svg"
     ;;  :urgency 'low)))
     (progn
-      (start-process-shell-command "whatever" nil "ffplay -t 0.5 -autoexit -nodisp ~/Music/sounds/bell-ringing-04.wav")
+      (start-process-shell-command "whatever" nil "ffplay -t 0.5 -autoexit -nodisp ~/music/sounds/bell-ringing-04.wav")
       (append-message-to-buffer "erc notifications" (concat nick "\n\t" message))
       )
     ))
