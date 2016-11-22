@@ -59,7 +59,6 @@
             (local-set-key (kbd "C-c C-r") 'elpy-refactor)
             ;; Refactor using 'C-c C-r r' (rename variables, etc)
             ;; (add-hook 'before-save-hook (lambda () (delete-trailing-whitespace)))
-            (linum-mode 1)
             ;; enable code folding "hideshow":
             (hs-minor-mode))
 
@@ -84,8 +83,6 @@
 (add-to-list 'auto-mode-alist '("\\.conf\\'" . nginx-mode))
 
 ;; NGINX
-(defun nginx-mode-config ()
-            (linum-mode 1))
 (add-hook 'nginx-mode-hook 'nginx-mode-config)
 
 ;; SQL
@@ -108,14 +105,12 @@
 ;; TODO: error here!
 ;; (eval-after-load "sql"
 ;;   '(load-library "sql-indent.el"))
-(add-hook 'sql-mode-hook 'linum-mode)
 
 (setq-default indent-tabs-mode nil)
 ;; RUBY-MODE
 (add-hook 'ruby-mode-hook
           (lambda ()
             (define-key ruby-mode-map "\C-c#" 'comment-or-uncomment-region)
-            (linum-mode)
             )
  )
 (defadvice comment-or-uncomment-region (before slick-comment activate compile)
@@ -160,19 +155,16 @@
             (local-set-key (kbd "C-c d") 'tern-find-definition)
             (local-set-key (kbd "C-c C-n") 'js2-next-error)
             (define-key js2-mode-map (kbd "C-j") 'ac-js2-jump-to-definition)
-            (linum-mode)
             (js2-reparse t)
             (ac-js2-mode)))
 
 ;; HTML MODE
-(add-hook 'html-mode-hook 'linum-mode)
 
 
 ;; MATLAB-MODE
 ;; '.m' confilcts with obj-c mode. Default to matlab for '.m' files.
 (add-to-list 'auto-mode-alist
        '("\\.m$" . matlab-mode))
-(add-hook 'matlab-mode-hook 'linum-mode)
 
 ;; LATEX
   ;; (setq latex-run-command "pdflatex")
@@ -181,7 +173,6 @@
 ;; (add-hook 'latex-mode-hook
 (add-hook 'latex-mode-hook
           (lambda ()
-            (linum-mode)
             (flyspell-mode)))
 
 (add-hook 'doc-view-mode-hook 'auto-revert-mode)
@@ -271,6 +262,7 @@
 (defun luke-web-mode-comment (&optional arg)
   (interactive)
   (progn (web-mode-comment-or-uncomment)(forward-line)))
+
 (defun my-web-mode-hook ()
   "Hooks for Web mode."
   ;; (setq web-mode-markup-indent-offset 2)
@@ -279,10 +271,8 @@
   (setq web-mode-css-indent-offset 2)
   (setq web-mode-enable-current-element-highlight t)
   (local-set-key (kbd "C-;") 'luke-web-mode-comment)
-  (linum-mode 1) ;; This doesn't work?!
 )
 (add-hook 'web-mode-hook  'my-web-mode-hook)
-(add-hook 'web-mode-hook 'linum-mode)
 
 ;; JSX with WEB MODE
 ;; Source here: http://paste.lisp.org/display/317176
@@ -339,7 +329,6 @@
 (add-to-list 'auto-mode-alist '("\\.phtml$" . php-with-web-mode))
 
 ;; SASS MODE
-(add-hook 'sass-mode-hook 'linum-mode)
 
 ;; ORG MODE
 (setq org-log-done t)
@@ -935,17 +924,14 @@ matches a regexp in `erc-keywords'."
 (add-hook 'erc-server-PRIVMSG-functions 'my-erc-page-me-PRIVMSG)
 
 ;; SHELL SCRIPT MODE
-(add-hook 'sh-mode-hook 'linum-mode)
 
 ;; CONF MODE
-(add-hook 'conf-mode-hook 'linum-mode)
 
 ;; YAML MODE
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 ;; (print auto-mode-alist)
 (add-hook 'yaml-mode-hook
           '(lambda ()
-             (linum-mode)
              (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
 
 ;; C++ MODE

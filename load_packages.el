@@ -3,6 +3,7 @@
 (require 'buffer-stack)
 (require 'evil)
 (require 'znc)
+;; (require 'magit)
 ;; (require 'org)
 (require 'modeline-posn)
 (require 'org-trello)
