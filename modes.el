@@ -943,3 +943,23 @@ matches a regexp in `erc-keywords'."
 (setq auto-mode-alist
       (cons '("\\.po\\'\\|\\.po\\." . po-mode) auto-mode-alist))
 (autoload 'po-mode "po-mode" "Major mode for translators to edit PO files" t)
+
+;; GIT-GUTTER MODE
+(require 'git-gutter)
+
+;; ;; If you enable global minor mode
+(global-git-gutter-mode t)
+;; (global-git-gutter-mode +1)
+
+;; ;; If you would like to use git-gutter.el and linum-mode
+;; (git-gutter:linum-setup)
+
+;; ;; If you enable git-gutter-mode for some modes
+;; (add-hook 'ruby-mode-hook 'git-gutter-mode)
+
+;; (global-set-key (kbd "C-x C-g") 'git-gutter)
+;; (global-set-key (kbd "C-x v =") 'git-gutter:popup-hunk)
+
+;; Jump to next/previous hunk
+(global-set-key (kbd "C-x p") 'git-gutter:previous-hunk)
+(global-set-key (kbd "C-x n") 'git-gutter:next-hunk)
