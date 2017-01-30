@@ -10,6 +10,11 @@
 
 (require 'erc-hl-nicks)
 
+(require 'flycheck)
+(add-hook 'after-init-hook #'global-flycheck-mode)
+(setq flycheck-disabled-checkers '(javascript-jshint))
+(setq flycheck-checkers '(javascript-eslint))
+
 (require 'dired+)
 (require 'evil-little-word)
 (dumb-jump-mode)
