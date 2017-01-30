@@ -177,6 +177,22 @@
 
 (add-hook 'js2-mode-hook #'setup-js2-mode)
 
+;; COFFEESCRIPT MODE
+(add-to-list 'auto-mode-alist '("\\.coffee\\'" . coffee-mode))
+
+(custom-set-variables
+ '(coffee-indent-like-python-mode t)
+ '(coffee-tab-width 2)
+ '(coffee-args-compile '("-c" "--no-header" "--bare")))
+
+(eval-after-load "coffee-mode"
+  '(progn
+     (define-key coffee-mode-map [(meta r)] 'coffee-compile-buffer)
+     (define-key coffee-mode-map (kbd "C-j") 'coffee-newline-and-indent)))
+
+
+;; TYPESCRIPT MODE
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
 
 ;; HTML MODE
 
