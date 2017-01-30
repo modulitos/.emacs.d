@@ -15,6 +15,8 @@
 (setq flycheck-disabled-checkers '(javascript-jshint))
 (setq flycheck-checkers '(javascript-eslint))
 
+(require 'js2-mode)
+
 (require 'dired+)
 (require 'evil-little-word)
 (dumb-jump-mode)

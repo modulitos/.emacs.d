@@ -154,9 +154,29 @@
             (local-set-key (kbd "M-.") 'tern-find-definition)
             (local-set-key (kbd "C-c d") 'tern-find-definition)
             (local-set-key (kbd "C-c C-n") 'js2-next-error)
+            (flycheck-mode)
             (define-key js2-mode-map (kbd "C-j") 'ac-js2-jump-to-definition)
             (js2-reparse t)
             (ac-js2-mode)))
+
+;; JS2-MODE AND JSX-MODE
+(add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-jsx-mode))
+
+(setq js2-mode-show-parse-errors nil)
+(setq js2-mode-show-strict-warnings nil)
+
+;; Disable JSCS linting (optional but if you're using ESLint you probably don't
+;; need this).
+(let ((checkers (get 'javascript-eslint 'flycheck-next-checkers)))
+  (put 'javascript-eslint 'flycheck-next-checkers
+       (remove '(warning . javascript-jscs) checkers)))
+
+(defun setup-js2-mode ()
+  (flycheck-select-checker 'javascript-eslint)
+  (flycheck-mode))
+
+(add-hook 'js2-mode-hook #'setup-js2-mode)
+
 
 ;; HTML MODE
 
@@ -269,8 +289,18 @@
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-css-indent-offset 2)
   (setq web-mode-enable-current-element-highlight t)
+
+  (local-set-key (kbd "C-c r") 'tern-rename-variable)
+  (local-set-key (kbd "C-j") 'tern-find-definition)
+  (local-set-key (kbd "M-.") 'tern-find-definition)
+  (local-set-key (kbd "C-c d") 'tern-find-definition)
+  (local-set-key (kbd "C-c C-n") 'js2-next-error)
+  (js2-reparse t)
+  (ac-js2-mode)
+
   (local-set-key (kbd "C-;") 'luke-web-mode-comment)
 )
+
 (add-hook 'web-mode-hook  'my-web-mode-hook)
 
 ;; JSX with WEB MODE
@@ -282,19 +312,28 @@
       '(("jsx" . ".*.react.js$")))
 
 (defadvice web-mode-highlight-part (around tweak-jsx activate)
-  (if (or (equal web-mode-content-type "jsx"))
+  (if (or (equal web-mode-content-type "jsx") (equal web-mode-content-type "js"))
       (let ((web-mode-enable-part-face nil))
         ad-do-it)
     ad-do-it))
 
-;;(setq-default flycheck-disabled-checkers
-;;              (append flycheck-disabled-checkers
-;;                      '(javascript-jshint)))
+;; http://codewinds.com/blog/2015-04-02-emacs-flycheck-eslint-jsx.html
+(setq-default flycheck-disabled-checkers
+             (append flycheck-disabled-checkers
+                     '(javascript-jshint)))
 
-;;(flycheck-add-mode 'javascript-eslint 'web-mode)
-;;(flycheck-add-mode 'javascript-eslint 'js-mode)
-;;(flycheck-add-mode 'javascript-eslint 'js2-mode)
-;;(flycheck-add-mode 'javascript-eslint 'jsx-mode)
+;; customize flycheck temp file prefix
+(setq-default flycheck-temp-prefix ".flycheck")
+
+;; disable json-jsonlist checking for json files
+(setq-default flycheck-disabled-checkers
+  (append flycheck-disabled-checkers
+    '(json-jsonlist)))
+
+;; (flycheck-add-mode 'javascript-eslint 'web-mode)
+(flycheck-add-mode 'javascript-eslint 'js-mode)
+(flycheck-add-mode 'javascript-eslint 'js2-mode)
+(flycheck-add-mode 'javascript-eslint 'jsx-mode)
 
 ;;(setq-default flycheck-disabled-checkers
 ;;              (append flycheck-disabled-checkers
