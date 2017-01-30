@@ -123,7 +123,7 @@
 
 ;; JAVASCRIPT-MODE
 ;; json files look better with js-mode:
-(add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
+(add-to-list 'auto-mode-alist '("\\.json$" . json-mode))
 
 ;; js2-mode provides 4 level of syntax highlighting. They are * 0 or a negative value means none. * 1 adds basic syntax highlighting. * 2 adds highlighting of some Ecma built-in properties. * 3 adds highlighting of many Ecma built-in functions.
 (setq js2-highlight-level 3)
@@ -241,7 +241,6 @@
 ;; (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.css?\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.scss?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
@@ -301,12 +300,6 @@
 ;;              (append flycheck-disabled-checkers
 ;;                      '(json-jsonlist)))
 
-(defun my-web-mode-hook ()
-  (setq web-mode-markup-indent-offset 2)
-  (setq web-mode-css-indent-offset 2)
-  (setq web-mode-code-indent-offset 2))
-(add-hook 'web-mode-hook 'my-web-mode-hook)
-
 
 ;; PHP with WEB MODE
 (defun php-with-web-mode ()
@@ -328,7 +321,8 @@
 
 (add-to-list 'auto-mode-alist '("\\.phtml$" . php-with-web-mode))
 
-;; SASS MODE
+;; SASS/SCSS MODE
+(add-to-list 'auto-mode-alist '("\\.scss?\\'" . scss-mode))
 
 ;; ORG MODE
 (setq org-log-done t)
