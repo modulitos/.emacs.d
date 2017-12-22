@@ -132,10 +132,30 @@
 (js2r-add-keybindings-with-prefix "C-c C-m")
 (add-hook 'js2-mode-hook #'js2-refactor-mode)
 
+(add-to-list 'safe-local-variable-values
+             '(flycheck-checkers . (javascript-eslint)))
+
 (add-to-list 'load-path "~/.emacs.d/tern/emacs/")
 (autoload 'tern-mode "tern.el" nil t)
-(add-hook 'js-mode-hook (lambda () (tern-mode t)))
+(add-hook 'js-mode-hook
+          (lambda ()
+            (tern-mode t)))
 
+(add-hook 'js2-jsx-mode-hook
+          (lambda ()
+            (flycheck-mode)
+
+            ;; allow window resizing via M-l and M-h
+            (local-unset-key (kbd "M-l"))
+            (local-unset-key (kbd "M-h"))
+            (local-unset-key (kbd "M-j"))))
+
+;; Moved from down below:
+(defun setup-js2-mode ()
+  (flycheck-select-checker 'javascript-eslint)
+  (flycheck-mode))
+
+(add-hook 'js2-mode-hook #'setup-js2-mode)
 (add-hook 'js2-mode-hook
           (lambda ()
 
@@ -149,16 +169,29 @@
             (local-set-key (kbd "M-.") 'tern-find-definition)
             (local-set-key (kbd "C-c d") 'tern-find-definition)
             (local-set-key (kbd "C-c C-n") 'js2-next-error)
-            (flycheck-mode)
+            (setq js2-mode-show-parse-errors nil)
+            (setq js2-mode-show-strict-warnings nil)
             (define-key js2-mode-map (kbd "C-j") 'ac-js2-jump-to-definition)
             (js2-reparse t)
             (ac-js2-mode)))
 
 ;; JS2-MODE AND JSX-MODE
-(add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-jsx-mode))
-
+(add-to-list 'auto-mode-alist '("\\.jsx?\\'" . web-mode))
 (setq js2-mode-show-parse-errors nil)
 (setq js2-mode-show-strict-warnings nil)
+
+;; use local eslint from node_modules before global
+;; http://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
+(defun my/use-eslint-from-node-modules ()
+  (let* ((root (locate-dominating-file
+                (or (buffer-file-name) default-directory)
+                "node_modules"))
+         (eslint (and root
+                      (expand-file-name "node_modules/eslint/bin/eslint.js"
+                                        root))))
+    (when (and eslint (file-executable-p eslint))
+      (setq-local flycheck-javascript-eslint-executable eslint))))
+(add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
 
 ;; Disable JSCS linting (optional but if you're using ESLint you probably don't
 ;; need this).
@@ -166,11 +199,7 @@
   (put 'javascript-eslint 'flycheck-next-checkers
        (remove '(warning . javascript-jscs) checkers)))
 
-(defun setup-js2-mode ()
-  (flycheck-select-checker 'javascript-eslint)
-  (flycheck-mode))
 
-(add-hook 'js2-mode-hook #'setup-js2-mode)
 
 ;; COFFEESCRIPT MODE
 (add-to-list 'auto-mode-alist '("\\.coffee\\'" . coffee-mode))
@@ -187,6 +216,23 @@
 
 
 ;; TYPESCRIPT MODE
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  ;; company is an optional dependency. You have to
+  ;; install it separately via package-install
+  ;; `M-x package-install [ret] company`
+  (company-mode +1))
+
+;; aligns annotation to the right hand side
+(setq company-tooltip-align-annotations t)
+
+(add-hook 'typescript-mode-hook #'setup-tide-mode)
+
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
 
 ;; HTML MODE
@@ -289,13 +335,11 @@
 (add-to-list 'auto-mode-alist '("\\.php\\'" . php-mode))
 
 ;; Move to next line when commenting
-(defun luke-web-mode-comment (&optional arg)
-  (interactive)
-  (progn (web-mode-comment-or-uncomment)(forward-line)))
 
 (defun my-web-mode-hook ()
   "Hooks for Web mode."
-  ;; (setq web-mode-markup-indent-offset 2)
+  ;;; http://web-mode.org/
+  (flycheck-mode)
   (setq web-mode-code-indent-offset 2)
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-css-indent-offset 2)
@@ -308,25 +352,21 @@
   (local-set-key (kbd "C-c C-n") 'js2-next-error)
   (js2-reparse t)
   (ac-js2-mode)
-
-  (local-set-key (kbd "C-;") 'luke-web-mode-comment)
 )
 
-(add-hook 'web-mode-hook  'my-web-mode-hook)
+(add-hook 'web-mode-hook  'my-web-mode-hook);
+(setq-default web-mode-comment-formats
+              '(("java"       . "/*")
+                ("javascript" . "//")
+                ("jsx" . "//")
+                ("php"        . "/*")))
 
 ;; JSX with WEB MODE
 ;; Source here: http://paste.lisp.org/display/317176
-(add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.react.js\\'" . web-mode))
 
 (setq web-mode-content-types-alist
-      '(("jsx" . ".*.react.js$")))
+  '(("jsx" . "\\.js[x]?\\'")))
 
-(defadvice web-mode-highlight-part (around tweak-jsx activate)
-  (if (or (equal web-mode-content-type "jsx") (equal web-mode-content-type "js"))
-      (let ((web-mode-enable-part-face nil))
-        ad-do-it)
-    ad-do-it))
 
 ;; http://codewinds.com/blog/2015-04-02-emacs-flycheck-eslint-jsx.html
 (setq-default flycheck-disabled-checkers
