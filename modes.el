@@ -77,12 +77,8 @@
      (message "Using elpy backend: %s for %s" elpy-rpc-backend (elpy-project-root))
      ad-do-it))
 
-;; Configurations
-(add-to-list 'auto-mode-alist '("Dockerfile\\'" . conf-space-mode))
-(add-to-list 'auto-mode-alist '("\\.env\\'" . conf-mode))
-(add-to-list 'auto-mode-alist '("\\.conf\\'" . nginx-mode))
-
 ;; NGINX
+(add-to-list 'auto-mode-alist '("\\.conf\\'" . nginx-mode))
 (add-hook 'nginx-mode-hook 'nginx-mode-config)
 
 ;; SQL
@@ -122,7 +118,6 @@
 
 
 ;; JAVASCRIPT-MODE
-;; json files look better with js-mode:
 (add-to-list 'auto-mode-alist '("\\.json$" . json-mode))
 
 ;; js2-mode provides 4 level of syntax highlighting. They are * 0 or a negative value means none. * 1 adds basic syntax highlighting. * 2 adds highlighting of some Ecma built-in properties. * 3 adds highlighting of many Ecma built-in functions.
