@@ -509,6 +509,7 @@
                  evil-insert-state-map
                  evil-emacs-state-map))
     (define-key (eval map) "\C-w" nil)))
+(fset 'evil-visual-update-x-selection 'ignore)
 ;; Clipboard bypassing START
 ;; http://www.codejury.com/bypassing-the-clipboard-in-emacs-evil-mode/
 ;;;; Support
