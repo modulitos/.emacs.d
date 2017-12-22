@@ -10,19 +10,20 @@
 ;; WINDOWS AND BUFFERS
 ; Cycle between windows
 (global-set-key (kbd "C-~") 'other-window)
-(global-set-key (kbd "C-`") 
+(global-set-key (kbd "C-`")
     (lambda ()
       (interactive)
       (other-window -1)))
 
 (global-set-key (kbd "M-j") 'other-window)
-(global-set-key (kbd "M-k") 
+(global-set-key (kbd "M-k")
     (lambda ()
       (interactive)
       (other-window -1)))
 
 (global-set-key (kbd "M-h") 'enlarge-window-horizontally)
 (global-set-key (kbd "M-l") 'shrink-window-horizontally)
+(global-set-key (kbd "M-i") 'downcase-word) ;; replacemente when M-l is overriden
 (global-set-key (kbd "M-n") 'enlarge-window)
 (global-set-key (kbd "M-m") 'shrink-window)
 
@@ -59,7 +60,7 @@
 (global-set-key (kbd "C-x M") (lambda () (interactive) (eshell t)))
 
 ;; ;; Bind (shift-right) and (shift-left) function to your favorite keys. I use
-;; the following so that Ctrl-Shift-Right Arrow moves selected text one 
+;; the following so that Ctrl-Shift-Right Arrow moves selected text one
 ;; column to the right, Ctrl-Shift-Left Arrow moves selected text one
 ;; column to the left:
 (global-set-key [C-S-right] 'shift-right)
@@ -87,7 +88,7 @@
     (set-mark-command t)))
 
 
-;; rect-mark.el 
+;; rect-mark.el
 ;; Rectangular mode editing - "C-x r" prefix, followed by normal mark/edit command.
 ;; reset the cursor (mark) position
     (global-set-key (kbd "C-x r C-SPC") 'rm-set-mark)
@@ -154,3 +155,5 @@
 
 ;; INPUT METHODS
 (global-set-key (kbd "C-M-/") 'toggle-input-method)
+
+(define-key global-map (kbd "RET") 'newline-and-indent)

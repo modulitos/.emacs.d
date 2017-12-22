@@ -6,14 +6,13 @@
 ;; (require 'magit)
 ;; (require 'org)
 (require 'modeline-posn)
+
 (require 'org-trello)
 
 (require 'erc-hl-nicks)
 
 (require 'flycheck)
 (add-hook 'after-init-hook #'global-flycheck-mode)
-(setq flycheck-disabled-checkers '(javascript-jshint))
-(setq flycheck-checkers '(javascript-eslint))
 
 (require 'js2-mode)
 
