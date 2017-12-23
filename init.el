@@ -3,7 +3,7 @@
 ;; PACKAGE MANAGEMENT
 (require 'package)
 
-;; ;; Install extensions if they're missing:
+;; Install extensions if they're missing:
 (defun init--install-packages ()
   (packages-install
    '(
@@ -14,14 +14,21 @@
 
 ;; ;; Update list of packages:
 ;; ;; does package-archives exist?
+;; ;; (add-to-list 'package-archives
+;; ;;              '("melpa" . "http://melpa.milkbox.net/packages/") t)
+;; ;; (add-to-list 'package-archives '("melpa" . "http://stable.melpa.net/packages/") t)
 ;; (add-to-list 'package-archives
-;;              '("melpa" . "http://melpa.milkbox.net/packages/") t)
-;; (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+;;              '("melpa" . "http://stable.melpa.org/packages/") t)
+;; (package-initialize)
+;; ;; (package-refresh-contents)
+
+;; (package-install 'flycheck)
 
 ;; ;; (add-to-list 'package-archives
-;; ;; 	     '("marmalade" . "http://marmalade-repo.org/packages/") t)
-;; ;; gnu tls error? ^
-;; ;; leave this commented out v
+
+;; ;; ;; 	     '("marmalade" . "http://marmalade-repo.org/packages/") t)
+;; ;; ;; gnu tls error? ^
+;; ;; leave this uncommented (unless you need to open emacs w/o internet) v
 ;; (package-refresh-contents)
 
 ;; tells use where the elpa folder is
