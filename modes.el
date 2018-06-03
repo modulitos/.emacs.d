@@ -897,34 +897,6 @@
 
 (add-hook 'dired-mode-hook 'dired-mode-activate)
 
-;; IMAGE-DIRED
-(evil-set-initial-state 'image-dired-thumbnail-mode 'emacs)
-(add-hook 'image-dired-thumbnail-mode-hook
-          (lambda ()
-            (define-key image-dired-thumbnail-mode-map (kbd "j") 'image-dired-next-line)
-            (define-key image-dired-thumbnail-mode-map (kbd "k") 'image-dired-previous-line)
-            (define-key image-dired-thumbnail-mode-map (kbd "l") 'image-dired-forward-image)
-            (define-key image-dired-thumbnail-mode-map (kbd "h") 'image-dired-backward-image)
-            (define-key image-dired-thumbnail-mode-map (kbd "u") 'image-dired-unmark-thumb-original-file)
-            (define-key image-dired-thumbnail-mode-map (kbd "m") 'image-dired-mark-thumb-original-file)
-            (define-key image-dired-thumbnail-mode-map (kbd "d") 'image-dired-flag-thumb-original-file)
-            (define-key image-dired-thumbnail-mode-map (kbd "t") 'image-dired-list-tags)
-            (define-key image-dired-thumbnail-mode-map (kbd "z") 'image-dired-thumb-size)
-            (define-key image-dired-thumbnail-mode-map (kbd "w") 'image-dired-write-tags)
-            (define-key image-dired-thumbnail-mode-map (kbd "r") 'image-dired-remove-tag)
-            (define-key image-dired-thumbnail-mode-map (kbd "L") 'image-dired-rotate-original-left)
-            (define-key image-dired-thumbnail-mode-map (kbd "R") 'image-dired-rotate-original-right)
-            )
-          )
-
-(eval-after-load "image-dired"
-  '(progn
-     (setq image-dired-cmd-create-thumbnail-options
-           (replace-regexp-in-string "-strip" "-auto-orient -strip" image-dired-cmd-create-thumbnail-options)
-           image-dired-cmd-create-temp-image-options
-           (replace-regexp-in-string "-strip" "-auto-orient -strip" image-dired-cmd-create-temp-image-options))))
-
-
 ;; ERC page-me
 ;; from http://www.emacswiki.org/emacs/ErcPageMe#toc4
 
