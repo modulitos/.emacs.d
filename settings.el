@@ -1,4 +1,5 @@
 ;; THEMING
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; (add-to-list 'custom-theme-load-path "~/workspace/emacs/.emacs.d/elisp/themes/color-theme-6.6.0/color-theme.el")
 ;; (load-theme 'light-blue t)
 (add-to-list 'load-path "~/.emacs.d/elisp/themes/color-theme-6.6.0")
@@ -51,6 +52,7 @@
 (setq evil-operator-state-cursor '("red" hollow))
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; FONT DISPLAY
 
 (defun font-big ()
@@ -70,11 +72,13 @@
 (global-set-key (kbd "<C-mouse-5>") 'font-small)
 (global-set-key (kbd "<C-mouse-4>") 'font-big)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MODELINE-POSN
 (column-number-mode 1)
 (size-indication-mode 1) ; Turn on Size Indication mode
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; TERMINAL
 (setq term-default-bg-color "#6F6F6F") ;; light grey
 (setq term-default-fg-color "#FAFAFA") ;; letters
@@ -83,6 +87,7 @@
       (local-set-key (kbd "C-j") 'term-line-mode)
       (local-set-key (kbd "C-k") 'term-char-mode)))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; YASNIPPET AND AUTO-COMPLETION
 ;;; yasnippet
 ;;; should be loaded before auto complete so that they can work together
@@ -115,6 +120,7 @@
 (ac-set-trigger-key "<tab>")
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; TEXT EDITING
 (add-hook 'before-save-hook
           (lambda ()
