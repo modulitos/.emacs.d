@@ -8,6 +8,11 @@
 (global-set-key (kbd "C-c k") 'delete-this-buffer-and-file)
 
 ;; WINDOWS AND BUFFERS
+
+; closing emacs:
+(global-unset-key (kbd "C-x C-c"))
+(global-set-key (kbd "C-x C-q") 'save-buffers-kill-terminal) ; override read-only option
+
 ; Cycle between windows
 (global-set-key (kbd "C-~") 'other-window)
 (global-set-key (kbd "C-`")
