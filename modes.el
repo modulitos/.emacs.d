@@ -132,6 +132,11 @@
 (js2r-add-keybindings-with-prefix "C-c C-m")
 (add-hook 'js2-mode-hook #'js2-refactor-mode)
 
+;; flycheck configs:
+(flycheck-add-mode 'javascript-eslint 'javascript-mode)
+(add-to-list 'flycheck-checkers 'javascript-eslint)
+(flycheck-add-mode 'javascript-eslint 'web-mode)
+
 (add-to-list 'safe-local-variable-values
              '(flycheck-checkers . (javascript-eslint)))
 
