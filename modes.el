@@ -453,7 +453,7 @@
       '((python . t)
         (js . t)
         (org . t)
-        (sh . t)))
+        (shell . t)))
         ;; (R . t)))
 
 (setq org-src-fontify-natively t)
