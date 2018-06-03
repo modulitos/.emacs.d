@@ -1002,6 +1002,10 @@ matches a regexp in `erc-keywords'."
 ;; SHELL SCRIPT MODE
 
 ;; CONF MODE
+;; CONF SPACE MODE
+(add-to-list 'auto-mode-alist '("Dockerfile\\'" . conf-space-mode))
+(add-to-list 'auto-mode-alist '("\\.env\\'" . conf-mode))
+(add-to-list 'auto-mode-alist '("\\.env*" . conf-mode))
 
 ;; YAML MODE
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
