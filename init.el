@@ -12,24 +12,24 @@
      markdown-mode
      clojure-mode)))
 
-;; ;; Update list of packages:
+;; ;; begin package updates:
 ;; ;; does package-archives exist?
 ;; ;; (add-to-list 'package-archives
 ;; ;;              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 ;; ;; (add-to-list 'package-archives '("melpa" . "http://stable.melpa.net/packages/") t)
 ;; (add-to-list 'package-archives
-;;              '("melpa" . "http://stable.melpa.org/packages/") t)
+;;              '("melpa" . "http://melpa.org/packages/") t)
 ;; (package-initialize)
 ;; ;; (package-refresh-contents)
 
 ;; (package-install 'flycheck)
 
 ;; ;; (add-to-list 'package-archives
-
 ;; ;; ;; 	     '("marmalade" . "http://marmalade-repo.org/packages/") t)
-;; ;; ;; gnu tls error? ^
-;; ;; leave this uncommented (unless you need to open emacs w/o internet) v
+;; ;; ;; throws a gnu tls error? ^
+
 ;; (package-refresh-contents)
+;; ;; end package updates
 
 ;; tells use where the elpa folder is
 (package-initialize)
