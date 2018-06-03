@@ -339,7 +339,7 @@
 )
 (add-to-list 'auto-mode-alist '("\\.php\\'" . php-mode))
 
-(add-hook 'web-mode-hook 'prettier-js-mode)
+;; TOOD: enable prettier for .js and .jsx file only (no html files!)
 (setq prettier-js-args '(
   "--trailing-comma" "all"
   "--semi" "false"
