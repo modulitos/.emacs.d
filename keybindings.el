@@ -7,7 +7,7 @@
 
 (global-set-key (kbd "C-c k") 'delete-this-buffer-and-file)
 
-;; WINDOWS AND BUFFERS
+;; WINDOWS
 
 ; closing emacs:
 (global-unset-key (kbd "C-x C-c"))
@@ -32,6 +32,8 @@
 (global-set-key (kbd "M-n") 'enlarge-window)
 (global-set-key (kbd "M-m") 'shrink-window)
 
+;; BUFFERS
+(global-set-key (kbd "C-x b") 'helm-buffers-list)
 ; Cycle between buffers
 (global-set-key [(control f9)] 'buffer-stack-bury-and-kill)
 (global-set-key [(f12)] 'buffer-stack-track)
