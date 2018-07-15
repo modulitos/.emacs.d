@@ -65,6 +65,8 @@
 (add-hook 'python-mode-hook 'python-mode-config)
 
 (defalias 'workon 'pyvenv-workon)
+(pyvenv-workon 'utils)
+(setq elpy-rpc-backend "jedi")
 
 ;; Use jedi instead of ropemacs when TRAMP is detected
 ;; Taken here: https://github.com/jorgenschaefer/elpy/issues/170
@@ -349,9 +351,10 @@
   (if (buffer-file-name)
       (if (string-match (car my-pair) buffer-file-name)
       (funcall (cdr my-pair)))))
-(add-hook 'web-mode-hook #'(lambda ()
-                            (enable-minor-mode
-                             '("\\.jsx?\\'" . prettier-js-mode))))
+(eval-after-load 'web-mode
+    '(progn
+       (add-hook 'web-mode-hook #'add-node-modules-path)
+       (add-hook 'web-mode-hook #'prettier-js-mode)))
 
 ;; Move to next line when commenting
 
@@ -370,7 +373,6 @@
   (local-set-key (kbd "C-c d") 'tern-find-definition)
   (local-set-key (kbd "C-c C-n") 'js2-next-error)
   (js2-reparse t)
-  (ac-js2-mode)
 )
 
 (add-hook 'web-mode-hook  'my-web-mode-hook);
