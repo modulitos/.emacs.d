@@ -164,3 +164,5 @@
 (global-set-key (kbd "C-M-/") 'toggle-input-method)
 
 (define-key global-map (kbd "RET") 'newline-and-indent)
+
+(global-set-key (kbd "C-c i") 'emojify-insert-emoji)
