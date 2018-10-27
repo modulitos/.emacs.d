@@ -206,8 +206,6 @@
   (put 'javascript-eslint 'flycheck-next-checkers
        (remove '(warning . javascript-jscs) checkers)))
 
-
-
 ;; COFFEESCRIPT MODE
 (add-to-list 'auto-mode-alist '("\\.coffee\\'" . coffee-mode))
 
@@ -242,9 +240,6 @@
 
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
 
-;; HTML MODE
-
-
 ;; MATLAB-MODE
 ;; '.m' confilcts with obj-c mode. Default to matlab for '.m' files.
 (add-to-list 'auto-mode-alist
@@ -278,7 +273,7 @@
 ;; MARKDOWN
 (custom-set-variables
  '(markdown-command "~/.cabal/bin/pandoc"))
-
+(setq markdown-fontify-code-blocks-natively t)
 (add-to-list 'auto-mode-alist '("\\.text\\'" "\\.markdown\\'" "\\.md\\'" . markdown-mode))
 
 ;; Custom highlighting modes (useful for job searches/tracking)
@@ -322,10 +317,7 @@
 
 ;; WEB MODE
 ;; http://web-mode.org/
-;; (require 'web-mode)
-(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.css?\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
@@ -346,17 +338,11 @@
   "--trailing-comma" "all"
   "--semi" "false"
 ))
-(defun enable-minor-mode (my-pair)
-  "Enable minor mode if filename match the regexp.  MY-PAIR is a cons cell (regexp . minor-mode)."
-  (if (buffer-file-name)
-      (if (string-match (car my-pair) buffer-file-name)
-      (funcall (cdr my-pair)))))
+
 (eval-after-load 'web-mode
     '(progn
        (add-hook 'web-mode-hook #'add-node-modules-path)
        (add-hook 'web-mode-hook #'prettier-js-mode)))
-
-;; Move to next line when commenting
 
 (defun my-web-mode-hook ()
   "Hooks for Web mode."
@@ -411,8 +397,17 @@
 ;;              (append flycheck-disabled-checkers
 ;;                      '(json-jsonlist)))
 
+;; HTML with WEB-MODE
+(defun html-with-web-mode ()
+  ;; enable web mode
+  (web-mode)
+  (flycheck-mode -1)
+  ;; disable the minor prettier-js-mode
+  (prettier-js-mode -1))
 
-;; PHP with WEB MODE
+(add-to-list 'auto-mode-alist '("\\.html$" . html-with-web-mode))
+
+;; PHP with WEB-MODE
 (defun php-with-web-mode ()
   ;; enable web mode
   (web-mode)

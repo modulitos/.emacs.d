@@ -15,6 +15,7 @@
 ;; Change the color of the highlighted line.
 
 (global-hl-line-mode)
+(global-emojify-mode)
 ;; (set-face-background hl-line-face "gray30") ;lighter grey
 
 ;; Transparency:
