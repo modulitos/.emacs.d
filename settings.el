@@ -227,7 +227,7 @@
 ;; (global-visual-line-mode)
 ;; (toggle-truncate-lines)
 ;; (setq-default truncate-lines t)
-(setq-default major-mode 'org-mode)
+(setq-default major-mode 'markdown-mode)
 
 (setq-default global-visual-line-mode t)
 (setq visual-line-mode t)
