@@ -677,8 +677,6 @@
             ))
 ;; setting keywords is based off of the default erc-match.el
 ;; http://www.emacswiki.org/emacs/ErcChannelTracking
-(makunbound 'erc-keywords)
-(setq erc-keywords `("lswart" "JakeRake"))
 
 ;; from http://bradyt.com/#sec-3
 (setq erc-hide-list '("JOIN" "PART" "QUIT" "MODE"))
