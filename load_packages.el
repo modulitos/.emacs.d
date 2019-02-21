@@ -1,3 +1,8 @@
+;;; Package --- Summary
+;;; Commentary:
+;;; configs for various modes
+
+;;; Code:
 (require 'cl)
 (require 'recentf)
 (require 'buffer-stack)
@@ -15,6 +20,7 @@
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
 (require 'js2-mode)
+(require 'web-mode)
 
 (require 'dired+)
 (require 'evil-little-word)
