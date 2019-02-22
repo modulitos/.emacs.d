@@ -245,3 +245,10 @@
       helm-quick-update                     t
       helm-recentf-fuzzy-match              t
       helm-semantic-fuzzy-match             t)
+
+
+;; Dumb-jump
+;; Add .mjs file extensions as javascript to our dumb jump configuration:
+(push '(:language "javascript" :ext "mjs" :agtype "mjs" :rgtype "mjs")
+      (cdr (last dumb-jump-language-file-exts)))
+;;; settings.el ends here
