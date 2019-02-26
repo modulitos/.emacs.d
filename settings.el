@@ -15,7 +15,10 @@
 ;; Change the color of the highlighted line.
 
 (global-hl-line-mode)
-(global-emojify-mode)
+
+global-emojify-mode)
+(setq emojify-emoji-styles (quote (unicode)))
+
 ;; (set-face-background hl-line-face "gray30") ;lighter grey
 
 ;; Transparency:
