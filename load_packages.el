@@ -4,7 +4,13 @@
 
 ;;; Code:
 (require 'cl)
-(require 'recentf)
+
+
+(require 'flycheck)
+(add-hook 'after-init-hook #'global-flycheck-mode)
+(add-to-list 'flycheck-emacs-lisp-load-path "~/.emacs.d/elisp/")
+
+
 (require 'buffer-stack)
 (require 'evil)
 (require 'znc)
@@ -16,8 +22,6 @@
 
 (require 'erc-hl-nicks)
 
-(require 'flycheck)
-(add-hook 'after-init-hook #'global-flycheck-mode)
 
 (require 'js2-mode)
 (require 'web-mode)

@@ -108,9 +108,7 @@
 ;; (yas/load-directory yas/root-directory)
 
 ;; http://blog.binchen.org/posts/how-to-configure-yasnippet-0-7-0-and-use-it-with-auto-complete-mode.html
-(require 'yasnippet)
 
-(yas/initialize)
 
 ;;; auto complete mod
 ;;; should be loaded after yasnippet so that they can work together
