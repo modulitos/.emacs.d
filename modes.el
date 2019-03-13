@@ -124,6 +124,7 @@
            (line-beginning-position 2)))))
 
 (load "~/.emacs.d/modes/javascript-modes")
+(load "~/.emacs.d/modes/erc-mode")
 
 ;; MATLAB-MODE
 ;; '.m' confilcts with obj-c mode. Default to matlab for '.m' files.
