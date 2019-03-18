@@ -32,14 +32,14 @@
 ;; (add-to-list 'load-path "~/workspace/emacs/.emacs.d/elisp/windows2.el")
   ;; (add-to-list 'load-path "~/workspace/emacs/.emacs.d/elisp/windows.el")
 
-  (require 'uniquify)
-  (setq uniquify-buffer-name-style 'reverse)
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'reverse)
 
 ;; REQUIREMENTS
 (require 'load-packages)
 
 ;; FUNCTIONS
-(load "~/.emacs.d/functions")
+(require 'init-functions)
 
 ;; MAJOR MODES
 
@@ -49,12 +49,12 @@
 (require 'init-rust)
 
 ;; SETTINGS
-(load "~/.emacs.d/settings")
+(require 'init-settings)
 ;; KEY BINDINGS
-(load "~/.emacs.d/keybindings")
+(require 'keybindings)
 
 
-(load "~/.emacs.d/servers")
+(require 'init-servers)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
