@@ -2,9 +2,35 @@
 ;;; Commentary:
 ;;; configs for various modes
 
+(require 'znc)
+(require 'package)
+
 ;;; Code:
 ;; ERC page-me
 ;; from http://www.emacswiki.org/emacs/ErcPageMe#toc4
+
+;;Inspired by: https://www.gnu.org/software/emacs/manual/html_node/eintr/append_002dto_002dbuffer-overview.html
+(defun append-message-to-buffer (buffer msg)
+  "Append to specified buffer the message string.
+It is appended at the buffer of that buffer.
+
+When calling from a program, give three arguments:
+BUFFER (or buffer name), MSG.
+MSG specifies the string that will be appended at the end of the buffer."
+  (save-excursion
+    (let* ((append-to (get-buffer-create buffer))
+           (windows (get-buffer-window-list append-to t t))
+           )
+      (set-buffer append-to)
+      (message (concat "set-buffer to: " (prin1-to-string append-to)))
+      (end-of-buffer)
+      (barf-if-buffer-read-only)
+      (insert msg)
+      ))
+)
+;; For testing:
+;; (append-message-to-buffer "Luke's ERC Messages" "another more crazy ass string!!!\n")
+
 
 (add-hook 'erc-mode-hook
           (lambda ()
@@ -53,7 +79,7 @@ the same person.")
     ;;  :app-icon "/usr/share/notify-osd/icons/gnome/scalable/status/notification-message-im.svg"
     ;;  :urgency 'low)))
     (progn
-      (start-process-shell-command "whatever" nil "play ~/music/sounds/bell-ringing-04.wav")
+      (start-process-shell-command "whatever" nil "play ~/music/sounds/beep.mp3")
       (append-message-to-buffer "erc notifications" (concat nick "\n\t" message))
       )
     ))
@@ -102,3 +128,7 @@ matches a regexp in `erc-keywords'."
       (message "finished calling erc-global-notify-arch from prviate message")
       nil)))
 (add-hook 'erc-server-PRIVMSG-functions 'my-erc-page-me-PRIVMSG)
+
+
+(provide 'init-erc)
+;;; init-erc.el ends here

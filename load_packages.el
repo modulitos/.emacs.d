@@ -13,7 +13,7 @@
 
 (require 'buffer-stack)
 (require 'evil)
-(require 'znc)
+
 ;; (require 'magit)
 ;; (require 'org)
 (require 'modeline-posn)
@@ -23,8 +23,6 @@
 (require 'erc-hl-nicks)
 
 
-(require 'js2-mode)
-(require 'web-mode)
 
 (require 'dired+)
 (require 'evil-little-word)
@@ -54,4 +52,4 @@
 (require 'prettier-js)
 
 (add-to-list 'load-path "/usr/share/emacs/site-list/")
-
+;;; load_packages.el ends here

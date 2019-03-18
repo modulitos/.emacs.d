@@ -42,7 +42,12 @@
 (load "~/.emacs.d/functions")
 
 ;; MAJOR MODES
-(load "~/.emacs.d/modes")
+(add-to-list 'load-path (expand-file-name "modes" user-emacs-directory))
+
+(require 'init-erc)
+(require 'init-javascript)
+(require 'init-rust)
+(require 'init-rest)
 
 ;; SETTINGS
 (load "~/.emacs.d/settings")
@@ -88,7 +93,7 @@
  '(org-trello-files (quote ("~/Documents/mgmt-docs/haxgeo-trello.trello")) nil (org-trello))
  '(package-selected-packages
    (quote
-    (flycheck-rust rust-mode emojify prettier-js add-node-modules-path evil company-web tide pdf-tools git-gutter evil-magit magit yaml-mode web-mode w3m tss timesheet tern-auto-complete swiper php-mode paredit org-trello markdown-mode+ js2-refactor js-comint ix image+ htmlize helm-fuzzy-find helm-fuzzier helm-flyspell helm-dired-recent-dirs haskell-mode haml-mode flycheck exec-path-from-shell evil-smartparens evil-org erc-hl-nicks elpy dumb-jump django-snippets dired+ coffee-mode bookmark+ ac-js2)))
+    (racer flycheck-rust rust-mode emojify prettier-js add-node-modules-path evil company-web tide pdf-tools git-gutter evil-magit magit yaml-mode web-mode w3m tss timesheet tern-auto-complete swiper php-mode paredit org-trello markdown-mode+ js2-refactor js-comint ix image+ htmlize helm-fuzzy-find helm-fuzzier helm-flyspell helm-dired-recent-dirs haskell-mode haml-mode flycheck exec-path-from-shell evil-smartparens evil-org erc-hl-nicks elpy dumb-jump django-snippets dired+ coffee-mode bookmark+ ac-js2)))
  '(python-indent-guess-indent-offset nil)
  '(safe-local-variable-values
    (quote
@@ -139,8 +144,7 @@
  '(web-mode-enable-control-block-indentation nil)
  '(web-mode-markup-indent-offset 2)
  '(whitespace-style (quote (trailing)))
- '(znc-erc-ssl-connector (quote erc-tls))
- )
+ '(znc-erc-ssl-connector (quote erc-tls)))
 
 ;; (custom-set-faces
 ;;  ;; Custom-set-faces was added by Custom.

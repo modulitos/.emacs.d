@@ -2,11 +2,23 @@
 ;;; Commentary:
 ;;; configs for various modes
 
+(require 'init-elpa)
+;; (require-package 'flycheck)
+(require 'flycheck)
+;; (require-package 'js2-mode)
+;; (require-package 'web-mode)
+(require 'js2-mode)
+(require 'web-mode)
+
+
 ;;; Code:
 ;; JAVASCRIPT-MODE
 (add-to-list 'auto-mode-alist '("\\.json$" . json-mode))
 
-;; js2-mode provides 4 level of syntax highlighting. They are * 0 or a negative value means none. * 1 adds basic syntax highlighting. * 2 adds highlighting of some Ecma built-in properties. * 3 adds highlighting of many Ecma built-in functions.
+;; js2-mode provides 4 level of syntax highlighting. They are * 0 or a
+;; negative value means none. * 1 adds basic syntax highlighting. * 2
+;; adds highlighting of some Ecma built-in properties. * 3 adds
+;; highlighting of many Ecma built-in functions.
 (setq js2-highlight-level 3)
 
 (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
@@ -303,3 +315,6 @@
   (setq web-mode-markup-indent-offset 2))
 
 (add-to-list 'auto-mode-alist '("\\.phtml$" . php-with-web-mode))
+
+(provide 'init-javascript)
+;;; init-javascript.el ends here

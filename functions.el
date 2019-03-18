@@ -128,29 +128,6 @@
     (loop for file in recentf-list
           unless (member file active-files) return (find-file file))))
 
-
-;;Inspired by: https://www.gnu.org/software/emacs/manual/html_node/eintr/append_002dto_002dbuffer-overview.html
-(defun append-message-to-buffer (buffer msg)
-  "Append to specified buffer the message string.
-It is appended at the buffer of that buffer.
-
-When calling from a program, give three arguments:
-BUFFER (or buffer name), MSG.
-MSG specifies the string that will be appended at the end of the buffer."
-  (save-excursion
-    (let* ((append-to (get-buffer-create buffer))
-           (windows (get-buffer-window-list append-to t t))
-           )
-      (set-buffer append-to)
-      (message (concat "set-buffer to: " (prin1-to-string append-to)))
-      (end-of-buffer)
-      (barf-if-buffer-read-only)
-      (insert msg)
-      ))
-)
-;; For testing:
-;; (append-message-to-buffer "Luke's ERC Messages" "another more crazy ass string!!!\n")
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; TEXT EDITING
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

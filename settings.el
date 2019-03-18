@@ -252,4 +252,13 @@
 ;; Add .mjs file extensions as javascript to our dumb jump configuration:
 (push '(:language "javascript" :ext "mjs" :agtype "mjs" :rgtype "mjs")
       (cdr (last dumb-jump-language-file-exts)))
+
+;; company mode
+(eval-after-load 'company
+  '(progn
+     (define-key company-active-map (kbd "TAB") 'company-select-next)
+     (define-key company-active-map [tab] 'company-select-next)
+     (define-key company-active-map (kbd "C-n") 'company-select-next)
+     (define-key company-active-map (kbd "C-p") 'company-select-previous)))
+
 ;;; settings.el ends here
