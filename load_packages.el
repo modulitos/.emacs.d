@@ -16,7 +16,6 @@
 
 ;; (require 'magit)
 ;; (require 'org)
-(require 'modeline-posn)
 
 (require 'org-trello)
 

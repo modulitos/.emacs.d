@@ -1,9 +1,12 @@
+;;; package --- summary
+;;; Commentary:
 ;; THEMING
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; (add-to-list 'custom-theme-load-path "~/workspace/emacs/.emacs.d/elisp/themes/color-theme-6.6.0/color-theme.el")
 ;; (load-theme 'light-blue t)
+;;; Code:
 (add-to-list 'load-path "~/.emacs.d/elisp/themes/color-theme-6.6.0")
-(require 'color-theme)
+
 ;; (color-theme-initialize);; try "color-theme-select" to try out themes
     ;; (color-theme-charcoal-black)
     ;; (color-theme-renegade)
@@ -101,6 +104,7 @@
 ;; (yas/initialize)
 (add-hook 'term-mode-hook (lambda()
         (setq yas-dont-activate t)))
+
 ;; http://stackoverflow.com/questions/8225183/emacs-yasnippet-install
 ;; (yas/initialize)
 ;; ;; (setq yas/root-directory "~/.emacs.d/snippets")
