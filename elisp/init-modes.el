@@ -3,9 +3,14 @@
 ;;; configs for various modes, dumping ground
 ;;; TODO: break this out into separate files
 
+(require 'evil)
+(require 'evil-little-word)
+
 ;;; Code:
 ;; INFO MODE
+(message "loading init-modes.el")
 (evil-set-initial-state 'Info-mode 'emacs)
+
 
 ;; HELM mode
 (require 'helm)
@@ -725,5 +730,5 @@
 (global-set-key (kbd "C-x n") 'git-gutter:next-hunk)
 
 
-(provide 'init-rest)
-;;; init-rest.el ends here
+(provide 'init-modes)
+;;; init-modes.el ends here

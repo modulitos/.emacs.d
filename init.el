@@ -36,18 +36,17 @@
   (setq uniquify-buffer-name-style 'reverse)
 
 ;; REQUIREMENTS
-(load "~/.emacs.d/load_packages")
+(require 'load-packages)
 
 ;; FUNCTIONS
 (load "~/.emacs.d/functions")
 
 ;; MAJOR MODES
-(add-to-list 'load-path (expand-file-name "modes" user-emacs-directory))
 
+(require 'init-modes)
 (require 'init-erc)
 (require 'init-javascript)
 (require 'init-rust)
-(require 'init-rest)
 
 ;; SETTINGS
 (load "~/.emacs.d/settings")

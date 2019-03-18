@@ -13,6 +13,7 @@
 
 ;;; Code:
 ;; JAVASCRIPT-MODE
+(message "loading init-javascript.el")
 (add-to-list 'auto-mode-alist '("\\.json$" . json-mode))
 
 ;; js2-mode provides 4 level of syntax highlighting. They are * 0 or a

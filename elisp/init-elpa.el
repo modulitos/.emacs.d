@@ -7,6 +7,7 @@
 (require 'package)
 
 ;;; code:
+(message "loading init-elpa.el")
 (defun require-package (package)
   "Install given PACKAGE if it was not installed before."
   (if (package-installed-p package)
