@@ -1,3 +1,8 @@
+;;; package --- summary
+;;; Commentary:
+(message "loading keybindings.el")
+
+;;; Code:
 (define-key text-mode-map (kbd "M-s t") 'testing-MapAppLog.txt)
 (global-set-key (kbd "C-x C-;") 'comment-or-uncomment-region-or-line)
 
@@ -55,6 +60,8 @@
 
 ;; Kill buffer
 (global-set-key (kbd "C-w") 'kill-buffer)
+;; (global-set-key (kbd "C-x k") 'kill-current-buffer)
+
 ; Re-open recently killed buffers
 (global-set-key (kbd "C-S-t") 'reopen-killed-file)
 ;; (define-key global-map (kbd "C-S-t") 'find-last-killed-file)
@@ -166,3 +173,5 @@
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
 (global-set-key (kbd "C-c i") 'emojify-insert-emoji)
+
+(provide 'keybindings)

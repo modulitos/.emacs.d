@@ -3,9 +3,11 @@
 ;; THEMING
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; (add-to-list 'custom-theme-load-path "~/workspace/emacs/.emacs.d/elisp/themes/color-theme-6.6.0/color-theme.el")
+(message "loading init-settings.el")
 ;; (load-theme 'light-blue t)
 ;;; Code:
 (add-to-list 'load-path "~/.emacs.d/elisp/themes/color-theme-6.6.0")
+;; (require 'color-theme)
 
 ;; (color-theme-initialize);; try "color-theme-select" to try out themes
     ;; (color-theme-charcoal-black)
@@ -154,6 +156,17 @@
           (lambda ()
             (make-local-variable 'kill-ring)))
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; COMMENTING
+;; auto line-breaking comments:
+;; (Note that this is broken in languauges using mulitiple chars for commenting
+;; - only auto-fills a single comment char)
+;; (setq comment-auto-fill-only-comments 1)
+;; (setq-default auto-fill-function 'do-auto-fill)
+;; (setq-default auto-fill-function nil)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; BUFFER NAVIGATION
 ;; Sentence navigation
 (setq sentence-end-double-space nil)
@@ -265,4 +278,5 @@
      (define-key company-active-map (kbd "C-n") 'company-select-next)
      (define-key company-active-map (kbd "C-p") 'company-select-previous)))
 
+(provide 'init-settings)
 ;;; settings.el ends here

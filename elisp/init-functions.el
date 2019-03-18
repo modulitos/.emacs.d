@@ -1,3 +1,9 @@
+;;; package --- summary
+;;; Commentary:
+(message "loading functions.el")
+
+;;; Code:
+
 ;; UTILITIES
 (defun reverse-characters-in-region (&optional arg)
   "Reverse current region, like this: \"a(bc) d\" -> \"d )cb(a\"."
@@ -145,6 +151,7 @@
   (let ((start (line-beginning-position))
         (end (line-end-position)))
     (when (or (not transient-mark-mode) (region-active-p))
+      (message "comment-line-or-region: not transient mark mode: %s, region-active-p: %s" (not transient-mark-mode) (region-active-p))
       (setq start (save-excursion
                     (goto-char (region-beginning))
                     (beginning-of-line)
@@ -156,7 +163,9 @@
                   (end-of-line)
                   ;; (print (concat "current point: " (number-to-string (point))))
                   (point))))
+    (message "comment-line-or-region: start: %s, end: %s" start end)
     (progn (comment-or-uncomment-region start end)(forward-line))))
+    ;; (comment-or-uncomment-region start end)))
   ;; (if (not (region-active-p))
   ;; (comment-dwim arg)))
 
@@ -380,3 +389,6 @@ there's a region, all lines that region covers will be duplicated."
 ;;           (switch-to-buffer current)
 ;;           (clear-this-command-keys t)
 ;;           (setq unread-command-events (list last-input-event)))))))
+
+(provide 'init-functions)
+;;; init-functions.el ends here

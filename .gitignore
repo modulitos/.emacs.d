@@ -15,4 +15,4 @@ semanticdb*
 .python-environments
 .authinfo
 image-dired
-servers.el
+elisp/init-servers.el
