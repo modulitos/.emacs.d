@@ -688,6 +688,7 @@
 (add-to-list 'auto-mode-alist '("Dockerfile\\'" . conf-space-mode))
 (add-to-list 'auto-mode-alist '("\\.env\\'" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.env*" . conf-mode))
+(add-to-list 'auto-mode-alist '("*requirements.txt" . conf-mode))
 ;; This interferes with our ".ts" files and typescript:
 ;; (add-to-list 'auto-mode-alist '("\\.tf*" . conf-mode))
 
