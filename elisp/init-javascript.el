@@ -8,12 +8,43 @@
 ;; (require-package 'js2-mode)
 ;; (require-package 'web-mode)
 (require 'js2-mode)
-(require 'web-mode)
 
+(message "loading init-javascript.el")
+(use-package
+ web-mode
+ :ensure t
+ :mode (("\\.html?\\'" . web-mode)
+        ("\\.tsx\\'" . web-mode)
+        ("\\.jsx?\\'" . web-mode)
+        ("\\.mjs\\'" . web-mode))
+ :config
+ (setq web-mode-markup-indent-offset 2
+       web-mode-css-indent-offset 2
+       web-mode-code-indent-offset 2
+       web-mode-block-padding 2
+       web-mode-comment-style 2
+       
+       web-mode-enable-css-colorization t
+       web-mode-enable-auto-pairing t
+       web-mode-enable-comment-keywords t
+       web-mode-enable-current-element-highlight t
+       web-mode-enable-auto-indentation nil
+       )
+ (add-hook 'web-mode-hook
+           (lambda ()
+             (when (string-equal "tsx" (file-name-extension buffer-file-name))
+               (setup-tide-mode))))
+ ;; enable typescript-tslint checker
+ (flycheck-add-mode 'typescript-tslint 'web-mode)
+ (rplacd (assoc "javascript" web-mode-content-types)
+         "\\.\\([jt]s\\|mjs\\|[jt]s\\.erb\\)\\'")
+ )
+
+
+(flycheck-add-mode 'javascript-eslint 'web-mode)
 
 ;;; Code:
 ;; JAVASCRIPT-MODE
-(message "loading init-javascript.el")
 (add-to-list 'auto-mode-alist '("\\.json$" . json-mode))
 
 ;; js2-mode provides 4 level of syntax highlighting. They are * 0 or a
@@ -37,7 +68,7 @@
 
 ;; flycheck configs:
 ;; (flycheck-add-mode 'javascript-eslint 'javascript-mode)
-(flycheck-add-mode 'javascript-eslint 'web-mode)
+
 ;; (setq flycheck-disabled-checkers '(javascript-jshint))
 ;; (setq flycheck-checkers '(javascript-eslint))
 
@@ -111,12 +142,10 @@
 
 
 ;; JS2-MODE AND JSX-MODE
-(add-to-list 'auto-mode-alist '("\\.jsx?\\'" . web-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . typescript-mode))
 (add-to-list 'flycheck-checkers 'jsx-tide)
 ;; (flycheck-add-next-checker 'javascript-eslint 'jsx-tide 'append)
 
-(add-to-list 'auto-mode-alist '("\\.mjs\\'" . web-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.mjs\\'" . typescript-mode))
 (setq js2-mode-show-parse-errors nil)
 (setq js2-mode-show-strict-warnings nil)
@@ -159,10 +188,13 @@
   (interactive)
   (tide-setup)
   (flycheck-mode +1)
+  (setq typescript-indent-level 2)
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
   ;; The following line might be needed, ala: https://github.com/ananthakumaran/tide/issues/67
   ;; (flycheck-add-next-checker 'typescript-tide '(t . typescript-tslint) 'append)
   (eldoc-mode +1)
+  (add-node-modules-path)
+  (prettier-js-mode 1)
   (tide-hl-identifier-mode +1)
   ;; company is an optional dependency. You have to
   ;; install it separately via package-install
@@ -176,9 +208,26 @@
 ;; (add-hook 'before-save-hook 'tide-format-before-save)
 ;; (remove-hook 'before-save-hook 'tide-format-before-save)
 
-(add-hook 'typescript-mode-hook #'setup-tide-mode)
+;; https://www.reddit.com/r/emacs/comments/8yuuft/config_snippet_for_setting_up_emacs_for_react/
+(use-package flycheck
+  :ensure t
+  :config
+  (add-hook 'typescript-mode-hook 'flycheck-mode))
 
-(add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
+(use-package typescript-mode
+  :ensure t
+  :mode "\\.tsx?\\'"
+  :config
+  (message "loading typescript!")
+  (setq typescript-indent-level 2)
+  (setq blah-test 6)
+  (add-hook 'typescript-mode-hook #'setup-tide-mode)
+  (add-hook 'typescript-mode #'subword-mode))
+
+
+(use-package tide
+  :commands tide-setup
+  )
 
 
 ;; WEB MODE
@@ -223,6 +272,7 @@
        (add-hook 'web-mode-hook #'add-node-modules-path)
        (add-hook 'web-mode-hook #'prettier-js-mode)))
 
+
 (defun my-web-mode-hook ()
   "Hooks for Web mode."
   ;;; http://web-mode.org/
@@ -246,9 +296,6 @@
                 ("javascript" . "//")
                 ("jsx" . "//")
                 ("php"        . "/*")))
-
-(rplacd (assoc "javascript" web-mode-content-types)
-        "\\.\\([jt]s\\|mjs\\|[jt]s\\.erb\\)\\'")
 
 
 ;; JSX with WEB MODE

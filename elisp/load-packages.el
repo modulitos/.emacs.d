@@ -4,10 +4,16 @@
 
 ;;; Code:
 (message "loading load-packages.el")
-(require 'cl)
+
+;; This is only needed once, near the top of the file
+(eval-when-compile
+  (require 'use-package))
 
 
-(require 'flycheck)
+(use-package cl)
+
+(use-package flycheck)
+
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (add-to-list 'flycheck-emacs-lisp-load-path "~/.emacs.d/elisp/")
 

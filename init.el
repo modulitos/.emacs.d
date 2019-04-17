@@ -1,5 +1,8 @@
+;;; package --- summary
+;;; Commentary:
 ;; Requisites: Emacs >= 24
 
+;;; Code:
 ;; PACKAGE MANAGEMENT
 (require 'package)
 

@@ -4,7 +4,9 @@
 
 ;;; Code:
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; UTILITIES
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun reverse-characters-in-region (&optional arg)
   "Reverse current region, like this: \"a(bc) d\" -> \"d )cb(a\"."
   (interactive "P")
@@ -40,7 +42,6 @@
     (when new-kill-string
       (message "%s copied" new-kill-string)
       (kill-new new-kill-string))))
-
 
 
 ;; CUSTOM HIGHLIGHTING
