@@ -8,28 +8,32 @@
 
 (global-set-key (kbd "C-=") 'er/expand-region)
 
+(global-set-key (kbd "C-M-l") 'display-line-numbers-mode)
+
+(global-set-key (kbd "C-M-f") 'copy-buffer-file-name-as-kill)
 
 
 (global-set-key (kbd "C-c k") 'delete-this-buffer-and-file)
 
 ;; WINDOWS
 
-; closing emacs:
+                                        ; closing emacs:
 (global-unset-key (kbd "C-x C-c"))
 (global-set-key (kbd "C-x C-q") 'save-buffers-kill-terminal) ; override read-only option
+(global-set-key (kbd "C-M-s") 'save-some-buffers)
 
-; Cycle between windows
+                                        ; Cycle between windows
 (global-set-key (kbd "C-~") 'other-window)
 (global-set-key (kbd "C-`")
-    (lambda ()
-      (interactive)
-      (other-window -1)))
+                (lambda ()
+                  (interactive)
+                  (other-window -1)))
 
 (global-set-key (kbd "M-j") 'other-window)
 (global-set-key (kbd "M-k")
-    (lambda ()
-      (interactive)
-      (other-window -1)))
+                (lambda ()
+                  (interactive)
+                  (other-window -1)))
 
 (global-set-key (kbd "M-h") 'enlarge-window-horizontally)
 (global-set-key (kbd "M-l") 'shrink-window-horizontally)
@@ -39,7 +43,13 @@
 
 ;; BUFFERS
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
-; Cycle between buffers
+(with-eval-after-load 'evil-maps
+  (define-key evil-normal-state-map (kbd "C-p") nil))
+                                        ; switch keybindings for "save buffer" and "isearch-forward"
+(global-set-key (kbd "C-s") 'save-buffer)
+(global-set-key (kbd "C-x C-s") 'isearch-forward)
+(global-set-key (kbd "<f2>") 'iedit-mode)  ;; originally bound to `C-c o`
+                                        ; Cycle between buffers
 (global-set-key [(control f9)] 'buffer-stack-bury-and-kill)
 (global-set-key [(f12)] 'buffer-stack-track)
 (global-set-key [(control f12)] 'buffer-stack-untrack)
@@ -86,8 +96,6 @@
 
 ;; (global-set-key [\M-\S-up] 'move-text-up)
 ;; (global-set-key [\M-\S-down] 'move-text-down)
-(global-set-key (kbd "C-M-p") 'move-text-up)
-(global-set-key (kbd "C-M-n") 'move-text-down)
 ;; end move text up or down.
 
 ;; MISC KEY-BINDINGS
@@ -105,22 +113,21 @@
 ;; rect-mark.el
 ;; Rectangular mode editing - "C-x r" prefix, followed by normal mark/edit command.
 ;; reset the cursor (mark) position
-    (global-set-key (kbd "C-x r C-SPC") 'rm-set-mark)
-    (global-set-key (kbd "C-x r C-x") 'rm-exchange-point-and-mark)
-    (global-set-key (kbd "C-x r C-w") 'rm-kill-region)
-    (global-set-key (kbd "C-x r M-w") 'rm-kill-ring-save)
-    (autoload 'rm-set-mark "rect-mark"
-      "Set mark for rectangle." t)
-    (autoload 'rm-exchange-point-and-mark "rect-mark"
-      "Exchange point and mark for rectangle." t)
-    (autoload 'rm-kill-region "rect-mark"
-      "Kill a rectangular region and save it in the kill ring." t)
-    (autoload 'rm-kill-ring-save "rect-mark"
-      "Copy a rectangular region to the kill ring." t)
+(global-set-key (kbd "C-x r C-SPC") 'rm-set-mark)
+(global-set-key (kbd "C-x r C-x") 'rm-exchange-point-and-mark)
+(global-set-key (kbd "C-x r C-w") 'rm-kill-region)
+(global-set-key (kbd "C-x r M-w") 'rm-kill-ring-save)
+(autoload 'rm-set-mark "rect-mark"
+  "Set mark for rectangle." t)
+(autoload 'rm-exchange-point-and-mark "rect-mark"
+  "Exchange point and mark for rectangle." t)
+(autoload 'rm-kill-region "rect-mark"
+  "Kill a rectangular region and save it in the kill ring." t)
+(autoload 'rm-kill-ring-save "rect-mark"
+  "Copy a rectangular region to the kill ring." t)
 
-(global-set-key (kbd "C-M-c") 'whitespace-cleanup)
+(global-set-key (kbd "C-S-i") 'whitespace-cleanup)
 
-(global-set-key (kbd "C-+") 'copy-line)
 
 (global-set-key (kbd "C-S-SPC") 'duplicate-current-line-or-region)
 
@@ -166,6 +173,12 @@
 (global-set-key (kbd "C-c h") 'hs-toggle-hiding)
 ;; Can use it in combination the following to jump around:
 ;; M-x imenu <my_func_name>
+
+(global-set-key (kbd "C-x r")
+                (lambda ()
+                  (interactive)
+                  (query-replace-regexp (isearch-forward-symbol-at-point))
+                  ))
 
 ;; INPUT METHODS
 (global-set-key (kbd "C-M-/") 'toggle-input-method)

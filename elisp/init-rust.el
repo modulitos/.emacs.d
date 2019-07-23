@@ -28,14 +28,18 @@
 (add-hook 'rust-mode-hook  #'racer-mode)
 (add-hook 'racer-mode-hook #'eldoc-mode)
 (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
-(add-hook 'rust-mode-hook
-          '(lambda ()
-	     ;; (setq racer-cmd (concat (getenv "HOME") "/.rust-dev/racer/target/release/racer"))
-	     (setq racer-cmd (concat (getenv "HOME") "/.cargo/bin/racer"))
-	     ;; (setq racer-rust-src-path (concat (getenv "HOME") "/.rust-dev/rust/src"))
-	     (setq racer-rust-src-path (getenv "RUST_SRC_PATH"))
-             (local-set-key (kbd "TAB") #'company-indent-or-complete-common)
-	     (electric-pair-mode 1)))
+
+(defun my-rust-mode-hook ()
+  "Hooks for Rust mode."
+  (message "inside rust hook3!!!")
+  (setq racer-cmd (concat (getenv "HOME") "/.cargo/bin/racer"))
+  (setq racer-rust-src-path (getenv "RUST_SRC_PATH"))
+  (my-code-editor-hook)
+  (superword-mode nil) ;; not working...
+  (local-set-key (kbd "C-S-i") 'rust-format-buffer)
+  (electric-pair-mode 1))
+
+(add-hook 'rust-mode-hook  'my-rust-mode-hook);
 
 (provide 'init-rust)
 ;;; init-rust.el ends here

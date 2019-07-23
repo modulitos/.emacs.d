@@ -4,7 +4,14 @@
 ;;; TODO: break this out into separate files
 
 (require 'evil)
-(require 'evil-little-word)
+;; functions shared across modes:
+(defun my-code-editor-hook ()
+  "Hooks for all modes."
+  (message "inside my-editor-mode-hook!")
+  (local-set-key (kbd "C-p") 'helm-buffers-list)
+  (message "finished my-editor-mode-hook!"))
+
+
 
 ;;; Code:
 ;; INFO MODE
@@ -53,42 +60,6 @@
          '(("\\.java\\'" . jde-mode))
          auto-mode-alist)))
   (require 'jde))
-
-;; PYTHON
-(setenv "PYTHONPATH” “/usr/bin/python")
-;; For Python 3
-;;(setenv "PYTHONPATH” “/usr/bin/python3")
- (elpy-enable)
- ;; Fixing a key binding bug in elpy
- (define-key yas-minor-mode-map (kbd "C-c e") 'yas-expand)
- ;; Fixing another key binding bug in iedit mode
- (define-key global-map (kbd "C-c o") 'iedit-mode)
-(defun python-mode-config ()
-            (local-unset-key (kbd "M-."))
-            (local-set-key (kbd "C-c d") 'elpy-goto-definition)
-            (local-set-key (kbd "C-c r") 'elpy-refactor)
-            (local-set-key (kbd "C-c C-r") 'elpy-refactor)
-            ;; Refactor using 'C-c C-r r' (rename variables, etc)
-            ;; (add-hook 'before-save-hook (lambda () (delete-trailing-whitespace)))
-            ;; enable code folding "hideshow":
-            (hs-minor-mode))
-
-(add-hook 'python-mode-hook 'python-mode-config)
-
-(defalias 'workon 'pyvenv-workon)
-(pyvenv-workon 'utils)
-(setq elpy-rpc-backend "jedi")
-
-;; Use jedi instead of ropemacs when TRAMP is detected
-;; Taken here: https://github.com/jorgenschaefer/elpy/issues/170
-(defadvice elpy-rpc--open (around native-rpc-for-tramp activate)
-  (interactive)
-  (let ((elpy-rpc-backend
-         (if (ignore-errors (tramp-tramp-file-p (elpy-project-root)))
-             "native"
-           elpy-rpc-backend)))
-     (message "Using elpy backend: %s for %s" elpy-rpc-backend (elpy-project-root))
-     ad-do-it))
 
 ;; NGINX
 (add-to-list 'auto-mode-alist '("\\.conf\\'" . nginx-mode))
@@ -420,13 +391,6 @@
     (evil-delete (point-at-bol) (point))))
 
 ;; evil-little-word bindings for camelCase:
-(define-key evil-normal-state-map (kbd "w") 'evil-forward-little-word-begin)
-(define-key evil-normal-state-map (kbd "b") 'evil-backward-little-word-begin)
-(define-key evil-operator-state-map (kbd "w") 'evil-forward-little-word-begin)
-(define-key evil-operator-state-map (kbd "b") 'evil-backward-little-word-begin)
-(define-key evil-visual-state-map (kbd "w") 'evil-forward-little-word-begin)
-(define-key evil-visual-state-map (kbd "b") 'evil-backward-little-word-begin)
-(define-key evil-visual-state-map (kbd "i w") 'evil-inner-little-word)
 ;; (define-key evil-operator-state-map (kbd "b") 'evil-backward-little-word-begin)
 ;; (define-key evil-normal-state-map (kbd "w") 'subword-right)
 ;; (define-key evil-normal-state-map (kbd "b") 'subword-left)
@@ -689,9 +653,17 @@
 (add-to-list 'auto-mode-alist '("\\.env\\'" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.env*" . conf-mode))
 (add-to-list 'auto-mode-alist '("*requirements.txt" . conf-mode))
+(add-to-list 'auto-mode-alist '("requirements.txt" . conf-mode))
 ;; This interferes with our ".ts" files and typescript:
 ;; (add-to-list 'auto-mode-alist '("\\.tf*" . conf-mode))
 
+(defun conf-mode-activate ()
+  "custom settings for conf-mode"
+  (interactive)
+  (message "conf mode!!!")
+  (my-code-editor-hook))
+
+(add-hook 'conf-mode-hook 'conf-mode-activate)
 
 ;; YAML MODE
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))

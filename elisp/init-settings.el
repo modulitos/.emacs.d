@@ -187,7 +187,7 @@
 
 ;; Jump to last point
 (setq mark-ring-max 3)
-(global-set-key (kbd "M-SPC")
+(global-set-key (kbd "C-M--")
                 (lambda () (interactive)
                   (let ((current-prefix-arg '(1))) ; C-u
                   (call-interactively 'set-mark-command))))
@@ -213,13 +213,10 @@
 (global-set-key (kbd "C-M-v") 'set-input-to-vietnamese)
 
 ;; MINOR MODES
-;; Camel Case subword mode
-  (add-hook 'prog-mode-hook 'subword-mode)
-  (add-hook 'text-mode-hook 'subword-mode)
 
 ;; Fly spell checker mode
-  (add-hook 'text-mode-hook 'flyspell-mode)
-  (add-hook 'markdown-mode-hook 'flyspell-mode)
+(add-hook 'text-mode-hook 'flyspell-mode)
+(add-hook 'markdown-mode-hook 'flyspell-mode)
 
 ;; http://www.aaronbedra.com/emacs.d/
 (global-set-key (kbd "C-+") 'text-scale-increase)
