@@ -9,8 +9,17 @@
   "Hooks for all modes."
   (message "inside my-editor-mode-hook!")
   (local-set-key (kbd "C-p") 'helm-buffers-list)
+  (local-set-key (kbd "C-S-i") 'format-all-buffer)
   (message "finished my-editor-mode-hook!"))
 
+;; ELISP-MODE
+
+(defun elisp-mode-config ()
+  (message "initializing elisp editor mode hook")
+  (my-code-editor-hook)
+  (format-all-mode t))
+
+(add-hook 'emacs-lisp-mode-hook 'elisp-mode-config)
 
 
 ;;; Code:
@@ -47,19 +56,8 @@
 
 (helm-mode 1)
 
-;; JDEE for java support
-(add-to-list 'load-path "~/.emacs.d/jdee-2.4.1/lisp")
 ;; (load "jde") ;; Lazy-load instead
 ;;Lazy-load JDEE
-(setq defer-loading-jde t)
-(if defer-loading-jde
-    (progn
-      (autoload 'jde-mode "jde" "JDE mode." t)
-      (setq auto-mode-alist
-        (append
-         '(("\\.java\\'" . jde-mode))
-         auto-mode-alist)))
-  (require 'jde))
 
 ;; NGINX
 (add-to-list 'auto-mode-alist '("\\.conf\\'" . nginx-mode))
@@ -92,7 +90,7 @@
           (lambda ()
             (define-key ruby-mode-map "\C-c#" 'comment-or-uncomment-region)
             )
- )
+          )
 (defadvice comment-or-uncomment-region (before slick-comment activate compile)
   "When called interactively with no active region, comment a single line instead."
   (interactive
@@ -186,24 +184,24 @@
       org-export-html-style-include-default nil)
 
 (setq org-todo-keywords
-  '((sequence "TODO" "IN-PROGRESS" "WAITING" "DONE")))
+      '((sequence "TODO" "IN-PROGRESS" "WAITING" "DONE")))
 (setq org-html-xml-declaration (quote (("html" . "")
                                        ("was-html" . "<?xml version=\"1.0\" encoding=\"%s\"?>")
                                        ("php" . "<?php echo \"<?xml version=\\\"1.0\\\" encoding=\\\"%s\\\" ?>\"; ?>"))))
 
 ;; shortcut this with C-c C-v d then language
 (org-babel-do-load-languages
-      'org-babel-load-languages
-      '((python . t)
-        (js . t)
-        (org . t)
-        (shell . t)))
-        ;; (R . t)))
+ 'org-babel-load-languages
+ '((python . t)
+   (js . t)
+   (org . t)
+   (shell . t)))
+;; (R . t)))
 
 (setq org-src-fontify-natively t)
 (defun indent-org-block-automatically ()
   (when (org-in-src-block-p)
-   (org-edit-special)
+    (org-edit-special)
     (indent-region (point-min) (point-max))
     (org-edit-src-exit)))
 
@@ -233,8 +231,8 @@
             (let ((filename (buffer-file-name (current-buffer))))
               (when (and filename (string= "trello" (file-name-extension filename)))
                 (org-trello-mode)))))
-            ;; (local-unset-key (kbd "C-tab"))))
-            ;; (local-unset-key (kbd "<C-tab>"))))
+;; (local-unset-key (kbd "C-tab"))))
+;; (local-unset-key (kbd "<C-tab>"))))
 ;; (org-force-cycle-archived) It is bound to <C-tab>.
 
 ;; ORG-AGENDA
@@ -338,15 +336,15 @@
 (defun evil-destroy-paste-before ()
   (interactive)
   (without-evil-mode
-     (delete-region (point) (mark))
-     (evil-paste-before 1)))
+   (delete-region (point) (mark))
+   (evil-paste-before 1)))
 
 ;; paste: after
 (defun evil-destroy-paste-after ()
   (interactive)
   (without-evil-mode
-     (delete-region (point) (mark))
-     (evil-paste-after 1)))
+   (delete-region (point) (mark))
+   (evil-paste-after 1)))
 
 ;; paste: text object
 (evil-define-operator evil-destroy-replace (beg end type register yank-handler)
@@ -421,7 +419,7 @@
 ;;  (let ((modified (buffer-modified-p)))
 ;;    (insert "ㅏ")
 ;;    (let ((evt (read-event (format "Insert %c to exit insert state" ?ㅓ)
-    ;; (let ((evt (read-event (format "Insert %c to exit insert state" ?)
+;; (let ((evt (read-event (format "Insert %c to exit insert state" ?)
 ;;               nil 0.5)))
 ;;      (cond
 ;;       ((null evt) (message ""))
@@ -473,15 +471,15 @@
   (let ((modified (buffer-modified-p)))
     (insert "j")
     (let ((evt (read-event (format "Insert %c to exit insert state" ?j)
-               nil 0.5)))
+                           nil 0.5)))
       (cond
        ((null evt) (message ""))
        ((and (integerp evt) (char-equal evt ?j))
-    (delete-char -1)
-    (set-buffer-modified-p modified)
-    (push 'escape unread-command-events))
+        (delete-char -1)
+        (set-buffer-modified-p modified)
+        (push 'escape unread-command-events))
        (t (setq unread-command-events (append unread-command-events
-                          (list evt))))))))
+                                              (list evt))))))))
 
 ;; Hooks to enabe/disable evil in other modes
 (add-hook 'term-mode-hook 'evil-emacs-state)

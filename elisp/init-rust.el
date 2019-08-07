@@ -35,9 +35,19 @@
   (setq racer-cmd (concat (getenv "HOME") "/.cargo/bin/racer"))
   (setq racer-rust-src-path (getenv "RUST_SRC_PATH"))
   (my-code-editor-hook)
-  (superword-mode nil) ;; not working...
+
+  ;; debug when racer-mode causes hangs...
+  ;; (toggle-debug-on-quit)
+  (racer-mode)
+
+  ;; (when superword-mode
+  ;;     (message "superword mode enabled!"))
+  ;; (superword-mode nil) ;; not working...
   (local-set-key (kbd "C-S-i") 'rust-format-buffer)
-  (electric-pair-mode 1))
+  (modify-syntax-entry ?_ "w") ;; allows us to treat _ as part of a word!
+  (electric-pair-mode 1)
+  (setq electric-pair-preserve-balance nil) ;; allows us to type over the closing bracket, avoiding "Node<T>>"
+  )
 
 (add-hook 'rust-mode-hook  'my-rust-mode-hook);
 

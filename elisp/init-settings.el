@@ -91,15 +91,6 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; TERMINAL
-(setq term-default-bg-color "#6F6F6F") ;; light grey
-(setq term-default-fg-color "#FAFAFA") ;; letters
-(add-hook 'ansi-term-mode-hook
-    (lambda ()
-      (local-set-key (kbd "C-j") 'term-line-mode)
-      (local-set-key (kbd "C-k") 'term-char-mode)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; YASNIPPET AND AUTO-COMPLETION
 ;;; yasnippet
 ;;; should be loaded before auto complete so that they can work together
@@ -107,8 +98,6 @@
 ;; (yas-global-mode 1)
 ;; help from: http://stackoverflow.com/questions/8225183/emacs-yasnippet-install
 ;; (yas/initialize)
-(add-hook 'term-mode-hook (lambda()
-        (setq yas-dont-activate t)))
 
 ;; http://stackoverflow.com/questions/8225183/emacs-yasnippet-install
 ;; (yas/initialize)

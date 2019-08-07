@@ -72,7 +72,7 @@
 (global-set-key (kbd "C-w") 'kill-buffer)
 ;; (global-set-key (kbd "C-x k") 'kill-current-buffer)
 
-; Re-open recently killed buffers
+                                        ; Re-open recently killed buffers
 (global-set-key (kbd "C-S-t") 'reopen-killed-file)
 ;; (define-key global-map (kbd "C-S-t") 'find-last-killed-file)
 

@@ -1,25 +1,28 @@
 ;;; package -- summary
 ;;; commentary:
-;; RUST MODE
-;; (with-eval-after-load 'rust-mode
-  ;; (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
 (setenv "PYTHONPATH” “/usr/bin/python")
 ;; For Python 3
 ;;(setenv "PYTHONPATH” “/usr/bin/python3")
- (elpy-enable)
- ;; Fixing a key binding bug in elpy
- (define-key yas-minor-mode-map (kbd "C-c e") 'yas-expand)
- ;; Fixing another key binding bug in iedit mode
- (define-key global-map (kbd "C-c o") 'iedit-mode)
+;; (elpy-enable)
+(use-package elpy
+  :ensure t
+  :init
+  (elpy-enable))
+
+;; Fixing a key binding bug in elpy
+(define-key yas-minor-mode-map (kbd "C-c e") 'yas-expand)
+;; Fixing another key binding bug in iedit mode
+(define-key global-map (kbd "C-c o") 'iedit-mode)
 (defun python-mode-config ()
   (local-unset-key (kbd "M-."))
-  (local-set-key (kbd "C-c d") 'elpy-goto-definition)
-  (local-set-key (kbd "C-c r") 'elpy-refactor)
-  (local-set-key (kbd "C-c C-r") 'elpy-refactor)
+  ;; (local-set-key (kbd "C-c d") 'elpy-goto-definition)
+  ;; (local-set-key (kbd "C-c r") 'elpy-refactor)
+  ;; (local-set-key (kbd "C-c C-r") 'elpy-refactor)
   ;; https://github.com/lassik/emacs-format-all-the-code#how-to-add-new-languages
   ;; (format-all-mode)
 
+  ;; (message "initializing python editor mode hook")
   (my-code-editor-hook)
   ;; Refactor using 'C-c C-r r' (rename variables, etc)
   ;; (add-hook 'before-save-hook (lambda () (delete-trailing-whitespace)))
@@ -40,7 +43,8 @@
          (if (ignore-errors (tramp-tramp-file-p (elpy-project-root)))
              "native"
            elpy-rpc-backend)))
-     (message "Using elpy backend: %s for %s" elpy-rpc-backend (elpy-project-root))
-     ad-do-it))
+    (message "Using elpy backend: %s for %s" elpy-rpc-backend (elpy-project-root))
+    ad-do-it))
 
+(provide 'init-python)
 ;;; init-python.el ends here
