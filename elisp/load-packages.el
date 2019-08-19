@@ -38,6 +38,9 @@
 (require 'dired+)
 
 (dumb-jump-mode)
+;; rebind the "dump jump previous" keybinding:
+(eval-after-load 'dumb-jump
+  '(define-key dumb-jump-mode-map (kbd "C-M-p") (kbd "C-M-b")))
 
 (require 'nginx-mode)
 

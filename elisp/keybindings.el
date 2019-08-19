@@ -54,6 +54,9 @@
 (global-set-key [(f12)] 'buffer-stack-track)
 (global-set-key [(control f12)] 'buffer-stack-untrack)
 
+(global-set-key (kbd "C-M-n") 'git-gutter:next-hunk)
+(global-set-key (kbd "C-M-p") 'git-gutter:previous-hunk)
+
 (global-set-key [C-tab] 'buffer-stack-down)
 (global-set-key [C-S-iso-lefttab] 'buffer-stack-up);Linux
 (global-set-key [C-S-tab] 'buffer-stack-up);Windows/Linux
