@@ -11,41 +11,49 @@
 
 (message "loading init-javascript.el")
 (use-package
- web-mode
- :ensure t
- :mode (("\\.html?\\'" . web-mode)
-        ("\\.tsx\\'" . web-mode)
-        ("\\.jsx?\\'" . web-mode)
-        ("\\.mjs\\'" . web-mode))
- :config
- (setq web-mode-markup-indent-offset 2
-       web-mode-css-indent-offset 2
-       web-mode-code-indent-offset 2
-       web-mode-block-padding 2
-       web-mode-comment-style 2
-       
-       web-mode-enable-css-colorization t
-       web-mode-enable-auto-pairing t
-       web-mode-enable-comment-keywords t
-       web-mode-enable-current-element-highlight t
-       web-mode-enable-auto-indentation nil
-       )
- (add-hook 'web-mode-hook
-           (lambda ()
-             (when (string-equal "tsx" (file-name-extension buffer-file-name))
-               (setup-tide-mode))))
- ;; enable typescript-tslint checker
- (flycheck-add-mode 'typescript-tslint 'web-mode)
- (rplacd (assoc "javascript" web-mode-content-types)
-         "\\.\\([jt]s\\|mjs\\|[jt]s\\.erb\\)\\'")
- )
+  web-mode
+  :ensure t
+  :mode (("\\.html?\\'" . web-mode)
+         ("\\.tsx\\'" . web-mode)
+         ("\\.jsx?\\'" . web-mode)
+         ("\\.mjs\\'" . web-mode))
+
+  :config
+  (setq web-mode-markup-indent-offset 2
+        web-mode-css-indent-offset 2
+        web-mode-code-indent-offset 2
+        web-mode-block-padding 2
+        web-mode-comment-style 2
+
+        web-mode-enable-css-colorization t
+        web-mode-enable-auto-pairing t
+        web-mode-enable-comment-keywords t
+        web-mode-enable-current-element-highlight t
+        web-mode-enable-auto-indentation nil
+        )
+  (add-hook 'web-mode-hook
+            (lambda ()
+              (when (string-equal "tsx" (file-name-extension buffer-file-name))
+                (setup-tide-mode))))
+  ;; enable typescript-tslint checker
+  (flycheck-add-mode 'typescript-tslint 'web-mode)
+  (rplacd (assoc "javascript" web-mode-content-types)
+          "\\.\\([jt]s\\|mjs\\|[jt]s\\.erb\\)\\'")
+  )
+
 
 
 (flycheck-add-mode 'javascript-eslint 'web-mode)
 
 ;;; Code:
-;; JAVASCRIPT-MODE
+
+;; https://github.com/purcell/flymake-json
+(require 'flymake-json)
 (add-to-list 'auto-mode-alist '("\\.json$" . json-mode))
+(add-hook 'json-mode-hook 'flymake-json-load)
+
+
+;; JAVASCRIPT-MODE
 
 ;; js2-mode provides 4 level of syntax highlighting. They are * 0 or a
 ;; negative value means none. * 1 adds basic syntax highlighting. * 2
@@ -55,9 +63,6 @@
 
 (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
 
-(add-to-list 'auto-mode-alist
-      '("\\.js$" . js2-mode))
-      ;; '("\\.[m]?js$" . js2-mode))
 ;; (add-to-list 'auto-mode-alist
 ;;       '("\\.mjs$" . js2-mode))
 
@@ -81,9 +86,6 @@
 (add-to-list 'safe-local-variable-values
              '(flycheck-checkers . (javascript-eslint)))
 
-             ;; '(js2-jsx-mode . ((flycheck-disabled-checkers . (javascript-jshint))
-             ;;  (flycheck-checkers . (javascript-eslint)))))
-             ;; '(js2-jsx-mode . "lualatex -shell-escape"))
 (add-to-list 'load-path "~/.emacs.d/tern/emacs/")
 (autoload 'tern-mode "tern.el" nil t)
 (add-hook 'js-mode-hook
@@ -120,18 +122,13 @@
             ;; (add-hook 'before-save-hook 'prettier-before-save)
 
             ;; allow window resizing via M-l and M-h
-            (local-unset-key (kbd "M-l"))
-            (local-unset-key (kbd "M-h"))
-            (local-unset-key (kbd "M-j"))
 
-            (local-set-key (kbd "C-c r") 'tern-rename-variable)
-            (local-set-key (kbd "C-j") 'tern-find-definition)
-            (local-set-key (kbd "M-.") 'tern-find-definition)
-            (local-set-key (kbd "C-c d") 'tern-find-definition)
-            (local-set-key (kbd "C-c C-n") 'js2-next-error)
+            (electric-pair-mode 1)
+            (setq electric-pair-preserve-balance nil) ;; allows us to type over the closing bracket, avoiding "Node<T>>"
+            (format-all-mode t)
+            (my-code-editor-hook)
             (setq js2-mode-show-parse-errors nil)
             (setq js2-mode-show-strict-warnings nil)
-            (define-key js2-mode-map (kbd "C-j") 'ac-js2-jump-to-definition)
             (js2-reparse t)
             (ac-js2-mode)))
 
@@ -216,17 +213,19 @@
 
 (use-package typescript-mode
   :ensure t
-  :mode "\\.tsx?\\'"
+  :mode ("\\.tsx?\\'" "\\.jsx?\\'")
   :config
   (message "loading typescript!")
   (setq typescript-indent-level 2)
   (setq blah-test 6)
-  (add-hook 'typescript-mode-hook #'setup-tide-mode)
-  (add-hook 'typescript-mode #'subword-mode))
+  (my-code-editor-hook)
+  (add-hook 'typescript-mode-hook #'setup-tide-mode))
+
 
 
 (use-package tide
-  :commands tide-setup
+  ;; :commands tide-setup
+  :commands setup-tide-mode
   )
 
 
@@ -247,15 +246,15 @@
       '(("ctemplate"   .  "\\.html\\'")
         ("php"    . "\\.phtml\\'")
         ("blade"  . "\\.blade\\."))
-)
+      )
 (add-to-list 'auto-mode-alist '("\\.php\\'" . php-mode))
 
 ;; TOOD: enable prettier for .js and .jsx file only (no html files!)
 ;; (add-hook 'web-mode-hook 'prettier-js-mode)
 (setq prettier-js-args '(
-  ;; "--trailing-comma" "all"
-  ;; "--semi" "false"
-))
+                         ;; "--trailing-comma" "all"
+                         ;; "--semi" "false"
+                         ))
 
 ;; (defun enable-minor-mode (my-pair)
 ;;   "Enable minor mode if filename match the regexp.  MY-PAIR is a cons cell (regexp . minor-mode)."
@@ -268,9 +267,9 @@
 ;;                              '("\\.jsx?\\'" . prettier-js-mode))))
 
 (eval-after-load 'web-mode
-    '(progn
-       (add-hook 'web-mode-hook #'add-node-modules-path)
-       (add-hook 'web-mode-hook #'prettier-js-mode)))
+  '(progn
+     (add-hook 'web-mode-hook #'add-node-modules-path)
+     (add-hook 'web-mode-hook #'prettier-js-mode)))
 
 
 (defun my-web-mode-hook ()
@@ -288,7 +287,7 @@
   (local-set-key (kbd "C-c d") 'tern-find-definition)
   (local-set-key (kbd "C-c C-n") 'js2-next-error)
   (js2-reparse t)
-)
+  )
 
 (add-hook 'web-mode-hook  'my-web-mode-hook);
 (setq-default web-mode-comment-formats
@@ -314,16 +313,16 @@
 
 ;; http://codewinds.com/blog/2015-04-02-emacs-flycheck-eslint-jsx.html
 (setq-default flycheck-disabled-checkers
-             (append flycheck-disabled-checkers
-                     '(javascript-jshint)))
+              (append flycheck-disabled-checkers
+                      '(javascript-jshint)))
 
 ;; customize flycheck temp file prefix
 (setq-default flycheck-temp-prefix ".flycheck")
 
 ;; disable json-jsonlist checking for json files
 (setq-default flycheck-disabled-checkers
-  (append flycheck-disabled-checkers
-    '(json-jsonlist)))
+              (append flycheck-disabled-checkers
+                      '(json-jsonlist)))
 
 ;; (flycheck-add-mode 'javascript-eslint 'web-mode)
 (flycheck-add-mode 'javascript-eslint 'js-mode)

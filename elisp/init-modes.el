@@ -9,6 +9,7 @@
   "Hooks for all modes."
   (message "inside my-editor-mode-hook!")
   (local-set-key (kbd "C-p") 'helm-buffers-list)
+  (local-set-key (kbd "C-/") 'comment-line-or-region)
   (local-set-key (kbd "C-S-i") 'format-all-buffer)
   (message "finished my-editor-mode-hook!"))
 
@@ -100,7 +101,7 @@
 ;; MATLAB-MODE
 ;; '.m' confilcts with obj-c mode. Default to matlab for '.m' files.
 (add-to-list 'auto-mode-alist
-       '("\\.m$" . matlab-mode))
+             '("\\.m$" . matlab-mode))
 
 ;; LATEX
   ;; (setq latex-run-command "pdflatex")
@@ -139,7 +140,7 @@
   ;; "\\.txt" "\\.md" "\\.pm" "\\.conf" "\\.htaccess" "\\.html" "\\.tex" "\\.el"
   ;; "\\.yasnippet" "user_prefs" "\\.shtml" "\\.cgi" "\\.pl" "\\.js" "\\.css"
   ;; "\\*eshell\\*")
-"Regexp of file / buffer names that will be matched using `regexp-match-p` function.")
+  "Regexp of file / buffer names that will be matched using `regexp-match-p` function.")
 
 ;; https://github.com/kentaro/auto-save-buffers-enhanced
 ;; `regexp-match-p` function modified by @sds on stackoverflow
@@ -649,6 +650,7 @@
 ;; CONF SPACE MODE
 (add-to-list 'auto-mode-alist '("Dockerfile\\'" . conf-space-mode))
 (add-to-list 'auto-mode-alist '("\\.env\\'" . conf-mode))
+(add-to-list 'auto-mode-alist '("\\.ovpn\\'" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.env*" . conf-mode))
 (add-to-list 'auto-mode-alist '("*requirements.txt" . conf-mode))
 (add-to-list 'auto-mode-alist '("requirements.txt" . conf-mode))

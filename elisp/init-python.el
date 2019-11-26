@@ -24,6 +24,8 @@
 
   ;; (message "initializing python editor mode hook")
   (my-code-editor-hook)
+  (format-all-mode)
+  (modify-syntax-entry ?_ "w") ;; allows us to treat _ as part of a word!
   ;; Refactor using 'C-c C-r r' (rename variables, etc)
   ;; (add-hook 'before-save-hook (lambda () (delete-trailing-whitespace)))
   ;; enable code folding "hideshow":

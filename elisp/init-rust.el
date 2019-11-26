@@ -2,7 +2,7 @@
 ;;; commentary:
 ;; RUST MODE
 ;; (with-eval-after-load 'rust-mode
-  ;; (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+;; (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
 
 (require 'init-elpa)
@@ -35,6 +35,7 @@
   (setq racer-cmd (concat (getenv "HOME") "/.cargo/bin/racer"))
   (setq racer-rust-src-path (getenv "RUST_SRC_PATH"))
   (my-code-editor-hook)
+  (format-all-mode)
 
   ;; debug when racer-mode causes hangs...
   ;; (toggle-debug-on-quit)

@@ -70,6 +70,7 @@
  '(coffee-args-compile (quote ("-c" "--no-header" "--bare")))
  '(coffee-indent-like-python-mode t)
  '(coffee-tab-width 2)
+ '(company-search-regexp-function (quote company-search-flex-regexp))
  '(css-indent-offset 2)
  '(custom-enabled-themes (quote (zenburn)))
  '(custom-safe-themes
@@ -96,7 +97,7 @@
  '(org-trello-files (quote ("~/Documents/mgmt-docs/haxgeo-trello.trello")) nil (org-trello))
  '(package-selected-packages
    (quote
-    (format-all iedit flymake-json use-package racer flycheck-rust rust-mode emojify prettier-js add-node-modules-path evil company-web tide pdf-tools git-gutter evil-magit magit yaml-mode web-mode w3m tss timesheet tern-auto-complete swiper php-mode paredit org-trello markdown-mode+ js2-refactor js-comint ix image+ htmlize helm-fuzzy-find helm-fuzzier helm-flyspell helm-dired-recent-dirs haskell-mode haml-mode flycheck exec-path-from-shell evil-smartparens evil-org erc-hl-nicks elpy dumb-jump django-snippets dired+ coffee-mode bookmark+ ac-js2)))
+    (flycheck-mypy format-all iedit flymake-json use-package racer flycheck-rust rust-mode emojify prettier-js add-node-modules-path evil company-web tide pdf-tools git-gutter evil-magit magit yaml-mode web-mode w3m tss timesheet tern-auto-complete swiper php-mode paredit org-trello markdown-mode+ js2-refactor js-comint ix image+ htmlize helm-fuzzy-find helm-fuzzier helm-flyspell helm-dired-recent-dirs haskell-mode haml-mode flycheck exec-path-from-shell evil-smartparens evil-org erc-hl-nicks elpy dumb-jump django-snippets dired+ coffee-mode bookmark+ ac-js2)))
  '(python-indent-guess-indent-offset nil)
  '(safe-local-variable-values
    (quote
