@@ -38,6 +38,13 @@
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'reverse)
 
+;; OS specific package
+(if (eq system-type 'darwin)
+    ;; something for OS X if true
+    ;; optional something if not
+    (require 'macos-setup)
+  )
+
 ;; REQUIREMENTS
 (require 'load-packages)
 
