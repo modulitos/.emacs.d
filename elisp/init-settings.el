@@ -13,8 +13,8 @@
 ;; (require 'color-theme)
 
 ;; (color-theme-initialize);; try "color-theme-select" to try out themes
-    ;; (color-theme-charcoal-black)
-    ;; (color-theme-renegade)
+;; (color-theme-charcoal-black)
+;; (color-theme-renegade)
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/elisp/themes/")
 (load-theme 'zenburn t)
@@ -31,7 +31,7 @@
 ;; (set-face-background hl-line-face "gray30") ;lighter grey
 
 ;; Transparency:
- ;;(set-frame-parameter (selected-frame) 'alpha '(<active> [<inactive>]))
+;;(set-frame-parameter (selected-frame) 'alpha '(<active> [<inactive>]))
 (set-frame-parameter (selected-frame) 'alpha '(90 75))
 (add-to-list 'default-frame-alist '(alpha 90 75))
 ;; (add-to-list 'default-frame-alist '(alpha 100 100))
@@ -69,16 +69,16 @@
 ;; FONT DISPLAY
 
 (defun font-big ()
- (interactive)
- (set-face-attribute 'default nil :height
-  (min 720
-   (+ (face-attribute 'default :height) 10))))
+  (interactive)
+  (set-face-attribute 'default nil :height
+                      (min 720
+                           (+ (face-attribute 'default :height) 10))))
 
 (defun font-small ()
- (interactive)
- (set-face-attribute 'default nil :height
-  (max 80
-   (- (face-attribute 'default :height) 10))))
+  (interactive)
+  (set-face-attribute 'default nil :height
+                      (max 80
+                           (- (face-attribute 'default :height) 10))))
 
 ;; (global-set-key (kbd "<C-wheel-down>") 'font-small)
 ;; (global-set-key (kbd "<C-wheel-up>") 'font-big)
@@ -176,7 +176,7 @@
 (global-set-key (kbd "C-M--")
                 (lambda () (interactive)
                   (let ((current-prefix-arg '(1))) ; C-u
-                  (call-interactively 'set-mark-command))))
+                    (call-interactively 'set-mark-command))))
 ;; Equivalent keybinding:
 ;; (global-set-key (kbd "M-SPC") (kbd "C-u C-SPC"))
 
@@ -210,7 +210,7 @@
 
 
 ;; (if term-mode
-    ;; (hl-line-mode -1))
+;; (hl-line-mode -1))
 (make-variable-buffer-local 'global-hl-line-mode)
 (add-hook 'ansi-term-mode-hook (lambda () (setq global-hl-line-mode nil)))
 (add-hook 'Java/l-mode-hook (lambda () (setq global-hl-line-mode nil)))
@@ -221,7 +221,7 @@
 ;; use shift to move around windows
 (windmove-default-keybindings 'shift)
 (show-paren-mode t)
- ; Turn beep off
+;; Turn beep off
 (setq visible-bell nil)
 
 ;; Prompt to save the desktop upon exit

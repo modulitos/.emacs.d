@@ -31,9 +31,9 @@
 (message "Default Dir: %S" default-directory)
 
 ;; SESSION MANAGEMENT - Windows Mode
-  ;; (require 'desktop-menu)
+;; (require 'desktop-menu)
 ;; (add-to-list 'load-path "~/workspace/emacs/.emacs.d/elisp/windows2.el")
-  ;; (add-to-list 'load-path "~/workspace/emacs/.emacs.d/elisp/windows.el")
+;; (add-to-list 'load-path "~/workspace/emacs/.emacs.d/elisp/windows.el")
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'reverse)

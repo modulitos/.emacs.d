@@ -35,7 +35,6 @@
 ;; (require 'js2-mode)
 ;; (require 'web-mode)
 
-(require 'dired+)
 
 (dumb-jump-mode)
 ;; rebind the "dump jump previous" keybinding:
