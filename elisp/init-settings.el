@@ -264,5 +264,11 @@
      (define-key company-active-map (kbd "C-n") 'company-select-next)
      (define-key company-active-map (kbd "C-p") 'company-select-previous)))
 
+;; Emacs Privacy Agent
+
+;; tells emacs where to listen for gpg key's pin when opening an encrypted gpp file:
+(setf epa-pinentry-mode 'loopback)
+
+
 (provide 'init-settings)
 ;;; settings.el ends here
