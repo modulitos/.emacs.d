@@ -35,7 +35,6 @@
 ;; (require 'js2-mode)
 ;; (require 'web-mode)
 
-
 (dumb-jump-mode)
 ;; rebind the "dump jump previous" keybinding:
 (eval-after-load 'dumb-jump

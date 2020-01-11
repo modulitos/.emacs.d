@@ -57,6 +57,7 @@
 (require 'init-erc)
 (require 'init-javascript)
 (require 'init-rust)
+(require 'init-ruby)
 (require 'init-python)
 
 ;; SETTINGS
