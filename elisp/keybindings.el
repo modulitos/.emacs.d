@@ -43,6 +43,7 @@
 
 ;; BUFFERS
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
+(global-set-key (kbd "s-p") 'helm-buffers-list)
 (with-eval-after-load 'evil-maps
   (define-key evil-normal-state-map (kbd "C-p") nil))
                                         ; switch keybindings for "save buffer" and "isearch-forward"
