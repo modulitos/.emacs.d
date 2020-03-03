@@ -113,6 +113,8 @@
     (interactive)
     (set-mark-command t)))
 
+;; move back to previous mark
+(global-set-key (kbd "C--") 'pop-global-mark)
 
 ;; rect-mark.el
 ;; Rectangular mode editing - "C-x r" prefix, followed by normal mark/edit command.
