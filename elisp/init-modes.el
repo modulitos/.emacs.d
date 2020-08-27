@@ -7,11 +7,10 @@
 ;; functions shared across modes:
 (defun my-code-editor-hook ()
   "Hooks for all modes."
-  (message "inside my-editor-mode-hook!")
   (local-set-key (kbd "C-p") 'helm-buffers-list)
   (local-set-key (kbd "C-/") 'comment-line-or-region)
   (local-set-key (kbd "C-S-i") 'format-all-buffer)
-  (message "finished my-editor-mode-hook!"))
+  )
 
 ;; ELISP-MODE
 
@@ -104,8 +103,8 @@
              '("\\.m$" . matlab-mode))
 
 ;; LATEX
-  ;; (setq latex-run-command "pdflatex")
-  ;; (setq latex-run-command "xelatex")
+;; (setq latex-run-command "pdflatex")
+;; (setq latex-run-command "xelatex")
 ;; (add-hook 'latex-mode-hook 'flyspell-mode)
 ;; (add-hook 'latex-mode-hook
 (add-hook 'latex-mode-hook
@@ -209,29 +208,33 @@
 ;; (run-at-time 1 10 'indent-org-block-automatically)
 
 (setq org-mode-hook nil)
-(add-hook 'org-mode-hook
-          (lambda()
-            (local-unset-key [C-tab])
-            ;; allow window resizing via M-l and M-h
-            (local-unset-key (kbd "M-l"))
-            (local-unset-key (kbd "M-h"))
-            (local-unset-key (kbd "C-q"))
+(defun my-org-mode-hook ()
+  "Hooks for Org mode."
+  (local-unset-key [C-tab])
+  ;; allow window resizing via M-l and M-h
+  (local-unset-key (kbd "M-l"))
+  (local-unset-key (kbd "M-h"))
+  (local-unset-key (kbd "C-q"))
+  ;; this somehow gets bound to C-S-i, which conflicts with our
+  ;; whitespace cleanup binding:
+  (local-unset-key (kbd "S-TAB"))
 
-            ;; (local-set-key (kbd "C-c C-c") 'org-table-align)
-            ;; (local-unset-key (kbd "C-c C-c"))
-            (local-set-key (kbd "C-c C-f") 'org-table-calc-current-TBLFM)
-            ;; default is "C-c C-x C-j"
-            (local-set-key (kbd "C-c C-g c") 'org-clock-goto)
+  ;; (local-set-key (kbd "C-c C-c") 'org-table-align)
+  ;; (local-unset-key (kbd "C-c C-c"))
+  (local-set-key (kbd "C-c C-f") 'org-table-calc-current-TBLFM)
+  ;; default is "C-c C-x C-j"
+  (local-set-key (kbd "C-c C-g c") 'org-clock-goto)
 
-            (local-set-key (kbd "C-c C-b") 'org-babel-demarcate-block)
+  (local-set-key (kbd "C-c C-b") 'org-babel-demarcate-block)
 
-            (toggle-truncate-lines 0)
+  (toggle-truncate-lines 0)
 
-            (org-indent-mode t)
-            ;; https://github.com/org-trello/org-trello/issues/249
-            (let ((filename (buffer-file-name (current-buffer))))
-              (when (and filename (string= "trello" (file-name-extension filename)))
-                (org-trello-mode)))))
+  (org-indent-mode t)
+  ;; https://github.com/org-trello/org-trello/issues/249
+  (let ((filename (buffer-file-name (current-buffer))))
+    (when (and filename (string= "trello" (file-name-extension filename)))
+      (org-trello-mode))))
+(add-hook 'org-mode-hook  'my-org-mode-hook);
 ;; (local-unset-key (kbd "C-tab"))))
 ;; (local-unset-key (kbd "<C-tab>"))))
 ;; (org-force-cycle-archived) It is bound to <C-tab>.
