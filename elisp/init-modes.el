@@ -176,6 +176,7 @@
 (add-to-list 'auto-mode-alist '("\\.scss?\\'" . scss-mode))
 
 ;; ORG MODE
+(require 'org-tempo)
 (setq org-log-done t)
 (define-key global-map "\C-cl" 'org-store-link)
 (setq org-export-html-style
@@ -215,9 +216,9 @@
   (local-unset-key (kbd "M-l"))
   (local-unset-key (kbd "M-h"))
   (local-unset-key (kbd "C-q"))
-  ;; this somehow gets bound to C-S-i, which conflicts with our
-  ;; whitespace cleanup binding:
-  (local-unset-key (kbd "S-TAB"))
+
+  ;; override default keybinding here:
+  (local-set-key (kbd "C-S-i") 'whitespace-cleanup)
 
   ;; (local-set-key (kbd "C-c C-c") 'org-table-align)
   ;; (local-unset-key (kbd "C-c C-c"))
@@ -562,48 +563,6 @@
 
 (setq doc-view-resolution 300)
 
-;; PDF-View
-(evil-set-initial-state 'pdf-view-mode 'emacs)
-;; Start server
-(pdf-tools-install)
-
-
-(defun adjust-pdf-view ()
-  (local-unset-key (kbd "u"))
-  (local-unset-key (kbd "d"))
-
-  (local-unset-key (kbd "k"))
-  (local-unset-key (kbd "j"))
-  (local-unset-key (kbd "l"))
-  (local-unset-key (kbd "h"))
-
-  (local-unset-key (kbd "-"))
-  (local-unset-key (kbd "+"))
-
-  (local-set-key (kbd "d")
-                 ;; (message "scrolling down")
-                 'image-scroll-up)
-  (local-set-key (kbd "u")
-                 ;; (message "scrolling down")
-                 'image-scroll-down)
-
-  (local-set-key (kbd "k")
-                 'pdf-view-previous-line-or-previous-page)
-  (local-set-key (kbd "j")
-                 'pdf-view-next-line-or-next-page)
-  (local-set-key (kbd "h")
-                 'image-backward-hscroll)
-  (local-set-key (kbd "l")
-                 'image-forward-hscroll)
-
-  (local-set-key (kbd "-")
-                 'pdf-view-shrink)
-  (local-set-key (kbd "+")
-                 'pdf-view-enlarge))
-
-(add-hook 'pdf-view-mode-hook
-          'adjust-pdf-view)
-
 ;; IMAGE MODE
 (setq image-continuous nil)
 (evil-set-initial-state 'image-mode 'emacs)
@@ -648,6 +607,18 @@
 (add-hook 'dired-mode-hook 'dired-mode-activate)
 
 ;; SHELL SCRIPT MODE
+(add-to-list 'auto-mode-alist '("\\.bash*" . sh-mode))
+
+(defun my-shell-mode-hook ()
+  "Hooks for 'sh-mode'."
+  (message "inside sh mode hook!!!")
+  ;; TODO: consider using use-package instead
+  (flymake-shellcheck-load)
+  (flymake-mode)
+  ;; (setq flymake-shellcheck-path )
+  )
+(add-hook 'sh-mode-hook 'my-shell-mode-hook)
+
 
 ;; CONF MODE
 ;; CONF SPACE MODE
@@ -661,7 +632,7 @@
 ;; (add-to-list 'auto-mode-alist '("\\.tf*" . conf-mode))
 
 (defun conf-mode-activate ()
-  "custom settings for conf-mode"
+  "Custom settings for 'conf-mode'."
   (interactive)
   (message "conf mode!!!")
   (my-code-editor-hook))

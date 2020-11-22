@@ -192,6 +192,7 @@
   (eldoc-mode +1)
   (add-node-modules-path)
   (prettier-js-mode 1)
+  (my-code-editor-hook)
   (tide-hl-identifier-mode +1)
   ;; company is an optional dependency. You have to
   ;; install it separately via package-install

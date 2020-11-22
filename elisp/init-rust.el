@@ -29,11 +29,14 @@
 (add-hook 'racer-mode-hook #'eldoc-mode)
 (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
 
+(exec-path-from-shell-copy-env "RUST_SRC_PATH")
+
 (defun my-rust-mode-hook ()
   "Hooks for Rust mode."
   (message "inside rust hook3!!!")
   (setq racer-cmd (concat (getenv "HOME") "/.cargo/bin/racer"))
   (setq racer-rust-src-path (getenv "RUST_SRC_PATH"))
+  ;; (setq racer-rust-src-path (expand-file-name (getenv "RUST_SRC_PATH")))
   (my-code-editor-hook)
   (format-all-mode)
 
@@ -46,8 +49,8 @@
   ;; (superword-mode nil) ;; not working...
   (local-set-key (kbd "C-S-i") 'rust-format-buffer)
   (modify-syntax-entry ?_ "w") ;; allows us to treat _ as part of a word!
-  (electric-pair-mode 1)
-  (setq electric-pair-preserve-balance nil) ;; allows us to type over the closing bracket, avoiding "Node<T>>"
+  ;; (electric-pair-mode 1)
+  ;; (setq electric-pair-preserve-balance nil) ;; allows us to type over the closing bracket, avoiding "Node<T>>"
   )
 
 (add-hook 'rust-mode-hook  'my-rust-mode-hook);
