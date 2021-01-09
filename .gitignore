@@ -18,4 +18,3 @@ image-dired
 elisp/init-servers.el
 emojis
 elpy
-.flycheck_init.el

@@ -56,8 +56,9 @@
 
 (helm-mode 1)
 
-;; (load "jde") ;; Lazy-load instead
-;;Lazy-load JDEE
+;; DTRACE SCRIPT MODE
+(add-to-list 'auto-mode-alist '("\\.d\\'" . dtrace-script-mode))
+
 
 ;; NGINX
 (add-to-list 'auto-mode-alist '("\\.conf\\'" . nginx-mode))
@@ -232,9 +233,7 @@
 
   (org-indent-mode t)
   ;; https://github.com/org-trello/org-trello/issues/249
-  (let ((filename (buffer-file-name (current-buffer))))
-    (when (and filename (string= "trello" (file-name-extension filename)))
-      (org-trello-mode))))
+  )
 (add-hook 'org-mode-hook  'my-org-mode-hook);
 ;; (local-unset-key (kbd "C-tab"))))
 ;; (local-unset-key (kbd "<C-tab>"))))
@@ -607,17 +606,20 @@
 (add-hook 'dired-mode-hook 'dired-mode-activate)
 
 ;; SHELL SCRIPT MODE
-(add-to-list 'auto-mode-alist '("\\.bash*" . sh-mode))
-
-(defun my-shell-mode-hook ()
-  "Hooks for 'sh-mode'."
-  (message "inside sh mode hook!!!")
-  ;; TODO: consider using use-package instead
-  (flymake-shellcheck-load)
-  (flymake-mode)
-  ;; (setq flymake-shellcheck-path )
+(use-package flymake-shellcheck
+  :commands flymake-shellcheck-load
+  :config
+  (defun my-shell-mode-hook ()
+    "Hooks for 'sh-mode'."
+    (message "inside sh mode hook")
+    (flymake-shellcheck-load)
+    (flymake-mode)
+    ;; (setq flymake-shellcheck-path )
+    )
+  :init
+  (add-hook 'sh-mode-hook 'my-shell-mode-hook)
+  (add-to-list 'auto-mode-alist '("\\.bash*" . sh-mode))
   )
-(add-hook 'sh-mode-hook 'my-shell-mode-hook)
 
 
 ;; CONF MODE
