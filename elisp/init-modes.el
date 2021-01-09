@@ -178,63 +178,75 @@
 
 ;; ORG MODE
 (require 'org-tempo)
-(setq org-log-done t)
-(define-key global-map "\C-cl" 'org-store-link)
-(setq org-export-html-style
-      "<link rel=\"stylesheet\" type=\"text/css\" href=\"org-style.css\" />")
+;; (setq org-log-done t)
+;; (define-key global-map "\C-cl" 'org-store-link)
+;; (setq org-export-html-style
+;;       "<link rel=\"stylesheet\" type=\"text/css\" href=\"org-style.css\" />")
 (setq org-export-html-style-include-scripts nil
       org-export-html-style-include-default nil)
 
-(setq org-todo-keywords
-      '((sequence "TODO" "IN-PROGRESS" "WAITING" "DONE")))
-(setq org-html-xml-declaration (quote (("html" . "")
-                                       ("was-html" . "<?xml version=\"1.0\" encoding=\"%s\"?>")
-                                       ("php" . "<?php echo \"<?xml version=\\\"1.0\\\" encoding=\\\"%s\\\" ?>\"; ?>"))))
+;; (setq org-todo-keywords
+;;       '((sequence "TODO" "IN-PROGRESS" "WAITING" "DONE")))
+;; (setq org-html-xml-declaration (quote (("html" . "")
+;;                                        ("was-html" . "<?xml version=\"1.0\" encoding=\"%s\"?>")
+;;                                        ("php" . "<?php echo \"<?xml version=\\\"1.0\\\" encoding=\\\"%s\\\" ?>\"; ?>"))))
 
 ;; shortcut this with C-c C-v d then language
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((python . t)
-   (js . t)
-   (org . t)
-   (shell . t)))
+;; (org-babel-do-load-languages
+;;  'org-babel-load-languages
+;;  '((python . t)
+;;    (js . t)
+;;    (org . t)
+;;    (shell . t)))
 ;; (R . t)))
 
-(setq org-src-fontify-natively t)
-(defun indent-org-block-automatically ()
-  (when (org-in-src-block-p)
-    (org-edit-special)
-    (indent-region (point-min) (point-max))
-    (org-edit-src-exit)))
+;; (setq org-src-fontify-natively t)
+;; (defun indent-org-block-automatically ()
+;;   (when (org-in-src-block-p)
+;;     (org-edit-special)
+;;     (indent-region (point-min) (point-max))
+;;     (org-edit-src-exit)))
 
 ;; (run-at-time 1 10 'indent-org-block-automatically)
 
-(setq org-mode-hook nil)
-(defun my-org-mode-hook ()
-  "Hooks for Org mode."
-  (local-unset-key [C-tab])
-  ;; allow window resizing via M-l and M-h
-  (local-unset-key (kbd "M-l"))
-  (local-unset-key (kbd "M-h"))
-  (local-unset-key (kbd "C-q"))
+;; (setq org-mode-hook nil)
 
-  ;; override default keybinding here:
-  (local-set-key (kbd "C-S-i") 'whitespace-cleanup)
+(use-package org
+  :mode (("\\.org$" . org-mode))
+  :config
+  (defun my-org-mode-hook ()
+    "Hooks for Org mode."
+    (local-unset-key [C-tab])
+    ;; allow window resizing via M-l and M-h
+    (local-unset-key (kbd "M-l"))
+    (local-unset-key (kbd "M-h"))
+    (local-unset-key (kbd "C-q"))
 
-  ;; (local-set-key (kbd "C-c C-c") 'org-table-align)
-  ;; (local-unset-key (kbd "C-c C-c"))
-  (local-set-key (kbd "C-c C-f") 'org-table-calc-current-TBLFM)
-  ;; default is "C-c C-x C-j"
-  (local-set-key (kbd "C-c C-g c") 'org-clock-goto)
+    ;; override default keybinding here:
+    (local-set-key (kbd "C-S-i") 'whitespace-cleanup)
 
-  (local-set-key (kbd "C-c C-b") 'org-babel-demarcate-block)
+    ;; (local-set-key (kbd "C-c C-c") 'org-table-align)
+    ;; (local-unset-key (kbd "C-c C-c"))
+    ;; (local-set-key (kbd "C-c C-f") 'org-table-calc-current-TBLFM)
+    ;; default is "C-c C-x C-j"
+    ;; (local-set-key (kbd "C-c C-g c") 'org-clock-goto)
 
-  (toggle-truncate-lines 0)
+    ;; (local-set-key (kbd "C-c C-b") 'org-babel-demarcate-block)
 
-  (org-indent-mode t)
-  ;; https://github.com/org-trello/org-trello/issues/249
+    (toggle-truncate-lines 0)
+
+    (org-indent-mode t)
+    ;; https://github.com/org-trello/org-trello/issues/249
+    ;; (let ((filename (buffer-file-name (current-buffer))))
+    ;;   (when (and filename (string= "trello" (file-name-extension filename)))
+    ;;     (org-trello-mode)))
+    )
+  :init
+  (add-hook 'org-mode-hook  'my-org-mode-hook);
   )
-(add-hook 'org-mode-hook  'my-org-mode-hook);
+
+
+;; (add-hook 'org-mode-hook  'my-org-mode-hook);
 ;; (local-unset-key (kbd "C-tab"))))
 ;; (local-unset-key (kbd "<C-tab>"))))
 ;; (org-force-cycle-archived) It is bound to <C-tab>.
@@ -243,15 +255,15 @@
 (define-key global-map "\C-ca" 'org-agenda)
 
 ;; ORG-TRELLO
-(custom-set-variables '(org-trello-files '("~/Documents/mgmt-docs/calendar.trello" "~/Documents/mgmt-docs/haxgeo-trello.trello" "~/Documents/mgmt-docs/floortek-calendar.trello") ))
+;; (custom-set-variables '(org-trello-files '("~/Documents/mgmt-docs/calendar.trello" "~/Documents/mgmt-docs/haxgeo-trello.trello" "~/Documents/mgmt-docs/floortek-calendar.trello") ))
 
 ;; org-trello major mode for all .trello files
-(add-to-list 'auto-mode-alist '("\\.trello$" . org-mode))
+;; (add-to-list 'auto-mode-alist '("\\.trello$" . org-mode))
 
-(add-hook 'org-trello-mode-hook
-          (lambda ()
-            (org-indent-mode t)
-            (toggle-truncate-lines 0)))
+;; (add-hook 'org-trello-mode-hook
+;;           (lambda ()
+;;             (org-indent-mode t)
+;;             (toggle-truncate-lines 0)))
 
 
 ;; ORG-TIMESHEET and ORG-AGENDA
