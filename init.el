@@ -76,6 +76,7 @@
  '(ansi-color-names-vector
    ["#3F3F3F" "#CC9393" "#7F9F7F" "#F0DFAF" "#8CD0D3" "#DC8CC3" "#93E0E3" "#DCDCCC"])
  '(coffee-args-compile '("-c" "--no-header" "--bare"))
+ '(coffee-indent-like-python-mode t)
  '(coffee-tab-width 2)
  '(company-search-regexp-function 'company-search-flex-regexp)
  '(css-indent-offset 2)
@@ -101,7 +102,7 @@
  '(org-trello-current-prefix-keybinding "C-c o" nil (org-trello))
  '(org-trello-files '("~/Documents/mgmt-docs/haxgeo-trello.trello") nil (org-trello))
  '(package-selected-packages
-   '(dtrace-script-mode flymake-shellcheck rubocopfmt rubocop json-mode markdown-mode flycheck-mypy format-all iedit flymake-json use-package racer flycheck-rust rust-mode emojify prettier-js add-node-modules-path evil company-web tide pdf-tools git-gutter evil-magit magit yaml-mode web-mode w3m tss timesheet tern-auto-complete swiper php-mode paredit org-trello markdown-mode+ js2-refactor js-comint ix image+ htmlize helm-fuzzy-find helm-fuzzier helm-flyspell helm-dired-recent-dirs haskell-mode haml-mode flycheck exec-path-from-shell evil-smartparens evil-org erc-hl-nicks elpy dumb-jump django-snippets dired+ coffee-mode bookmark+ ac-js2))
+   '(undo-tree dtrace-script-mode flymake-shellcheck rubocopfmt rubocop json-mode markdown-mode flycheck-mypy format-all iedit flymake-json use-package racer flycheck-rust rust-mode emojify prettier-js add-node-modules-path evil company-web tide pdf-tools git-gutter evil-magit magit yaml-mode web-mode w3m tss timesheet tern-auto-complete swiper php-mode paredit org-trello markdown-mode+ js2-refactor js-comint ix image+ htmlize helm-fuzzy-find helm-fuzzier helm-flyspell helm-dired-recent-dirs haskell-mode haml-mode flycheck exec-path-from-shell evil-smartparens evil-org erc-hl-nicks elpy dumb-jump django-snippets dired+ coffee-mode bookmark+ ac-js2))
  '(python-indent-guess-indent-offset nil)
  '(safe-local-variable-values
    '((encoding . utf-8)
@@ -117,6 +118,7 @@
  '(typescript-auto-indent-flag t)
  '(typescript-expr-indent-offset 0)
  '(typescript-indent-level 2)
+ '(undo-tree-auto-save-history nil)
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map
    '((20 . "#BC8383")

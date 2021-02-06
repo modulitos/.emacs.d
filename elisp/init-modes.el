@@ -278,113 +278,17 @@
 ;;                 (org-agenda-time-grid nil))) t)
 
 ;; EVIL MODE
-(eval-after-load "evil-maps"
-  (dolist (map '(evil-motion-state-map
-                 evil-insert-state-map
-                 evil-emacs-state-map))
-    (define-key (eval map) "\C-w" nil)))
-(fset 'evil-visual-update-x-selection 'ignore)
-;; Clipboard bypassing START
-;; http://www.codejury.com/bypassing-the-clipboard-in-emacs-evil-mode/
-;;;; Support
 
-(defmacro without-evil-mode (&rest do-this)
-  ;; Check if evil-mode is on, and disable it temporarily
-  `(let ((evil-mode-is-on (evil-mode?)))
-     (if evil-mode-is-on
-         (disable-evil-mode))
-     (ignore-errors
-       ,@do-this)
-     (if evil-mode-is-on
-         (enable-evil-mode))))
-
-(defmacro evil-mode? ()
-  "Checks if evil-mode is active. Uses Evil's state to check."
-  `evil-state)
-
-(defmacro disable-evil-mode ()
-  "Disable evil-mode with visual cues."
-  `(progn
-     (evil-mode 0)
-     (message "Evil mode disabled")))
-
-(defmacro enable-evil-mode ()
-  "Enable evil-mode with visual cues."
-  `(progn
-     (evil-mode 1)
-     (message "Evil mode enabled")))
-
-;;;; Clipboard bypass
-
-;; delete: char
-(evil-define-operator evil-destroy-char (beg end type register yank-handler)
-  :motion evil-forward-char
-  (evil-delete-char beg end type ?_))
-
-;; delete: char (backwards)
-(evil-define-operator evil-destroy-backward-char (beg end type register yank-handler)
-  :motion evil-forward-char
-  (evil-delete-backward-char beg end type ?_))
-
-;; delete: text object
-(evil-define-operator evil-destroy (beg end type register yank-handler)
-  "Vim's 's' without clipboard."
-  (evil-delete beg end type ?_ yank-handler))
-
-;; delete: to end of line
-(evil-define-operator evil-destroy-line (beg end type register yank-handler)
-  :motion nil
-  :keep-visual t
-  (interactive "<R><x>")
-  (evil-delete-line beg end type ?_ yank-handler))
-
-;; delete: whole line
-(evil-define-operator evil-destroy-whole-line (beg end type register yank-handler)
-  :motion evil-line
-  (interactive "<R><x>")
-  (evil-delete-whole-line beg end type ?_ yank-handler))
-
-;; change: text object
-(evil-define-operator evil-destroy-change (beg end type register yank-handler delete-func)
-  (evil-change beg end type ?_ yank-handler delete-func))
-
-;; paste: before
-(defun evil-destroy-paste-before ()
-  (interactive)
-  (without-evil-mode
-   (delete-region (point) (mark))
-   (evil-paste-before 1)))
-
-;; paste: after
-(defun evil-destroy-paste-after ()
-  (interactive)
-  (without-evil-mode
-   (delete-region (point) (mark))
-   (evil-paste-after 1)))
-
-;; paste: text object
-(evil-define-operator evil-destroy-replace (beg end type register yank-handler)
-  (evil-destroy beg end type register yank-handler)
-  (evil-paste-before 1 register))
-
-;; Clipboard bypass key rebindings
-(define-key evil-normal-state-map "s" 'evil-destroy)
-(define-key evil-normal-state-map "S" 'evil-destroy-line)
-(define-key evil-normal-state-map "c" 'evil-destroy-change)
-(define-key evil-normal-state-map "x" 'evil-destroy-char)
-(define-key evil-normal-state-map "X" 'evil-destroy-whole-line)
-(define-key evil-normal-state-map "Y" 'evil-copy-to-end-of-line)
-(define-key evil-visual-state-map "P" 'evil-destroy-paste-before)
-(define-key evil-visual-state-map "p" 'evil-destroy-paste-after)
-
-;; Clipboard bypassing END
 
 ;; Enable Evil mode as defuault
 (evil-mode 1)
+(global-undo-tree-mode)
+(evil-set-undo-system 'undo-tree)
 (add-hook 'evil-mode-hook
           (lambda()
             (local-unset-key "C-/")
             (local-unset-key "C-z")))
+
 (eval-after-load "evil-maps"
   (dolist (map '(evil-motion-state-map
 
@@ -393,28 +297,13 @@
     (define-key (eval map) "\C-z" nil)))
 ;;    (define-key (eval map) (kbd "C-/") nil)))
 
-(add-hook 'undo-tree-mode (lambda () (local-unset-key "C-/")))
 
-(define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
-(define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
-;; (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up) ;; C-u interferes with org-mode bindings
-;; (define-key evil-visual-state-map (kbd "C-u") 'evil-scroll-up)
-(define-key evil-insert-state-map (kbd "C-u")
-  (lambda ()
-    (interactive)
-    (evil-delete (point-at-bol) (point))))
 
 ;; evil-little-word bindings for camelCase:
 ;; (define-key evil-operator-state-map (kbd "b") 'evil-backward-little-word-begin)
 ;; (define-key evil-normal-state-map (kbd "w") 'subword-right)
 ;; (define-key evil-normal-state-map (kbd "b") 'subword-left)
 
-;; key translations
-;; ie: translate zh to C-h and zx to C-x
-(define-key evil-normal-state-map "z" nil)
-(define-key evil-motion-state-map "zu" 'universal-argument)
-(define-key key-translation-map (kbd "zh") (kbd "C-h"))
-(define-key key-translation-map (kbd "zx") (kbd "C-x"))
 
 ;;; esc quits pretty much anything (like pending prompts in the minibuffer)
 
@@ -500,6 +389,7 @@
 ;; Hooks to enabe/disable evil in other modes
 (add-hook 'term-mode-hook 'evil-emacs-state)
 (add-hook 'ansi-term-mode-hook 'evil-emacs-state)
+
 
 ;; CALENDAR MODE
 (copy-face 'default 'calendar-iso-week-header-face)
