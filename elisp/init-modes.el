@@ -282,8 +282,16 @@
 
 ;; Enable Evil mode as defuault
 (evil-mode 1)
-(global-undo-tree-mode)
-(evil-set-undo-system 'undo-tree)
+
+(global-undo-tree-mode -1)
+(evil-set-undo-system 'undo-fu)
+
+(use-package undo-fu
+  :config
+  (global-undo-tree-mode -1)
+  (define-key evil-normal-state-map "u" 'undo-fu-only-undo)
+  (define-key evil-normal-state-map "\C-r" 'undo-fu-only-redo))
+
 (add-hook 'evil-mode-hook
           (lambda()
             (local-unset-key "C-/")
@@ -294,7 +302,11 @@
 
                  evil-insert-state-map
                  evil-emacs-state-map))
-    (define-key (eval map) "\C-z" nil)))
+    (define-key (eval map) "\C-z" nil)
+    (define-key (eval map) "\C-w" nil)
+    )
+  )
+
 ;;    (define-key (eval map) (kbd "C-/") nil)))
 
 
