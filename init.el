@@ -153,10 +153,13 @@
  '(whitespace-style '(trailing))
  '(znc-erc-ssl-connector 'erc-tls))
 
-;;; init.el ends here
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+;; https://www.emacswiki.org/emacs/DesktopMultipleSaveFiles
+(setq desktop-path '("~/workspaces/emacs/main" "~" "."))
+
+;;; init.el ends here
