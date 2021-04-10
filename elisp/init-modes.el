@@ -11,6 +11,19 @@
   (local-set-key (kbd "C-S-i") 'format-all-buffer)
   )
 
+(use-package format-all
+  :ensure t
+  ;; Select the default formatter without opening a dialog:
+  :hook ((format-all-mode . format-all-ensure-formatter))
+
+  ;; ;; Override default formatters:
+  ;; :config
+  ;;   (custom-set-variables
+  ;;  '(format-all-formatters
+  ;;    (quote
+  ;;     (("Python" yapf)))))
+  )
+
 ;; ELISP-MODE
 
 (defun elisp-mode-config ()
