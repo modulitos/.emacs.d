@@ -583,9 +583,8 @@
     (flymake-mode)
     ;; (setq flymake-shellcheck-path )
     )
-  :init
-  (add-hook 'sh-mode-hook 'my-shell-mode-hook)
-  (add-to-list 'auto-mode-alist '("\\.bash*" . sh-mode))
+  :mode (("\\.sh$" . sh-mode) ("\\.bash*" . sh-mode) (".direnvrc" . sh-mode))
+  :hook ((sh-mode . my-shell-mode-hook))
   )
 
 
