@@ -247,8 +247,7 @@
     ;;   (when (and filename (string= "trello" (file-name-extension filename)))
     ;;     (org-trello-mode)))
     )
-  :init
-  (add-hook 'org-mode-hook  'my-org-mode-hook);
+  :hook ((org-mode . my-org-mode-hook))
   )
 
 
