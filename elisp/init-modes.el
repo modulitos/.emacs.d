@@ -645,5 +645,25 @@
 (global-set-key (kbd "C-x n") 'git-gutter:next-hunk)
 
 
+;; abbrev-mode
+(define-abbrev-table 'global-abbrev-table '(
+                                            ("alpha0" "α")
+                                            ("beta0" "β")
+                                            ("gamma0" "γ")
+                                            ("theta0" "θ")
+                                            ("inf0" "∞")
+
+                                            ("ar10" "→")
+                                            ("ar20" "⇒")
+                                            ("pi0" "π")
+                                            ("sigma0" "σ")
+                                            ("union0" "∪")
+                                            ("intersection0" "∩")
+                                            ("bowtie0" "⋈")
+                                            ("rho0" "ρ")
+                                            ))
+
+(setq-default abbrev-mode t)
+
 (provide 'init-modes)
 ;;; init-modes.el ends here
