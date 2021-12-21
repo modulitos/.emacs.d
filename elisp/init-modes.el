@@ -660,7 +660,13 @@
                                             ("union0" "∪")
                                             ("intersection0" "∩")
                                             ("bowtie0" "⋈")
+                                            ("join0" "⋈")
                                             ("rho0" "ρ")
+                                            ("almosteq0" "≈")
+                                            ("land0" "∧")
+                                            ("lor0" "∨")
+                                            ("lnot0" "¬")
+                                            ("cross0" "×")
                                             ))
 
 (setq-default abbrev-mode t)
