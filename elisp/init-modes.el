@@ -672,6 +672,8 @@
                                             ("supersetEq0" "⊇")
                                             ("subset0" "⊂")
                                             ("subsetEq0" "⊆")
+                                            ("element0" "∈")
+                                            ("exists0" "∃")
                                             ))
 
 (setq-default abbrev-mode t)
