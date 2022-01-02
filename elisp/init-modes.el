@@ -668,6 +668,10 @@
                                             ("lor0" "∨")
                                             ("lnot0" "¬")
                                             ("cross0" "×")
+                                            ("superset0" "⊃")
+                                            ("supersetEq0" "⊇")
+                                            ("subset0" "⊂")
+                                            ("subsetEq0" "⊆")
                                             ))
 
 (setq-default abbrev-mode t)
