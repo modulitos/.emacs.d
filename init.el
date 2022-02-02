@@ -67,7 +67,7 @@
 (require 'keybindings)
 
 
-(require 'init-servers)
+;; (require 'init-servers)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

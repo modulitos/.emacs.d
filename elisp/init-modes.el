@@ -1,4 +1,4 @@
-;;; Package --- Summary
+;; Package --- Summary
 ;;; Commentary:
 ;;; configs for various modes, dumping ground
 ;;; TODO: break this out into separate files
@@ -6,9 +6,11 @@
 ;; functions shared across modes:
 (defun my-code-editor-hook ()
   "Hooks for all modes."
+  ;; (message "inside my-editor-mode-hook!")
   (local-set-key (kbd "C-p") 'helm-buffers-list)
   (local-set-key (kbd "C-/") 'comment-line-or-region)
   (local-set-key (kbd "C-S-i") 'format-all-buffer)
+  ;; (message "finished my-editor-mode-hook!")
   )
 
 (use-package format-all
@@ -135,8 +137,13 @@
                '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t)))
 
 ;; MARKDOWN
-(custom-set-variables
- '(markdown-command "~/.cabal/bin/pandoc"))
+
+(if (eq system-type 'darwin)
+    (custom-set-variables
+     '(markdown-command "/usr/local/bin/pandoc"))
+  (custom-set-variables
+   '(markdown-command "~/.cabal/pandoc"))
+  )
 (setq markdown-fontify-code-blocks-natively t)
 (add-to-list 'auto-mode-alist '("\\.text\\'" "\\.markdown\\'" "\\.md\\'" . markdown-mode))
 
@@ -251,6 +258,36 @@
   )
 
 
+;; (add-hook 'org-mode-hook  'my-org-mode-hook);
+;; (setq org-mode-hook nil)
+;; (defun my-org-mode-hook ()
+;;   "Hooks for Org mode."
+;;   (local-unset-key [C-tab])
+;;   ;; allow window resizing via M-l and M-h
+;;   (local-unset-key (kbd "M-l"))
+;;   (local-unset-key (kbd "M-h"))
+;;   (local-unset-key (kbd "C-q"))
+;;
+;;   ;; override default keybinding here:
+;;   (local-set-key (kbd "C-S-i") 'whitespace-cleanup)
+;;
+;;   ;; note: C-c C-, will create a #+begin_src block
+;;
+;;   ;; (local-set-key (kbd "C-c C-c") 'org-table-align)
+;;   ;; (local-unset-key (kbd "C-c C-c"))
+;;   (local-set-key (kbd "C-c C-f") 'org-table-calc-current-TBLFM)
+;;   ;; default is "C-c C-x C-j"
+;;   (local-set-key (kbd "C-c C-g c") 'org-clock-goto)
+;;
+;;   (local-set-key (kbd "C-c C-b") 'org-babel-demarcate-block)
+;;
+;;   (toggle-truncate-lines 0)
+;;
+;;   (org-indent-mode t)
+;;   ;; https://github.com/org-trello/org-trello/issues/249
+;;   (let ((filename (buffer-file-name (current-buffer))))
+;;     (when (and filename (string= "trello" (file-name-extension filename)))
+;;       (org-trello-mode))))
 ;; (add-hook 'org-mode-hook  'my-org-mode-hook);
 ;; (local-unset-key (kbd "C-tab"))))
 ;; (local-unset-key (kbd "<C-tab>"))))
@@ -585,6 +622,11 @@
     )
   :mode (("\\.sh$" . sh-mode) ("\\.bash*" . sh-mode) (".direnvrc" . sh-mode))
   :hook ((sh-mode . my-shell-mode-hook))
+  ;; :hook (
+  ;;        (message "inside sh mode hook")
+  ;;        (flymake-shellcheck-load)
+  ;;        (flymake-mode)
+  ;;        )
   )
 
 

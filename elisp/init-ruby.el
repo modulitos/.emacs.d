@@ -3,6 +3,9 @@
 ;; RUBY MODE
 
 ;;; Code:
+
+;; (setq flycheck-ruby-rubocop-executable "~/.asdf/shims/ruby")
+
 (defun my-ruby-mode-hook ()
   "Ruby mode hook!"
   (my-code-editor-hook)
