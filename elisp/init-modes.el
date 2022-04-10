@@ -238,6 +238,9 @@
     ;; override default keybinding here:
     (local-set-key (kbd "C-S-i") 'whitespace-cleanup)
 
+    ;; evil binds <tab> to evil-jump-forward by default.
+    (evil-define-key 'normal org-mode-map (kbd "<tab>") #'org-cycle)
+
     ;; (local-set-key (kbd "C-c C-c") 'org-table-align)
     ;; (local-unset-key (kbd "C-c C-c"))
     ;; (local-set-key (kbd "C-c C-f") 'org-table-calc-current-TBLFM)
