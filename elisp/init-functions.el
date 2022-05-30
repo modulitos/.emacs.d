@@ -14,16 +14,40 @@
     (delete-region (region-beginning) (region-end))
     (insert reversed)))
 
-;; These next two functions copy the filename to the os and emacs clipboards
-;; http://stackoverflow.com/questions/18812938/copy-full-file-path-into-copy-paste-clipboard
-(defun clip-file ()
-  "Put the current file name on the clipboard"
-  (interactive)
-  (let ((filename (if (equal major-mode 'dired-mode)
-                      (file-name-directory default-directory)
-                    (buffer-file-name))))
-    (when filename
-      (x-select-text filename))))
+
+;; This is only really needed on -nw modes of emacs, but can't hurt to have it on GTK.
+(when (eq system-type 'gnu/linux)
+  ;; https://www.emacswiki.org/emacs/CopyAndPaste
+  ;; credit: yorickvP on Github
+  (setq wl-copy-process nil)
+
+  (defun wl-copy (text)
+    (setq wl-copy-process (make-process :name "wl-copy"
+                                        :buffer nil
+                                        :command '("wl-copy" "-f" "-n")
+                                        :connection-type 'pipe))
+    (process-send-string wl-copy-process text)
+    (process-send-eof wl-copy-process))
+
+  (defun wl-paste ()
+    (if (and wl-copy-process (process-live-p wl-copy-process))
+        nil ; should return nil if we're the current paste owner
+      (shell-command-to-string "wl-paste -n | tr -d \r")))
+  (setq interprogram-cut-function 'wl-copy)
+  (setq interprogram-paste-function 'wl-paste)
+  )
+
+;; ;; These next two functions copy the filename to the os and emacs clipboards
+;; ;; http://stackoverflow.com/questions/18812938/copy-full-file-path-into-copy-paste-clipboard
+;; (defun clip-file ()
+;;   "Put the current file name on the clipboard"
+;;   (interactive)
+;;   (let ((filename (if (equal major-mode 'dired-mode)
+;;                       (file-name-directory default-directory)
+;;                     (buffer-file-name))))
+;;     (when filename
+;;       ;; (x-select-text filename))))
+;;       (wl-copy filename))))
 
 (defun copy-buffer-file-name-as-kill (choice)
   "Copy the buffer-file-name to the kill-ring"
@@ -61,24 +85,24 @@
     (unhighlight-regexp "TestQueryLogic")
     (unhighlight-regexp "Global logger is initialized")
     (highlight-regexp "testGudermann" font-lock-preprocessor-face) ;bold blue
-    (message "Highlighting: testGudermann") 
+    (message "Highlighting: testGudermann")
     (put this-command 'state t))))
 (defun highlight-contacts.md ()
   "Toggle highlighting `TestQueryLogic' or `invoking fork-join' and `testGudermann'."
   (interactive)
-    (highlight-regexp "^\\([^(\#,)]*\\),"     font-lock-keyword-face) 
-    (message "Highlighting: contacts"))
+  (highlight-regexp "^\\([^(\#,)]*\\),"     font-lock-keyword-face)
+  (message "Highlighting: contacts"))
 
 (defun highlight-untangler ()
   "Toggle highlighting `Found relationship' or `updated region' or 'SEVERE' or 'WARNING'."
   (interactive)
-    (highlight-regexp "SEVERE"                font-lock-type-face) 
-    (highlight-regexp "WARNING"               font-lock-type-face) 
-    (highlight-regexp "Found relationship"     font-lock-warning-face) 
-    (highlight-regexp "updated region"     font-lock-type-face) 
-    (highlight-regexp "new region"     font-lock-type-face) 
-    (highlight-regexp "new line region"     font-lock-type-face) 
-    (message "Highlighting: untangler log file"))
+  (highlight-regexp "SEVERE"                font-lock-type-face)
+  (highlight-regexp "WARNING"               font-lock-type-face)
+  (highlight-regexp "Found relationship"     font-lock-warning-face)
+  (highlight-regexp "updated region"     font-lock-type-face)
+  (highlight-regexp "new region"     font-lock-type-face)
+  (highlight-regexp "new line region"     font-lock-type-face)
+  (message "Highlighting: untangler log file"))
 ;; Font-lock faces to choose from:
 ;; font-lock-warning-face ;gold
 ;; font-lock-function-name-face ;blue
@@ -127,7 +151,7 @@
   (interactive)
   (when killed-file-list
     (find-file (pop killed-file-list))))
-; alternative:
+                                        ; alternative:
 (defun find-last-killed-file ()
   (interactive)
   (let ((active-files (loop for buf in (buffer-list)
@@ -166,9 +190,9 @@
                   (point))))
     (message "comment-line-or-region: start: %s, end: %s" start end)
     (progn (comment-or-uncomment-region start end)(forward-line))))
-    ;; (comment-or-uncomment-region start end)))
-  ;; (if (not (region-active-p))
-  ;; (comment-dwim arg)))
+;; (comment-or-uncomment-region start end)))
+;; (if (not (region-active-p))
+;; (comment-dwim arg)))
 
 (defun shift-region (distance)
   (let ((mark (mark)))
@@ -237,7 +261,7 @@
       (sp-select-next-thing)
       (setq rbeg (region-beginning))
       (setq rend (region-end))
-      
+
       (while (> NUM 1)
         ;; well, sp-select-next-thing is kind of wierd
         (re-search-forward "<[^!]")
@@ -284,36 +308,36 @@ there's a region, all lines that region covers will be duplicated."
 ;; Emulate Eclipse's text movement for regions and lines.
 ;; Moves text up or down.
 (defun move-text-internal (arg)
-   (cond
-    ((and mark-active transient-mark-mode)
-     (if (> (point) (mark))
-            (exchange-point-and-mark))
-     (let ((column (current-column))
-              (text (delete-and-extract-region (point) (mark))))
-       (forward-line arg)
-       (move-to-column column t)
-       (set-mark (point))
-       (insert text)
-       (exchange-point-and-mark)
-       (setq deactivate-mark nil)))
-    (t
-     (beginning-of-line)
-     (when (or (> arg 0) (not (bobp)))
-       (forward-line)
-       (when (or (< arg 0) (not (eobp)))
-            (transpose-lines arg))
-       (forward-line -1)))))
+  (cond
+   ((and mark-active transient-mark-mode)
+    (if (> (point) (mark))
+        (exchange-point-and-mark))
+    (let ((column (current-column))
+          (text (delete-and-extract-region (point) (mark))))
+      (forward-line arg)
+      (move-to-column column t)
+      (set-mark (point))
+      (insert text)
+      (exchange-point-and-mark)
+      (setq deactivate-mark nil)))
+   (t
+    (beginning-of-line)
+    (when (or (> arg 0) (not (bobp)))
+      (forward-line)
+      (when (or (< arg 0) (not (eobp)))
+        (transpose-lines arg))
+      (forward-line -1)))))
 (defun move-text-down (arg)
-   "Move region (transient-mark-mode active) or current line
+  "Move region (transient-mark-mode active) or current line
   arg lines down."
-   (interactive "*p")
-   (move-text-internal arg))
+  (interactive "*p")
+  (move-text-internal arg))
 
 (defun move-text-up (arg)
-   "Move region (transient-mark-mode active) or current line
+  "Move region (transient-mark-mode active) or current line
   arg lines up."
-   (interactive "*p")
-   (move-text-internal (- arg)))
+  (interactive "*p")
+  (move-text-internal (- arg)))
 
 ;; Setting the backtab.
 (defun un-indent-by-removing-4-spaces ()
@@ -336,26 +360,26 @@ there's a region, all lines that region covers will be duplicated."
   (paredit-mode 1))
 
 ;; copy line
-  (defun copy-line (arg)
-    "Copy lines (as many as prefix argument) in the kill ring.
+(defun copy-line (arg)
+  "Copy lines (as many as prefix argument) in the kill ring.
       Ease of use features:
       - Move to start of next line.
       - Appends the copy on sequential calls.
       - Use newline as last char even on the last line of the buffer.
       - If region is active, copy its lines."
-    (interactive "p")
-    (let ((beg (line-beginning-position))
-          (end (line-end-position arg)))
-      (when mark-active
-        (if (> (point) (mark))
-            (setq beg (save-excursion (goto-char (mark)) (line-beginning-position)))
-          (setq end (save-excursion (goto-char (mark)) (line-end-position)))))
-      (if (eq last-command 'copy-line)
-          (kill-append (buffer-substring beg end) (< end beg))
-        (kill-ring-save beg end)))
-    (kill-append "\n" nil)
-    (beginning-of-line (or (and arg (1+ arg)) 2))
-    (if (and arg (not (= 1 arg))) (message "%d lines copied" arg)))
+  (interactive "p")
+  (let ((beg (line-beginning-position))
+        (end (line-end-position arg)))
+    (when mark-active
+      (if (> (point) (mark))
+          (setq beg (save-excursion (goto-char (mark)) (line-beginning-position)))
+        (setq end (save-excursion (goto-char (mark)) (line-end-position)))))
+    (if (eq last-command 'copy-line)
+        (kill-append (buffer-substring beg end) (< end beg))
+      (kill-ring-save beg end)))
+  (kill-append "\n" nil)
+  (beginning-of-line (or (and arg (1+ arg)) 2))
+  (if (and arg (not (= 1 arg))) (message "%d lines copied" arg)))
 
 
 ;; Original idea from

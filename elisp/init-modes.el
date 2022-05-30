@@ -138,9 +138,9 @@
 
 ;; MARKDOWN
 
-(if (eq system-type 'darwin)
-    (custom-set-variables
-     '(markdown-command "/usr/local/bin/pandoc"))
+(when (eq system-type 'darwin)
+  (custom-set-variables
+   '(markdown-command "/usr/local/bin/pandoc"))
   (custom-set-variables
    '(markdown-command "~/.cabal/pandoc"))
   )

@@ -53,7 +53,7 @@
 
 ;; MAJOR MODES
 
-;; Enable starting emacs without QT (in -nw mode)
+;; Enable starting emacs without GTK (in -nw mode)
 ;; https://codeberg.org/dnkl/foot/issues/186
 (add-to-list 'term-file-aliases '("foot" . "xterm"))
 (setq xterm-extra-capabilities '(modifyOtherKeys reportBackground setSelection getSelection))
