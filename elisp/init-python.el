@@ -3,7 +3,7 @@
 
 (setenv "PYTHONPATH” “/usr/bin/python")
 ;; For Python 3
-;;(setenv "PYTHONPATH” “/usr/bin/python3")
+;; (setenv "PYTHONPATH” “/usr/bin/python3")
 ;; (elpy-enable)
 (use-package elpy
   :ensure t
@@ -34,7 +34,8 @@
 (add-hook 'python-mode-hook 'python-mode-config)
 
 (defalias 'workon 'pyvenv-workon)
-(pyvenv-workon 'utils)
+;; Commented out due to this error: "json-read: JSON readtable error: 47":
+;; (pyvenv-workon 'utils)
 (setq elpy-rpc-backend "jedi")
 
 ;; Use jedi instead of ropemacs when TRAMP is detected

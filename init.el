@@ -53,6 +53,11 @@
 
 ;; MAJOR MODES
 
+;; Enable starting emacs without QT (in -nw mode)
+;; https://codeberg.org/dnkl/foot/issues/186
+(add-to-list 'term-file-aliases '("foot" . "xterm"))
+(setq xterm-extra-capabilities '(modifyOtherKeys reportBackground setSelection getSelection))
+
 (require 'init-modes)
 (require 'init-erc)
 (require 'init-javascript)

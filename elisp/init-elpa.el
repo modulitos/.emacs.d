@@ -20,7 +20,7 @@
 ;; uncomment this if you want to update:
 ;; (saves startup time, especially when not on the web)
 (add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/") t)
+	     '("melpa" . "https://melpa.org/packages/"))
 
 ;; tells use where the elpa folder is
 (package-initialize)
