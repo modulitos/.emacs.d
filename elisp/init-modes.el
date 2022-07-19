@@ -220,6 +220,10 @@
 ;;     (indent-region (point-min) (point-max))
 ;;     (org-edit-src-exit)))
 
+(setq org-edit-src-content-indentation 0 ;; default is 2
+      org-src-tab-acts-natively t  ;; default is t
+      org-src-preserve-indentation t)  ;; default is nil
+
 ;; (run-at-time 1 10 'indent-org-block-automatically)
 
 ;; (setq org-mode-hook nil)
