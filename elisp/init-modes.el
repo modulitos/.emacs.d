@@ -740,5 +740,10 @@
 
 (setq-default abbrev-mode t)
 
+;; Nix mode
+;; https://github.com/NixOS/nix-mode
+(use-package nix-mode
+  :mode "\\.nix\\'")
+
 (provide 'init-modes)
 ;;; init-modes.el ends here
