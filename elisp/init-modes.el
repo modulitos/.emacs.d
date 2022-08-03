@@ -743,7 +743,16 @@
 ;; Nix mode
 ;; https://github.com/NixOS/nix-mode
 (use-package nix-mode
-  :mode "\\.nix\\'")
+  :mode "\\.nix\\'"
+  :config
+  (defun my-nix-mode-hook ()
+    "Hooks for 'sh-mode'."
+    (message "inside nix mode hook")
+    (my-code-editor-hook)
+    (format-all-mode)
+    )
+  :hook ((nix-mode . my-nix-mode-hook))
+  )
 
 (provide 'init-modes)
 ;;; init-modes.el ends here
