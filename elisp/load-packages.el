@@ -9,9 +9,6 @@
 (eval-when-compile
   (require 'use-package))
 
-
-(use-package cl)
-
 (use-package flycheck)
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
