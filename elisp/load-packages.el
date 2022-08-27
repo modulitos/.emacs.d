@@ -24,7 +24,6 @@
 ;; (defvar isearchp-reg-beg)                 ; In `isearch+.el'
 ;; (require 'modeline-posn)
 
-(require 'org-trello)
 
 (require 'erc-hl-nicks)
 
@@ -65,7 +64,6 @@
 ;; ; case sensitivity is important when finding matches
 ;; (setq ac-ignore-case nil)
 
-(require 'prettier-js)
 
 (add-to-list 'load-path "/usr/share/emacs/site-list/")
 

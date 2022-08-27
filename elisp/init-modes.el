@@ -344,8 +344,14 @@
   (evil-set-undo-system 'undo-fu)
   ;; This prevents us from typing 'j', so using the cofi solution below:
   ;; (define-key evil-insert-state-map "jj" 'evil-normal-state)
+
+  ;; don't treat wrapped lines as a single line:
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
   (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
+  (define-key evil-motion-state-map (kbd "j") 'evil-next-visual-line)
+  (define-key evil-motion-state-map (kbd "k") 'evil-previous-visual-line)
+  (define-key evil-visual-state-map (kbd "j") 'evil-next-visual-line)
+  (define-key evil-visual-state-map (kbd "k") 'evil-previous-visual-line)
 
   (define-key evil-normal-state-map [escape] 'keyboard-quit)
   (define-key evil-visual-state-map [escape] 'keyboard-quit)
