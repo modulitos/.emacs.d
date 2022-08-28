@@ -6,7 +6,6 @@
 ;;; Code:
 
 (defun c-mode-config ()
-  (message "initializing elisp editor mode hook")
   (my-code-editor-hook)
   (format-all-mode t)
   ;; https://github.com/FredeEB/.emacs.d#c

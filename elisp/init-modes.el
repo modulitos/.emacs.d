@@ -29,7 +29,6 @@
 ;; ELISP-MODE
 
 (defun elisp-mode-config ()
-  (message "initializing elisp editor mode hook")
   (my-code-editor-hook)
   (format-all-mode t))
 
@@ -325,6 +324,26 @@
 ;;                 (org-agenda-start-on-weekday 1)
 ;;                 (org-agenda-start-with-clockreport-mode t)
 ;;                 (org-agenda-time-grid nil))) t)
+
+
+;; EMOJIFY
+
+;; (setq emojify-emoji-styles (quote (unicode)))
+
+;; https://ianyepan.github.io/posts/emacs-emojis/
+(use-package emojify
+  :ensure t
+  :config
+  (setq emojify-emoji-styles (quote (unicode)))
+  (global-emojify-mode)
+  )
+;; (when (member "Segoe UI Emoji" (font-family-list))
+;;   (set-fontset-font
+;;    t 'symbol (font-spec :family "Segoe UI Emoji") nil 'prepend))
+;; (setq emojify-display-style 'unicode)
+;; (setq emojify-emoji-styles '(unicode))
+;; (bind-key* (kbd "C-c .") #'emojify-insert-emoji)) ; override binding in any mode
+
 
 ;; EVIL MODE
 
@@ -628,7 +647,6 @@
   :config
   (defun my-shell-mode-hook ()
     "Hooks for 'sh-mode'."
-    (message "inside sh mode hook")
     (flymake-shellcheck-load)
     (flymake-mode)
     ;; (setq flymake-shellcheck-path )
@@ -657,7 +675,6 @@
 (defun conf-mode-activate ()
   "Custom settings for 'conf-mode'."
   (interactive)
-  (message "conf mode!!!")
   (my-code-editor-hook))
 
 (add-hook 'conf-mode-hook 'conf-mode-activate)
