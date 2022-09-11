@@ -168,7 +168,5 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-;; https://www.emacswiki.org/emacs/DesktopMultipleSaveFiles
-(setq desktop-path '("~/workspaces/emacs/main" "~" "."))
 
 ;;; init.el ends here

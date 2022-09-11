@@ -415,5 +415,17 @@ there's a region, all lines that region covers will be duplicated."
 ;;           (clear-this-command-keys t)
 ;;           (setq unread-command-events (list last-input-event)))))))
 
+(defun set-main-editor ()
+  "Set the desktop mode to be the main editor.
+This is useful for opening multiple instances of Emacs."
+  (interactive)
+  (message "setting main editor!!")
+  (desktop-change-dir "~/workspaces/emacs/main")
+  (desktop-save-mode 1)
+
+  ;; https://www.emacswiki.org/emacs/DesktopMultipleSaveFiles
+  ;; (setq desktop-path '("~/workspaces/emacs/main" "~" "."))
+  )
+
 (provide 'init-functions)
 ;;; init-functions.el ends here
