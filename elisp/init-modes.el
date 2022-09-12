@@ -777,5 +777,21 @@
   :hook ((nix-mode . my-nix-mode-hook))
   )
 
+;; Projectile
+
+;; https://docs.projectile.mx/projectile/installation.html
+;; https://docs.projectile.mx/projectile/index.html
+;; https://github.com/bbatsov/projectile
+(use-package projectile
+  :ensure t
+  :init
+  ;; :pin melpa-stable
+  (projectile-mode +1)
+  :bind (:map projectile-mode-map
+              ;; Recommended keymap prefix on macOS
+              ("s-p" . projectile-command-map)
+              ;; Recommended keymap prefix on Windows/Linux
+              ("C-c p" . projectile-command-map)))
+
 (provide 'init-modes)
 ;;; init-modes.el ends here
