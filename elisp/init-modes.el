@@ -211,6 +211,10 @@
 ;;    (org . t)
 ;;    (shell . t)))
 ;; (R . t)))
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((go . t)))
+
 
 ;; (setq org-src-fontify-natively t)
 ;; (defun indent-org-block-automatically ()
