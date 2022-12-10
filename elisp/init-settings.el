@@ -262,6 +262,8 @@
 ;; tells emacs where to listen for gpg key's pin when opening an encrypted gpp file:
 (setf epa-pinentry-mode 'loopback)
 
+;; git link
+(setq git-link-use-commit t)
 
 (provide 'init-settings)
 ;;; settings.el ends here

@@ -655,7 +655,7 @@
     (flymake-mode)
     ;; (setq flymake-shellcheck-path )
     )
-  :mode (("\\.sh$" . sh-mode) ("\\.bash*" . sh-mode) (".direnvrc" . sh-mode))
+  :mode (("\\.sh$" . sh-mode) ("\\.bash*" . sh-mode) (".direnvrc" . sh-mode) (".localrc" . sh-mode))
   :hook ((sh-mode . my-shell-mode-hook))
   ;; :hook (
   ;;        (message "inside sh mode hook")
