@@ -242,6 +242,9 @@
     (local-unset-key (kbd "M-h"))
     (local-unset-key (kbd "C-q"))
 
+    ;; From evil-surround package to support anki cloze cards:
+    (push '(?z . ("{{c1::" . "}}")) evil-surround-pairs-alist)
+
     ;; override default keybinding here:
     (local-set-key (kbd "C-S-i") 'whitespace-cleanup)
 
@@ -434,6 +437,10 @@
 (add-hook 'term-mode-hook 'evil-emacs-state)
 (add-hook 'ansi-term-mode-hook 'evil-emacs-state)
 
+(use-package evil-surround
+  :ensure t
+  :config
+  (global-evil-surround-mode 1))
 
 
 ;;    (define-key (eval map) (kbd "C-/") nil)))
